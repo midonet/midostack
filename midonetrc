@@ -1,25 +1,15 @@
-#!/usr/bin/env bash
-
-# Load the default configuration options for midostack
-MIDOSTACK_PASSWORD=${MIDOSTACK_PASSWORD:-gogomid0}
-DATABASE_PASSWORD=${DATABASE_PASSWORD:-$MIDOSTACK_PASSWORD}
-RABBIT_PASSWORD=${RABBIT_PASSWORD:-$MIDOSTACK_PASSWORD}
-SERVICE_TOKEN=${SERVICE_TOKEN:-$MIDOSTACK_PASSWORD}
-SERVICE_PASSWORD=${SERVICE_PASSWORD:-$MIDOSTACK_PASSWORD}
-ADMIN_PASSWORD=${ADMIN_PASSWORD:-$MIDOSTACK_PASSWORD}
-
-USE_MIDONET=${USE_MIDONET:-true}
-
-# services
-disable_service n-net
-enable_service q-svc
-enable_service q-dhcp
-enable_service q-meta
-
-if [ $USE_MIDONET = false ]; then
-    enable_service q-agt
-    enable_service q-l3
-    enable_service q-lbaas
-else
-    Q_PLUGIN=midonet
-fi
+MIDO_DEST=${MIDO_DEST:-$DEST/midonet}
+MIDO_MVN_CLEAN=${MIDO_MVN_CLEAN:-true}
+MIDONET_GIT_REPO=${MIDONET_GIT_REPO:-git@github.com:midokura/midonet.git}
+MIDONET_GIT_BRANCH=${MIDONET_GIT_BRANCH:-v1.3.0}
+MIDONET_SRC_DIR=$MIDO_DEST/midonet
+MIDONET_DEPS_DIR=$MIDONET_SRC_DIR/midodeps
+MIDONET_API_SRC_DIR=$MIDONET_SRC_DIR/midonet-api
+MIDOLMAN_SRC_DIR=$MIDONET_SRC_DIR/midolman
+MIDOLMAN_TGT_DIR=$MIDOLMAN_SRC_DIR/target
+MIDONET_API_CFG=$MIDONET_API_SRC_DIR/src/main/webapp/WEB-INF/web.xml
+MIDONET_API_PORT=${MIDONET_API_PORT:-8081}
+MIDONET_SCREEN_NAME=${MIDONET_SCREEN_NAME:-mido}
+ZINC_URL=${ZINC_URL:-http://repo.typesafe.com/typesafe/zinc/com/typesafe/zinc/dist/0.2.5/zinc-0.2.5.tgz}
+ODP_CTRL_SRC_DIR=$MIDO_DEST/odp_controller
+MIDOLMAN_CONF_DIR=${MIDOLMAN_CONF_DIR:-/etc/midolman}
