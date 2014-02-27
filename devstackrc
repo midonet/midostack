@@ -9,6 +9,15 @@ SERVICE_PASSWORD=${SERVICE_PASSWORD:-$MIDOSTACK_PASSWORD}
 ADMIN_PASSWORD=${ADMIN_PASSWORD:-$MIDOSTACK_PASSWORD}
 
 USE_MIDONET=${USE_MIDONET:-true}
+MIDONET_CLIENT_BRANCH=v1.3.0
+
+NOVA_USE_QUANTUM_API=v2
+NOVA_USE_NEUTRON_API=v2
+
+KEYSTONE_TOKEN_FORMAT=UUID
+
+# Need override here because we use it in 'midonet_stack' script
+SCREEN_NAME=stack
 
 # services
 disable_service n-net
@@ -22,4 +31,5 @@ if [ $USE_MIDONET = false ]; then
     enable_service q-lbaas
 else
     Q_PLUGIN=midonet
+    enable_service midonet
 fi

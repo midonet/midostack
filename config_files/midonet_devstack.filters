@@ -1,0 +1,3 @@
+[Filters]
+# nova/virt/libvirt/vif.py: 'mm-ctl', ...
+mm-ctl: CommandFilter, /usr/local/bin/mm-ctl, root

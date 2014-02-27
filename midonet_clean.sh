@@ -18,17 +18,34 @@ cd $DEVSTACK_DIR && source clean.sh
 
 if [ $USE_MIDONET = true ]; then
 
+    sudo rm /etc/nova/rootwrap.d/
+
+    if [ -f /etc/libvirt/qemu.conf ]; then
+        sudo rm /etc/libvirt/qemu.conf
+        sudo mv /etc/libvirt/qemu.conf.bak /etc/libvirt/qemu.conf
+    fi
+
+    echo "Cleaning midonet..."
+    # Then load the midonetrc
+    source $MIDO_DIR/midonetrc
+
+    # Remove maven repo
+    rm -rf ~/.m2/repository/*
+
+    # binproxy remove
+    sudo rm -rf /usr/local/bin/mm-ctl
+    sudo rm -rf /usr/local/bin/mm-dpctl
+
     sudo rm -rf $MIDO_DEST
     sudo rm -rf $MIDOLMAN_CONF_DIR
 
-    # Then load the midonetrc
-    source $MIDO_DIR/midonetrc
     # Stop the services
+    $ZINC_DIR/bin/zinc -shutdown
     sudo service cassandra stop
     sudo service zookeeper stop
 
     # Install packages
-    sudo apt-get purge -y python-dev libxml2-dev libxslt-dev openjdk-7-jdk openjdk-7-jre zookeeper zookeeperd cassandra openvswitch-datapath-dkms linux-headers-`uname -r` maven
+    sudo apt-get purge -y python-dev libxml2-dev libxslt-dev openjdk-7-jdk openjdk-7-jre zookeeper zookeeperd cassandra openvswitch-datapath-dkms linux-headers-`uname -r` maven screen
     sudo apt-get -y autoremove
 
     # Clean the preferences

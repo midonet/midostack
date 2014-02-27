@@ -1,15 +1,25 @@
 MIDO_DEST=${MIDO_DEST:-$DEST/midonet}
-MIDO_MVN_CLEAN=${MIDO_MVN_CLEAN:-true}
+MIDO_MVN_CLEAN=${MIDO_MVN_CLEAN:-false}
+
+ZINC_URL=${ZINC_URL:-http://repo.typesafe.com/typesafe/zinc/com/typesafe/zinc/dist/0.2.5/zinc-0.2.5.tgz}
+
 MIDONET_GIT_REPO=${MIDONET_GIT_REPO:-git@github.com:midokura/midonet.git}
 MIDONET_GIT_BRANCH=${MIDONET_GIT_BRANCH:-v1.3.0}
-MIDONET_SRC_DIR=$MIDO_DEST/midonet
-MIDONET_DEPS_DIR=$MIDONET_SRC_DIR/midodeps
-MIDONET_API_SRC_DIR=$MIDONET_SRC_DIR/midonet-api
-MIDOLMAN_SRC_DIR=$MIDONET_SRC_DIR/midolman
-MIDOLMAN_TGT_DIR=$MIDOLMAN_SRC_DIR/target
-MIDONET_API_CFG=$MIDONET_API_SRC_DIR/src/main/webapp/WEB-INF/web.xml
 MIDONET_API_PORT=${MIDONET_API_PORT:-8081}
+MIDONET_API_URI=${MIDONET_API_URI:-http://localhost:$MIDONET_API_PORT/midonet-api}
 MIDONET_SCREEN_NAME=${MIDONET_SCREEN_NAME:-mido}
-ZINC_URL=${ZINC_URL:-http://repo.typesafe.com/typesafe/zinc/com/typesafe/zinc/dist/0.2.5/zinc-0.2.5.tgz}
-ODP_CTRL_SRC_DIR=$MIDO_DEST/odp_controller
+
 MIDOLMAN_CONF_DIR=${MIDOLMAN_CONF_DIR:-/etc/midolman}
+MIDOLMAN_BUNDLE_VERSION=${MIDOLMAN_BUNDLE_VERSION:-1.3.0}
+
+# Opendaylight
+ODP_CTRL_SRC_DIR=$MIDO_DEST/odp_controller
+ODP_CTRL=false
+ODP_CTRL_REPO=https://github.com/midokura/odp-controller.git
+ODP_CTRL_BRANCH=neutron_midonet_integration
+ODP_CTRL_BUNDLE=/opendaylight/distribution/opendaylight
+ODP_MN_BUNDLE=/opendaylight/networkconfiguration/neutron/midonet-parent
+
+# set screen log dir and EXTRA_OPTS
+SCREEN_LOGDIR=/tmp
+EXTRA_OPTS=(security_group_api=neutron)

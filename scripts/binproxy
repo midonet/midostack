@@ -1,0 +1,5 @@
+#!/bin/sh
+export MIDO_HOME=/opt/stack/midonet/midonet/midodeps
+
+SCRIPT_NAME=`basename $0`
+exec /opt/stack/midonet/midonet/midolman/src/deb/bin/$SCRIPT_NAME "$@"

@@ -5,9 +5,8 @@ function is_devstack_cloned() {
     MIDO_DIR=$(pwd)
     DEVSTACK_DIR="$MIDO_DIR/devstack"
     if [ ! "$(ls -A $DEVSTACK_DIR)" ]; then
-        echo "$DEVSTACK_DIR is empty. "
-        echo "You problably haven't cloned devstack yet. "
-        echo "Execute 'git submodule update --init' to clone devstack and run this script again"
-        exit 1;
+        git submodule update --init
     fi
 }
+
+source devstack/functions
