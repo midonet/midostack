@@ -4,6 +4,13 @@ function is_devstack_cloned() {
     MIDO_DIR=$(pwd)
     DEVSTACK_DIR="$MIDO_DIR/devstack"
     if [ ! "$(ls -A $DEVSTACK_DIR)" ]; then
+        # Check access to github.com
+        ssh -T -o StrictHostKeyChecking=no git@github.com
+        [ $? == 255 ] && {
+            echo "Exiting. Can't authenticate with Github via ssh; please check that your ssh key is present in ~/.ssh."
+            exit 1
+        }
+
         git submodule update --init
     fi
 }

@@ -39,14 +39,6 @@ if [ $USE_MIDONET = true ]; then
     fi
     KEYSTONE_AUTH_HOST=${KEYSTONE_AUTH_HOST:-$HOST_IP}
 
-    # Check access to github.com
-    ssh -T -o StrictHostKeyChecking=no git@github.com
-    [ $? == 255 ] && {
-        echo "Exiting. Can't authenticate with Github via ssh; please check that your ssh key is present in ~/.ssh."
-        exit 1
-    }
-
-
     # apt package pinning (zookeeper 3.4.5, ovs-dp 1.10)
     UBUNTU_ARCHIVE="http://us.archive.ubuntu.com/ubuntu/"
     RARING_SRC="deb $UBUNTU_ARCHIVE raring universe\ndeb-src $UBUNTU_ARCHIVE raring universe"
@@ -153,19 +145,15 @@ if [ $USE_MIDONET = true ]; then
     fi
 
     # Set up web.xml for midonet-api
-    MIDONET_API_CFG=$MIDONET_SRC_DIR/midonet-api/src/main/webapp/WEB-INF/web.xml
-    if [ ! -f $MIDONET_API_CFG ]; then
-        cp $MIDONET_API_CFG.sample $MIDONET_API_CFG
-        # TODO(ryu): Improve this part
-        sed -i -e "s/999888777666/$PASSWORD/g" $MIDONET_API_CFG
-        sed -i -e "s/mido_admin/admin/g" $MIDONET_API_CFG
-        sed -i -e "s/mido_tenant_admin/Member/g" $MIDONET_API_CFG
-        sed -i -e "s/mido_tenant_user/Member/g" $MIDONET_API_CFG
-        sed -i -e "s/org.midonet.api.auth.MockAuthService/org.midonet.api.auth.keystone.v2_0.KeystoneService/g" $MIDONET_API_CFG
-        sed -i -e "/<param-name>keystone-service_host<\/param-name>/{n;s%.*%    <param-value>$KEYSTONE_AUTH_HOST</param-value>%g}" $MIDONET_API_CFG
-        sed -i -e "/<param-name>keystone-admin_token<\/param-name>/{n;s%.*%    <param-value>$ADMIN_PASSWORD</param-value>%g}" $MIDONET_API_CFG
-    fi
-
+    MIDONET_API_CFG=$MIDONET_SRC_DIR/midonet-api/src/main/webapp/WEB-INF/web.xml.dev
+    # TODO(ryu): Improve this part
+    sed -i -e "s/999888777666/$PASSWORD/g" $MIDONET_API_CFG
+    sed -i -e "s/mido_admin/admin/g" $MIDONET_API_CFG
+    sed -i -e "s/mido_tenant_admin/Member/g" $MIDONET_API_CFG
+    sed -i -e "s/mido_tenant_user/Member/g" $MIDONET_API_CFG
+    sed -i -e "s/org.midonet.api.auth.MockAuthService/org.midonet.api.auth.keystone.v2_0.KeystoneService/g" $MIDONET_API_CFG
+    sed -i -e "/<param-name>keystone-service_host<\/param-name>/{n;s%.*%    <param-value>$KEYSTONE_AUTH_HOST</param-value>%g}" $MIDONET_API_CFG
+    sed -i -e "/<param-name>keystone-admin_token<\/param-name>/{n;s%.*%    <param-value>$ADMIN_PASSWORD</param-value>%g}" $MIDONET_API_CFG
 
     # Build midolman
     if $MIDO_MVN_CLEAN ; then
