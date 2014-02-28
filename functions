@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 # functions - Common functions used by MidoStack components
-
 function is_devstack_cloned() {
     MIDO_DIR=$(pwd)
     DEVSTACK_DIR="$MIDO_DIR/devstack"
@@ -8,5 +7,7 @@ function is_devstack_cloned() {
         git submodule update --init
     fi
 }
+
+is_devstack_cloned
 
 source devstack/functions

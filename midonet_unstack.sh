@@ -9,9 +9,6 @@ DEST=${DEST:-/opt/stack}
 source $MIDO_DIR/midonetrc
 source $MIDO_DIR/functions
 
-# Check if devstack script exists
-is_devstack_cloned
-
 # Execute stack script
 cd $DEVSTACK_DIR && source unstack.sh
 

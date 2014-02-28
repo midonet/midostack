@@ -10,9 +10,6 @@ if [ -f $MIDO_DIR/localrc ]; then
     source $MIDO_DIR/localrc
 fi
 
-# Check if devstack script exists
-is_devstack_cloned
-
 # Execute stack script to clean devstack
 cd $DEVSTACK_DIR && source clean.sh
 

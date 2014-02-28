@@ -5,9 +5,6 @@ DEVSTACK_DIR="$MIDO_DIR/devstack"
 
 source $MIDO_DIR/functions
 
-# Check if devstack repo exists
-is_devstack_cloned
-
 # Midonet password. Used to simplify the passwords in the configurated localrc
 MIDOSTACK_PASSWORD=${MIDOSTACK_PASSWORD:-gogomid0}
 ADMIN_PASSWORD=${ADMIN_PASSWORD:-$MIDOSTACK_PASSWORD}
@@ -108,11 +105,10 @@ if [ $USE_MIDONET = true ]; then
 
     # Create the dest dir in case it doesn't exist
     # Github clone will fail to run otherwise
-    echo "Creating midonet destination directory... $MIDO_DEST"
     if [ ! -d $MIDO_DEST ]; then
-        mkdir -p $MIDO_DEST
-        # sudo chown $STACK_USER $DEST
-        # sudo chown $STACK_USER $MIDO_DEST
+        echo "Creating midonet destination directory... $MIDO_DEST"
+        sudo mkdir -p $MIDO_DEST
+        sudo chown -R ubuntu:ubuntu $DEST
     fi
 
     # Check if we have zinc installed
