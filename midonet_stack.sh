@@ -180,8 +180,6 @@ if [ $USE_MIDONET = true ]; then
             exit 1
         fi
 
-        ##### Setup to allow mm-dpctl and mm-ctl to run in devstack ####
-
         # Place our executables in /usr/local/bin
         LOCAL_BIN_DIR=/usr/local/bin/
         sudo cp $MIDO_DIR/scripts/binproxy $LOCAL_BIN_DIR/mm-ctl
