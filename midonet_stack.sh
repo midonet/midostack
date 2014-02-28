@@ -145,7 +145,8 @@ if [ $USE_MIDONET = true ]; then
     fi
 
     # Set up web.xml for midonet-api
-    MIDONET_API_CFG=$MIDONET_SRC_DIR/midonet-api/src/main/webapp/WEB-INF/web.xml.dev
+    MIDONET_API_CFG=$MIDONET_SRC_DIR/midonet-api/src/main/webapp/WEB-INF/web.xml
+    cp $MIDONET_API_CFG.dev $MIDONET_API_CFG
     # TODO(ryu): Improve this part
     sed -i -e "s/999888777666/$PASSWORD/g" $MIDONET_API_CFG
     sed -i -e "s/mido_admin/admin/g" $MIDONET_API_CFG
