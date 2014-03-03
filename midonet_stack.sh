@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 MIDO_DIR=$(pwd)
 DEVSTACK_DIR="$MIDO_DIR/devstack"
 
