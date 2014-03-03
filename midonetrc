@@ -1,3 +1,24 @@
+#####################################################
+## General variables                               ##
+#####################################################
+BUILD_SOURCES=${BUILD_SOURCES:-false}
+
+#####################################################
+## Package environment variables                   ##
+#####################################################
+
+MIDO_APT_USER=${MIDO_APT_USER:-midokura} 
+MIDO_APT_PASSWORD=${MIDO_APT_PASSWORD:-gogomid0}
+PKG_MAJOR_VERSION=${MAJOR_VERSION:-v1.3}
+
+# STABLE OR TEST
+PKG_STATUS_VERSION=${STATUS_VERSION:-test}
+PKG_OS_RELEASE=${PKG_OS_RELEASE:-precise}
+
+#####################################################
+## Source build based environment variables        ##
+#####################################################
+
 MIDO_DEST=${MIDO_DEST:-$DEST/midonet}
 MIDO_MVN_CLEAN=${MIDO_MVN_CLEAN:-false}
 
