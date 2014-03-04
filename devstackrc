@@ -13,6 +13,9 @@ USE_MIDONET=${USE_MIDONET:-true}
 NOVA_USE_QUANTUM_API=v2
 NOVA_USE_NEUTRON_API=v2
 
+NEUTRON_REPO=https://github.com/midokura/neutron.git
+NEUTRON_BRANCH=stable/havana
+
 KEYSTONE_TOKEN_FORMAT=UUID
 
 # Need override here because we use it in 'midonet_stack' script

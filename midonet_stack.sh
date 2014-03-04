@@ -76,9 +76,6 @@ if [ $USE_MIDONET = true ]; then
     # Install dependences
     sudo apt-get install -y python-dev libxml2-dev libxslt-dev openjdk-7-jdk openjdk-7-jre zookeeper zookeeperd cassandra openvswitch-datapath-dkms linux-headers-`uname -r` maven screen
 
-    # Stop service zookeeper temporaly
-    sudo service zookeeper stop
-
     # Configure casandra
     sudo service cassandra stop
     sudo chown cassandra:cassandra /var/lib/cassandra
@@ -223,7 +220,7 @@ if [ $USE_MIDONET = true ]; then
         # Download and install Midokura public key to validate software authenticity
         curl -k http://$MIDO_APT_USER:$MIDO_APT_PASSWORD@apt.midokura.com/packages.midokura.key | sudo apt-key add -
         sudo apt-get -y update
-        sudo apt-get -y install midonet-api python-midonet-openstack python-midonetclient python-neutron-plugin-midonet midolman
+        sudo apt-get -y install midonet-api python-midonet-openstack python-midonetclient midolman
 
         stop_service tomcat7
 
@@ -245,6 +242,7 @@ if [ $USE_MIDONET = true ]; then
     # TODO: Set up midolman.conf properly as well in midolman/conf of Maven.
     # Still TODO?? we will see..
     # Restart ZK
+    set +e
     stop_service zookeeper
     start_service zookeeper
     if [ $? -gt 0 ]
