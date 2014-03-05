@@ -148,6 +148,7 @@ if [ $USE_MIDONET = true ]; then
         # Set up web.xml for midonet-api
         MIDONET_API_CFG=$MIDONET_SRC_DIR/midonet-api/src/main/webapp/WEB-INF/web.xml
         cp $MIDONET_API_CFG.dev $MIDONET_API_CFG
+        cp $MIDONET_API_CFG.dev $MIDONET_API_CFG.bak
         # TODO(ryu): Improve this part
         sed -i -e "s/999888777666/$PASSWORD/g" $MIDONET_API_CFG
         sed -i -e "s/mido_admin/admin/g" $MIDONET_API_CFG
@@ -156,6 +157,7 @@ if [ $USE_MIDONET = true ]; then
         sed -i -e "s/org.midonet.api.auth.MockAuthService/org.midonet.api.auth.keystone.v2_0.KeystoneService/g" $MIDONET_API_CFG
         sed -i -e "/<param-name>keystone-service_host<\/param-name>/{n;s%.*%    <param-value>$KEYSTONE_AUTH_HOST</param-value>%g}" $MIDONET_API_CFG
         sed -i -e "/<param-name>keystone-admin_token<\/param-name>/{n;s%.*%    <param-value>$ADMIN_PASSWORD</param-value>%g}" $MIDONET_API_CFG
+        cp $MIDONET_API_CFG $MIDONET_API_CFG.bak
 
         # Build midolman
         if $MIDO_MVN_CLEAN ; then
@@ -227,6 +229,7 @@ if [ $USE_MIDONET = true ]; then
         # Set up web.xml for midonet-api
         MIDONET_API_CFG=/usr/share/midonet-api/WEB-INF/web.xml
         sudo cp $MIDONET_API_CFG.dev $MIDONET_API_CFG
+        sudo cp $MIDONET_API_CFG.dev $MIDONET_API_CFG.bak
         # TODO(ryu): Improve this part
         sudo sed -i -e "s/999888777666/$PASSWORD/g" $MIDONET_API_CFG
         sudo sed -i -e "s/mido_admin/admin/g" $MIDONET_API_CFG
@@ -235,6 +238,7 @@ if [ $USE_MIDONET = true ]; then
         sudo sed -i -e "s/org.midonet.api.auth.MockAuthService/org.midonet.api.auth.keystone.v2_0.KeystoneService/g" $MIDONET_API_CFG
         sudo sed -i -e "/<param-name>keystone-service_host<\/param-name>/{n;s%.*%    <param-value>$KEYSTONE_AUTH_HOST</param-value>%g}" $MIDONET_API_CFG
         sudo sed -i -e "/<param-name>keystone-admin_token<\/param-name>/{n;s%.*%    <param-value>$ADMIN_PASSWORD</param-value>%g}" $MIDONET_API_CFG
+        sudo cp $MIDONET_API_CFG $MIDONET_API_CFG.dev
 
     fi
 
@@ -362,3 +366,17 @@ if [ $USE_MIDONET = true ]; then
 EOF
     fi
 fi
+
+# fake uplink setting for testing floating ip
+# Add ip addr to the datapath's local port 'midonet'
+sudo ip addr add 100.100.100.2/24 dev midonet 2>/dev/null
+sudo ip link set up dev midonet
+sudo ip route add $FLOATING_RANGE via 100.100.100.1
+
+# sets up fake uplink: create a provider router port
+# and bind it to the ifname midonet
+python $MIDONET_OS_DIR/bin/setup_midonet_topology.py $MIDONET_API_URI admin $ADMIN_PASSWORD admin fake_uplink
+
+# create a second network in demo tenant
+neutron --os-username admin --os-password $ADMIN_PASSWORD --os-auth-url http://$KEYSTONE_AUTH_HOST:5000/v2.0 --os-tenant-name demo net-create net2
+neutron --os-username admin --os-password $ADMIN_PASSWORD --os-auth-url http://$KEYSTONE_AUTH_HOST:5000/v2.0 --os-tenant-name demo subnet-create net2 10.0.1.0/24
