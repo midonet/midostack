@@ -7,9 +7,6 @@ DEVSTACK_DIR="$MIDO_DIR/devstack"
 
 source $MIDO_DIR/functions
 
-# Midonet password. Used to simplify the passwords in the configurated localrc
-MIDOSTACK_PASSWORD=${MIDOSTACK_PASSWORD:-gogomid0}
-ADMIN_PASSWORD=${ADMIN_PASSWORD:-$MIDOSTACK_PASSWORD}
 
 # Setting this value as 'false' will deploy a devstack with quantum and openvsitch
 USE_MIDONET=${USE_MIDONET:-true}
@@ -27,6 +24,9 @@ if [ $USE_MIDONET = true ]; then
 
     # Then load the midonetrc
     source $MIDO_DIR/midonetrc
+
+    # Midonet password. Used to simplify the passwords in the configurated localrc
+    ADMIN_PASSWORD=${ADMIN_PASSWORD:-$MIDOSTACK_PASSWORD}
 
     # Set fixed and floating range here so we can make sure not to use addresses
     # from either range when attempting to guess the IP to use for the host.
@@ -74,7 +74,7 @@ if [ $USE_MIDONET = true ]; then
     sudo apt-get -y update
 
     # Install dependences
-    sudo apt-get install -y python-dev libxml2-dev libxslt-dev openjdk-7-jdk openjdk-7-jre zookeeper zookeeperd cassandra openvswitch-datapath-dkms linux-headers-`uname -r` maven screen
+    sudo apt-get install -y python-dev libxml2-dev libxslt-dev openjdk-7-jdk openjdk-7-jre zookeeper zookeeperd cassandra openvswitch-datapath-dkms linux-headers-`uname -r` maven screen git curl
 
     # Configure casandra
     sudo service cassandra stop

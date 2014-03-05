@@ -2,6 +2,7 @@
 ## General variables                               ##
 #####################################################
 BUILD_SOURCES=${BUILD_SOURCES:-true}
+MIDOSTACK_PASSWORD=${MIDOSTACK_PASSWORD:-gogomid0}
 
 #####################################################
 ## Package environment variables                   ##
@@ -47,3 +48,10 @@ ODP_MN_BUNDLE=/opendaylight/networkconfiguration/neutron/midonet-parent
 # set screen log dir and EXTRA_OPTS
 SCREEN_LOGDIR=/tmp
 EXTRA_OPTS=(security_group_api=neutron)
+
+# For midonet.ini (configured in lib/neutron_plugins/midonet in devstack)
+MIDONET_API_PORT=${MIDONET_API_PORT:-8081}
+MIDONET_API_URI=${MIDONET_API_URI:-http://localhost:$MIDONET_API_PORT/midonet-api}
+MIDONET_USERNAME=${MIDONET_USERNAME:-admin}
+MIDONET_PASSWORD=${MIDOSTACK_PASSWORD}
+MIDONET_PROJECT_ID=${MIDONET_PROJECT_ID:-admin}
