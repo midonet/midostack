@@ -100,7 +100,7 @@ if [ $USE_MIDONET = true ]; then
     if [ ! -d $MIDO_DEST ]; then
         echo "Creating midonet destination directory... $MIDO_DEST"
         sudo mkdir -p $MIDO_DEST
-        sudo chown -R ubuntu:ubuntu $DEST
+        sudo chmod -R 777 $DEST
     fi
 
     # Check if we have zinc installed
