@@ -1,3 +1,4 @@
 [submodule "devstack"]
 	path = devstack
 	url = git://github.com/openstack-dev/devstack
+    ignore = dirty
