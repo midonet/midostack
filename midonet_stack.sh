@@ -309,12 +309,11 @@ if [ $USE_MIDONET = true ]; then
         SCREEN_NAME=$MIDONET_SCREEN_NAME
         TOP_DIR=$MIDO_DIR
 
-        screen_it midolman "cd $MIDONET_SRC_DIR && mvn -pl midolman exec:exec"
+        screen_it midolman "cd $MIDONET_SRC_DIR && MAVEN_OPTS=\"$MAVEN_OPTS_MIDOLMAN\" mvn -pl midolman exec:exec"
         # Run the API with jetty:plugin
         # Tomcat need to be stopped
         echo "Starting midonet-api"
-        screen_it midonet-api "cd $MIDONET_SRC_DIR && mvn -pl midonet-api jetty:run -Djetty.port=$MIDONET_API_PORT"
-
+        screen_it midonet-api "cd $MIDONET_SRC_DIR && MAVEN_OPTS=\"$MAVEN_OPTS_API\" mvn -pl midonet-api jetty:run -Djetty.port=$MIDONET_API_PORT"
         echo "* Making sure MidoNet API server is up and ready."
     else
 
