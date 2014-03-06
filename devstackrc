@@ -14,8 +14,8 @@ USE_MIDONET=${USE_MIDONET:-true}
 NOVA_USE_QUANTUM_API=v2
 NOVA_USE_NEUTRON_API=v2
 
-NEUTRON_REPO=https://github.com/midokura/neutron.git
-NEUTRON_BRANCH=master
+NEUTRON_REPO=${NEUTRON_REPO:-https://github.com/midokura/neutron.git}
+NEUTRON_BRANCH=${NEUTRON_BRANCH:-icehouse}
 
 KEYSTONE_TOKEN_FORMAT=UUID
 
