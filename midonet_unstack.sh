@@ -14,7 +14,8 @@ cd $DEVSTACK_DIR && source unstack.sh
 
 # Clean up ZK
 stop_service zookeeper
-sudo rm -rf /var/lib/zookeeper/data/version-2
+sleep 3
+sudo rm -rf /var/lib/zookeeper/version-2/
 
 # Clean up Cassandra
 stop_service cassandra
