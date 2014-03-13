@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+[[local|localrc]]
+
 # Load the default configuration options for midostack
 DATABASE_PASSWORD=${DATABASE_PASSWORD:-$MIDOSTACK_PASSWORD}
 RABBIT_PASSWORD=${RABBIT_PASSWORD:-$MIDOSTACK_PASSWORD}
@@ -32,5 +34,22 @@ if [ $USE_MIDONET = false ]; then
     enable_service q-lbaas
 else
     Q_PLUGIN=midonet
+    Q_L3_ENABLED=True
     enable_service midonet
+
 fi
+
+[[post-config|$NOVA_CONF]] 
+[DEFAULT]
+libvirt_vif_driver=midonet.nova.virt.libvirt.vif.MidonetVifDriver
+security_group_api=neutron
+firewall_driver=nova.virt.firewall.NoopFirewallDriver
+
+[MIDONET]
+midonet_uri = http://$HOST_IP:$MIDONET_API_PORT/midonet-api  
+provider_router_id =   
+username = admin  
+password = $ADMIN_PASSWORD
+project_id = admin  
+auth_url = http://$KEYSTONE_AUTH_HOST:35357/v2.0  
+midonet_use_tunctl = True

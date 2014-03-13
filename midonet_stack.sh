@@ -30,7 +30,7 @@ if [ $USE_MIDONET = true ]; then
     # from either range when attempting to guess the IP to use for the host.
     # Note that setting FIXED_RANGE may be necessary when running DevStack
     # in an OpenStack cloud that uses either of these address ranges internally.
-    FLOATING_RANGE=${FLOATING_RANGE:-172.24.4.224/28}
+    FLOATING_RANGE=${FLOATING_RANGE:-200.200.200.0/24}
     FIXED_RANGE=${FIXED_RANGE:-10.0.0.0/24}
     FIXED_NETWORK_SIZE=${FIXED_NETWORK_SIZE:-256}
 
@@ -338,10 +338,11 @@ if [ $USE_MIDONET = true ]; then
 fi
 
 # Execute stack scri
-cp $MIDO_DIR/devstackrc $DEVSTACK_DIR/localrc
+cp $MIDO_DIR/devstackrc $DEVSTACK_DIR/local.conf
 cd $DEVSTACK_DIR && source stack.sh
 
 if [ $USE_MIDONET = true ]; then
+
     # Add a filter to allow rootwrap to use mm-ctl from /usr/local/bin/
     sudo cp $MIDO_DIR/config_files/midonet_devstack.filters /etc/nova/rootwrap.d/
 

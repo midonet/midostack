@@ -45,7 +45,6 @@ ODP_MN_BUNDLE=/opendaylight/networkconfiguration/neutron/midonet-parent
 
 # set screen log dir and EXTRA_OPTS
 SCREEN_LOGDIR=/tmp
-EXTRA_OPTS=(security_group_api=neutron)
 
 # For midonet.ini (configured in lib/neutron_plugins/midonet in devstack)
 MIDONET_API_PORT=${MIDONET_API_PORT:-8081}
