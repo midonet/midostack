@@ -209,7 +209,7 @@ if [ $USE_MIDONET = true ]; then
     else
 
         # Install packages
-        MIDONET_SRC="deb [trusted=1 arch=amd64] http://$MIDO_APT_USER:$MIDO_APT_PASSWORD@apt.midokura.com/midonet/$PKG_MAJOR_VERSION/$PKG_STATUS_VERSION $PKG_OS_RELEASE main non-free"
+        MIDONET_SRC="deb [trusted=1 arch=amd64] http://$MIDO_APT_USER:$MIDO_APT_PASSWORD@apt.midokura.com/midonet/$PKG_MAJOR_VERSION/$PKG_STATUS_VERSION $PKG_OS_RELEASE main non-free test"
         MIDONET_LIST_FILE=/etc/apt/sources.list.d/midonet.list
         if [ ! -f $MIDONET_LIST_FILE ]; then
             echo "Adding sources from Midonet package daily"
