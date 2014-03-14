@@ -42,6 +42,7 @@ fi
 [[post-config|$NOVA_CONF]] 
 [DEFAULT]
 libvirt_vif_driver=midonet.nova.virt.libvirt.vif.MidonetVifDriver
+libvirt_type=qemu
 security_group_api=neutron
 firewall_driver=nova.virt.firewall.NoopFirewallDriver
 

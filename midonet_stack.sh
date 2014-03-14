@@ -31,6 +31,7 @@ if [ $USE_MIDONET = true ]; then
     # Note that setting FIXED_RANGE may be necessary when running DevStack
     # in an OpenStack cloud that uses either of these address ranges internally.
     FLOATING_RANGE=${FLOATING_RANGE:-200.200.200.0/24}
+    PUBLIC_NETWORK_GATEWAY=${PUBLIC_NETWORK_GATEWAY:-200.200.200.1}
     FIXED_RANGE=${FIXED_RANGE:-10.0.0.0/24}
     FIXED_NETWORK_SIZE=${FIXED_NETWORK_SIZE:-256}
 
