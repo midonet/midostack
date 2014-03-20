@@ -313,6 +313,16 @@ if [ $USE_MIDONET = true ]; then
         # Run the API with jetty:plugin
         # Tomcat need to be stopped
         echo "Starting midonet-api"
+	# put logback.xml to the classpath with "debug" level so mvn jetty:run can pick up
+        sed -e 's/info/debug/' \
+            -e 's,</configuration>,\
+    <logger name="org.apache.zookeeper" level="INFO" />\
+    <logger name="org.apache.cassandra" level="INFO" />\
+    <logger name="me.prettyprint.cassandra" level="INFO" />\
+</configuration>,' \
+           $MIDONET_SRC_DIR/midonet-api/conf/logback.xml.sample > \
+           $MIDONET_SRC_DIR/midonet-api/target/classes/logback.xml
+
         screen_it midonet-api "cd $MIDONET_SRC_DIR && MAVEN_OPTS=\"$MAVEN_OPTS_API\" mvn -pl midonet-api jetty:run -Djetty.port=$MIDONET_API_PORT"
         echo "* Making sure MidoNet API server is up and ready."
     else
