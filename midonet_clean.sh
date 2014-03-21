@@ -2,6 +2,7 @@
 
 MIDO_DIR=$(pwd)
 DEVSTACK_DIR="$MIDO_DIR/devstack"
+DEST=${DEST:-/opt/stack}
 
 source $MIDO_DIR/functions
 
@@ -33,7 +34,7 @@ if [ $USE_MIDONET = true ]; then
     sudo rm -rf /usr/local/bin/mm-ctl
     sudo rm -rf /usr/local/bin/mm-dpctl
 
-    sudo rm -rf $MIDO_DEST
+    sudo rm -rf $DEST
     sudo rm -rf $MIDOLMAN_CONF_DIR
 
     # Stop the services
@@ -56,5 +57,5 @@ if [ $USE_MIDONET = true ]; then
     sudo rm /etc/apt/preferences.d/01midokura_apt_preferences
 
     sudo apt-get -y update
-fi
 
+fi
