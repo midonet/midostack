@@ -52,3 +52,13 @@ MIDONET_API_URI=${MIDONET_API_URI:-http://localhost:$MIDONET_API_PORT/midonet-ap
 MIDONET_USERNAME=${MIDONET_USERNAME:-admin}
 MIDONET_PASSWORD=${MIDOSTACK_PASSWORD}
 MIDONET_PROJECT_ID=${MIDONET_PROJECT_ID:-admin}
+
+
+# Maven opts (mainly for remote debugging)
+
+MIDONET_API_DEBUG_PORT=8091
+MIDOLMAN_DEBUG_PORT=8092
+
+MAVEN_OPTS_API="-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,address=$MIDONET_API_DEBUG_PORT,server=y,suspend=n"
+MAVEN_OPTS_MIDOLMAN="-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,address=$MIDOLMAN_DEBUG_PORT,server=y,suspend=n"
+
