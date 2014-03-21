@@ -54,3 +54,11 @@ password = $ADMIN_PASSWORD
 project_id = admin  
 auth_url = http://$KEYSTONE_AUTH_HOST:35357/v2.0  
 midonet_use_tunctl = True
+
+[[post-config|$NEUTRON_CONF]]
+[quotas]
+default_quota = -1
+quota_network = -1
+quota_subnet = -1
+quota_port = -1
+quota_security_group = -1
