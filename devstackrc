@@ -27,11 +27,11 @@ disable_service n-net
 enable_service q-svc
 enable_service q-dhcp
 enable_service q-meta
+enable_service q-lbaas
 
 if [ $USE_MIDONET = false ]; then
     enable_service q-agt
     enable_service q-l3
-    enable_service q-lbaas
 else
     Q_PLUGIN=midonet
     Q_L3_ENABLED=True
@@ -62,3 +62,7 @@ quota_network = -1
 quota_subnet = -1
 quota_port = -1
 quota_security_group = -1
+
+[[post-config|$LBAAS_AGENT_CONF_FILENAME]] 
+[DEFAULT]
+interface_driver = neutron.plugins.midonet.agent.midonet_driver.MidonetInterfaceDriver

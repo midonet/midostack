@@ -62,3 +62,4 @@ MIDOLMAN_DEBUG_PORT=8092
 MAVEN_OPTS_API="-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,address=$MIDONET_API_DEBUG_PORT,server=y,suspend=n"
 MAVEN_OPTS_MIDOLMAN="-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,address=$MIDOLMAN_DEBUG_PORT,server=y,suspend=n"
 
+MIDONET_OS_REPO=${MIDONET_OS_REPO:-https://github.com/jdevesa/midonet-openstack.git}
