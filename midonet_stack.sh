@@ -164,6 +164,11 @@ if [ $USE_MIDONET = true ]; then
         else
             cd $MIDONET_SRC_DIR && mvn install -DskipTests -PfatJar
         fi
+        if [ $? -gt 0 ]
+        then
+            echo "Exiting. MidoNet Maven install failed."
+            exit 1
+        fi
 
         MIDOLMAN_TGT_DIR="$MIDONET_SRC_DIR/midolman/target"
         MIDOLMAN_JAR_FILE="$MIDOLMAN_TGT_DIR/midolman-$MIDOLMAN_BUNDLE_VERSION-jar-with-dependencies.jar"
