@@ -1,7 +1,7 @@
 #####################################################
 ## General variables                               ##
 #####################################################
-BUILD_SOURCES=${BUILD_SOURCES:-true}
+BUILD_SOURCES=${BUILD_SOURCES:-false}
 MIDOSTACK_PASSWORD=${MIDOSTACK_PASSWORD:-gogomid0}
 
 #####################################################
@@ -47,8 +47,7 @@ ODP_MN_BUNDLE=/opendaylight/networkconfiguration/neutron/midonet-parent
 SCREEN_LOGDIR=/tmp
 
 # For midonet.ini (configured in lib/neutron_plugins/midonet in devstack)
-MIDONET_API_PORT=${MIDONET_API_PORT:-8081}
-MIDONET_API_URI=${MIDONET_API_URI:-http://localhost:$MIDONET_API_PORT/midonet-api}
+MIDONET_API_PORT=${MIDONET_API_PORT:-8080}
 MIDONET_USERNAME=${MIDONET_USERNAME:-admin}
 MIDONET_PASSWORD=${MIDOSTACK_PASSWORD}
 MIDONET_PROJECT_ID=${MIDONET_PROJECT_ID:-admin}

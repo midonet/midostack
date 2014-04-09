@@ -48,7 +48,6 @@ firewall_driver=nova.virt.firewall.NoopFirewallDriver
 
 [MIDONET]
 midonet_uri = http://$HOST_IP:$MIDONET_API_PORT/midonet-api  
-provider_router_id =   
 username = admin  
 password = $ADMIN_PASSWORD
 project_id = admin  
@@ -66,3 +65,9 @@ quota_security_group = -1
 [[post-config|$LBAAS_AGENT_CONF_FILENAME]] 
 [DEFAULT]
 interface_driver = neutron.plugins.midonet.agent.midonet_driver.MidonetInterfaceDriver
+
+[MIDONET]
+midonet_uri = $MIDONET_API_URI
+username = $MIDONET_USERNAME
+password = $MIDONET_PASSWORD
+project_id = $MIDONET_PROJECT_ID
