@@ -27,35 +27,42 @@ if [ $USE_MIDONET = true ]; then
     # Then load the midonetrc
     source $MIDO_DIR/midonetrc
 
-    # Remove maven repo
-    rm -rf ~/.m2/repository/*
 
     # binproxy remove
-    sudo rm -rf /usr/local/bin/mm-ctl
-    sudo rm -rf /usr/local/bin/mm-dpctl
+    sudo rm -rf /usr/local/bin/mm-*
 
     sudo rm -rf $DEST
     sudo rm -rf $MIDOLMAN_CONF_DIR
 
+    if  [ $BUILD_SOURCES = true ]; then
+        # Remove maven repo
+        rm -rf ~/.m2/repository/*
+        $ZINC_DIR/bin/zinc -shutdown
+    fi
+
     # Stop the services
-    $ZINC_DIR/bin/zinc -shutdown
     sudo service cassandra stop
     sudo service zookeeper stop
 
-    # Install packages
-    sudo apt-get purge -y python-dev libxml2-dev libxslt-dev openjdk-7-jdk openjdk-7-jre zookeeper zookeeperd cassandra openvswitch-datapath-dkms linux-headers-`uname -r` maven screen
-    sudo apt-get -y autoremove
+    if [[ "$os_VENDOR" =~ (Red Hat) || "$os_VENDOR" =~ (CentOS) ]]; then
 
-    # Clean the preferences
-    RARING_LIST_FILE=/etc/apt/sources.list.d/raring.list
-    SAUCY_LIST_FILE=/etc/apt/sources.list.d/saucy.list
-    CASSANDRA_LIST_FILE=/etc/apt/sources.list.d/cassandra.list
 
-    sudo rm $RARING_LIST_FILE $SAUCY_LIST_FILE $CASSANDRA_LIST_FILE
-
-    sudo rm /etc/apt/apt.conf.d/01midokura_apt_config
-    sudo rm /etc/apt/preferences.d/01midokura_apt_preferences
-
-    sudo apt-get -y update
+    else
+        # Install packages
+        sudo apt-get purge -y python-dev libxml2-dev libxslt-dev openjdk-7-jdk openjdk-7-jre zookeeper zookeeperd cassandra openvswitch-datapath-dkms linux-headers-`uname -r` maven screen
+        sudo apt-get -y autoremove
+    
+        # Clean the preferences
+        RARING_LIST_FILE=/etc/apt/sources.list.d/raring.list
+        SAUCY_LIST_FILE=/etc/apt/sources.list.d/saucy.list
+        CASSANDRA_LIST_FILE=/etc/apt/sources.list.d/cassandra.list
+    
+        sudo rm $RARING_LIST_FILE $SAUCY_LIST_FILE $CASSANDRA_LIST_FILE
+    
+        sudo rm /etc/apt/apt.conf.d/01midokura_apt_config
+        sudo rm /etc/apt/preferences.d/01midokura_apt_preferences
+    
+        sudo apt-get -y update
+    fi
 
 fi
