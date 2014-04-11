@@ -61,7 +61,8 @@ if [ $USE_MIDONET = true ]; then
         # RHEL does not provide this package, installing directly from centos
         sudo yum install -y http://mirror.centos.org/centos-6/6/os/x86_64/Packages/libffi-devel-3.0.5-3.2.el6.x86_64.rpm
 
-        # java symlink
+        #Iptables disabled for now
+        sudo service iptables stop
 
         CASSANDRA_FILE='/etc/cassandra/conf/cassandra.yaml'
         sudo sed -i -e "s/^cluster_name:.*$/cluster_name: \'midonet\'/g" $CASSANDRA_FILE
