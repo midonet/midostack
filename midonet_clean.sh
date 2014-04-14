@@ -45,8 +45,7 @@ if [ $USE_MIDONET = true ]; then
     sudo service zookeeper stop
 
     if [[ "$os_VENDOR" =~ (Red Hat) || "$os_VENDOR" =~ (CentOS) ]]; then
-
-
+        sudo yum remove -y dsc1.1 zookeeper midolman midonet*
     else
         # Install packages
         sudo apt-get purge -y python-dev libxml2-dev libxslt-dev openjdk-7-jdk openjdk-7-jre zookeeper zookeeperd cassandra openvswitch-datapath-dkms linux-headers-`uname -r` maven screen
