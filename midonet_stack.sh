@@ -449,7 +449,7 @@ PROVIDER_ROUTER_ID=$(midonet-cli -e router list | grep MidonetProviderRouter | a
 PROVIDER_PORT_ID=$(midonet-cli -e router $PROVIDER_ROUTER_ID add port address 172.19.0.2 net 172.19.0.0/30)
 
 # Route any packet to the recent created port
-midonet-cli -e router $PROVIDER_ROUTER_ID add route src 0.0.0.0/0 dst 0.0.0.0/0 type normal port router $PROVIDER_ROUTER_ID port $PROVIDER_PORT_ID
+midonet-cli -e router $PROVIDER_ROUTER_ID add route src 0.0.0.0/0 dst 0.0.0.0/0 type normal port router $PROVIDER_ROUTER_ID port $PROVIDER_PORT_ID gw 172.19.0.1
 
 # Create the binding with veth1
 HOST_ID=$(midonet-cli -e host list | awk '{print $2 }')
