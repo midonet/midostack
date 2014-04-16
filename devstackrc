@@ -35,8 +35,8 @@ if [ $USE_MIDONET = false ]; then
 else
     Q_PLUGIN=midonet
     Q_L3_ENABLED=True
+    Q_L3_ROUTER_PER_TENANT=True
     enable_service midonet
-
 fi
 
 [[post-config|$NOVA_CONF]] 

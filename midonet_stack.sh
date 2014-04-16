@@ -363,7 +363,7 @@ if [ -f /etc/libvirt/qemu.conf ]; then
 
     # Change libvirt config file for qemu to allow "ethernet" mode.
     sudo sed -i -e 's/#user/user/'  -e 's/#group/group/'  -e 's/.*\(clear_emulator_capabilities =\) 1/\1 0/' /etc/libvirt/qemu.conf
-    grep  -q '^cgroup_device_acl' /etc/libvirt/qemu.conf |R| cat <<EOF | sudo tee -a /etc/libvirt/qemu.conf && sudo service libvirt-bin restart
+    grep  -q '^cgroup_device_acl' /etc/libvirt/qemu.conf | cat <<EOF | sudo tee -a /etc/libvirt/qemu.conf && sudo service libvirt-bin restart
 cgroup_device_acl = [
        "/dev/null", "/dev/full", "/dev/zero",
        "/dev/random", "/dev/urandom",
