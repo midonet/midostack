@@ -37,3 +37,9 @@ if [[ -n "$MIDO_SCREEN" ]]; then
         screen -X -S $MIDO_SESSION quit
     fi
 fi
+
+# Clean up uplink settings
+
+sudo ip -o link ls | grep veth[0-9a] | cut -d' ' -d':'  -f2 | while read dev ; do sudo ip link del $dev 2> /dev/null ; done
+sudo ip link set down uplinkbridge 2> /dev/null
+sudo brctl delbr uplinkbridge 2> /dev/null
