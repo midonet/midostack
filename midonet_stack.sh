@@ -449,23 +449,8 @@ PROVIDER_ROUTER_ID=$(midonet-cli -e router list | grep MidonetProviderRouter | a
 PROVIDER_PORT_ID=$(midonet-cli -e router $PROVIDER_ROUTER_ID add port address 172.19.0.2 net 172.19.0.0/30)
 
 # Route any packet to the recent created port
-midonet-cli -e router $PROVIDER_ROUTER_ID add route src 0.0.0.0/0 dst 0.0.0.0/0 type normal port router $PROVIDER_ROUTER_ID port $PROVIDER_PORT_ID
+midonet-cli -e router $PROVIDER_ROUTER_ID add route src 0.0.0.0/0 dst 0.0.0.0/0 type normal port router $PROVIDER_ROUTER_ID port $PROVIDER_PORT_ID gw 172.19.0.1
 
 # Create the binding with veth1
 HOST_ID=$(midonet-cli -e host list | awk '{print $2 }')
 midonet-cli -e host $HOST_ID add binding port router $PROVIDER_ROUTER_ID port $PROVIDER_PORT_ID interface veth1
-
-
-# fake uplink setting for testing floating ip
-# Add ip addr to the datapath's local port 'midonet'
-# sudo ip addr add 100.100.100.2/24 dev midonet 2>/dev/null
-# sudo ip link set up dev midonet
-# sudo ip route add $FLOATING_RANGE via 100.100.100.1
-#
-# # sets up fake uplink: create a provider router port
-# # and bind it to the ifname midonet
-# python $MIDONET_OS_DIR/bin/setup_midonet_topology.py $MIDONET_API_URI admin $ADMIN_PASSWORD admin fake_uplink
-#
-# # create a second network in demo tenant
-# neutron --os-username admin --os-password $ADMIN_PASSWORD --os-auth-url http://$KEYSTONE_AUTH_HOST:5000/v2.0 --os-tenant-name demo net-create net2
-# neutron --os-username admin --os-password $ADMIN_PASSWORD --os-auth-url http://$KEYSTONE_AUTH_HOST:5000/v2.0 --os-tenant-name demo subnet-create net2 10.0.1.0/24
