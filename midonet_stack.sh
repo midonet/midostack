@@ -35,70 +35,119 @@ if [ "$HOST_IP" == "" ]; then
     die $LINENO "Could not determine host ip address. Either localrc specified dhcp on ${HOST_IP_IFACE} or defaulted"
 fi
 KEYSTONE_AUTH_HOST=${KEYSTONE_AUTH_HOST:-$HOST_IP}
+TOMCAT=${TOMCAT:-tomcat7}
 
-# apt package pinning (zookeeper 3.4.5, ovs-dp 1.10)
-UBUNTU_ARCHIVE="http://us.archive.ubuntu.com/ubuntu/"
-RARING_SRC="deb $UBUNTU_ARCHIVE raring universe\ndeb-src $UBUNTU_ARCHIVE raring universe"
-RARING_LIST_FILE=/etc/apt/sources.list.d/raring.list
-if [ ! -f $RARING_LIST_FILE ]; then
-    echo "Adding sources from Ubuntu Raring release"
-    echo -e $RARING_SRC | sudo tee $RARING_LIST_FILE
+
+GetDistro
+
+if [[ "$os_VENDOR" =~ (Red Hat) || "$os_VENDOR" =~ (CentOS) ]]; then
+    ## RHEL Stuff ##
+    # Sources not supported
+    if [ $BUILD_SOURCES = true ]; then
+        echo "Build sources not supported with Red Hat and CentOS distros currently";
+        exit 1;
+    fi
+    
+    # midokura repo
+    sudo cp $MIDO_DIR/config_files/midokura.repo /etc/yum.repos.d/
+
+    # datastax repo
+    sudo cp $MIDO_DIR/config_files/datastax.repo /etc/yum.repos.d/
+   
+    sudo yum install -y dsc1.1 zookeeper screen git curl java-1.7.0-openjdk 
+    
+    sudo yum install -y python-setuptools dbus gcc python-devel libxslt-devel libxml2-devel
+    # RHEL does not provide this package, installing directly from centos
+    sudo yum install -y http://mirror.centos.org/centos-6/6/os/x86_64/Packages/libffi-devel-3.0.5-3.2.el6.x86_64.rpm
+
+    #Iptables disabled for now
+    sudo service iptables stop
+
+    CASSANDRA_FILE='/etc/cassandra/conf/cassandra.yaml'
+    sudo sed -i -e "s/^cluster_name:.*$/cluster_name: \'midonet\'/g" $CASSANDRA_FILE
+    CASSANDRA_ENV_FILE='/etc/cassandra/conf/cassandra-env.sh'
+    sudo sed -i 's/\(MAX_HEAP_SIZE=\).*$/\1128M/' $CASSANDRA_ENV_FILE
+    sudo sed -i 's/\(HEAP_NEWSIZE=\).*$/\164M/' $CASSANDRA_ENV_FILE
+    # Cassandra seems to need at least 228k stack working with Java 7.
+    # Related bug: https://issues.apache.org/jira/browse/CASSANDRA-5895
+    sudo sed -i -e "s/-Xss180k/-Xss228k/g" $CASSANDRA_ENV_FILE
+    sudo service cassandra start
+    sudo chkconfig cassandra on
+
+    # java symlink
+    sudo mkdir -p /usr/java/default/bin/
+    sudo ln -s /usr/bin/java /usr/java/default/bin/java
+    TOMCAT="tomcat6"
+
+
+elif [[ "$os_VENDOR" =~ (Ubuntu) || "$os_VENDOR" =~ (Debian) ]]; then
+    # apt package pinning (zookeeper 3.4.5, ovs-dp 1.10)
+    UBUNTU_ARCHIVE="http://us.archive.ubuntu.com/ubuntu/"
+    RARING_SRC="deb $UBUNTU_ARCHIVE raring universe\ndeb-src $UBUNTU_ARCHIVE raring universe"
+    RARING_LIST_FILE=/etc/apt/sources.list.d/raring.list
+    if [ ! -f $RARING_LIST_FILE ]; then
+        echo "Adding sources from Ubuntu Raring release"
+        echo -e $RARING_SRC | sudo tee $RARING_LIST_FILE
+    fi
+    SAUCY_SRC="deb $UBUNTU_ARCHIVE saucy universe\ndeb-src $UBUNTU_ARCHIVE saucy universe"
+    SAUCY_LIST_FILE=/etc/apt/sources.list.d/saucy.list
+    if [ ! -f $SAUCY_LIST_FILE ]; then
+        echo "Adding sources from Ubuntu Saucy release"
+        echo -e $SAUCY_SRC | sudo tee $SAUCY_LIST_FILE
+    fi
+    CASSANDRA_LIST_FILE=/etc/apt/sources.list.d/cassandra.list
+    if [ ! -f $CASSANDRA_LIST_FILE ]; then 
+        echo "Adding Cassandra sources"
+        echo -e 'deb http://www.apache.org/dist/cassandra/debian 11x main\ndeb-src http://www.apache.org/dist/cassandra/debian 11x main' | sudo tee $CASSANDRA_LIST_FILE
+        sudo gpg --keyserver pgp.mit.edu --recv-keys F758CE318D77295D
+        sudo gpg --export --armor F758CE318D77295D | sudo apt-key add -
+        sudo gpg --keyserver pgp.mit.edu --recv-keys 2B5C1B00
+        sudo gpg --export --armor 2B5C1B00 | sudo apt-key add -
+    fi
+
+    sudo cp $MIDO_DIR/config_files/01midokura_apt_config /etc/apt/apt.conf.d/
+    sudo cp $MIDO_DIR/config_files/01midokura_apt_preferences /etc/apt/preferences.d/
+
+    sudo apt-get -y update
+
+    # Install dependences
+    sudo apt-get install -y python-dev libxml2-dev libxslt-dev openjdk-7-jdk openjdk-7-jre zookeeper zookeeperd cassandra openvswitch-datapath-dkms linux-headers-`uname -r` maven screen git curl
+
+    # Configure casandra
+    sudo service cassandra stop
+    sudo chown cassandra:cassandra /var/lib/cassandra
+    sudo rm -rf /var/lib/cassandra/data/system/LocationInfo
+    # Configure Cassandra and restart
+    CASSANDRA_FILE='/etc/cassandra/cassandra.yaml'
+    sudo sed -i -e "s/^cluster_name:.*$/cluster_name: \'midonet\'/g" $CASSANDRA_FILE
+    CASSANDRA_ENV_FILE='/etc/cassandra/cassandra-env.sh'
+    sudo sed -i 's/\(MAX_HEAP_SIZE=\).*$/\1128M/' $CASSANDRA_ENV_FILE
+    sudo sed -i 's/\(HEAP_NEWSIZE=\).*$/\164M/' $CASSANDRA_ENV_FILE
+    # Cassandra seems to need at least 228k stack working with Java 7.
+    # Related bug: https://issues.apache.org/jira/browse/CASSANDRA-5895
+    sudo sed -i -e "s/-Xss180k/-Xss228k/g" $CASSANDRA_ENV_FILE
+    sudo service cassandra start
+
+    # Maven installs Java 6; make sure we set Java 7 as primary
+    # JDK so that MidoNet Maven build works
+    sudo update-java-alternatives -s java-1.7.0-openjdk-amd64
+else
+    echo "Distro not supported."
+    exit 1
 fi
 
-SAUCY_SRC="deb $UBUNTU_ARCHIVE saucy universe\ndeb-src $UBUNTU_ARCHIVE saucy universe"
-SAUCY_LIST_FILE=/etc/apt/sources.list.d/saucy.list
-if [ ! -f $SAUCY_LIST_FILE ]; then
-    echo "Adding sources from Ubuntu Saucy release"
-    echo -e $SAUCY_SRC | sudo tee $SAUCY_LIST_FILE
-fi
-
-CASSANDRA_LIST_FILE=/etc/apt/sources.list.d/cassandra.list
-if [ ! -f $CASSANDRA_LIST_FILE ]; then 
-    echo "Adding Cassandra sources"
-    echo -e 'deb http://www.apache.org/dist/cassandra/debian 11x main\ndeb-src http://www.apache.org/dist/cassandra/debian 11x main' | sudo tee $CASSANDRA_LIST_FILE
-    sudo gpg --keyserver pgp.mit.edu --recv-keys F758CE318D77295D
-    sudo gpg --export --armor F758CE318D77295D | sudo apt-key add -
-    sudo gpg --keyserver pgp.mit.edu --recv-keys 2B5C1B00
-    sudo gpg --export --armor 2B5C1B00 | sudo apt-key add -
-fi
-
-sudo cp $MIDO_DIR/config_files/01midokura_apt_config /etc/apt/apt.conf.d/
-sudo cp $MIDO_DIR/config_files/01midokura_apt_preferences /etc/apt/preferences.d/
-
-sudo apt-get -y update
-
-# Install dependences
-sudo apt-get install -y python-dev libxml2-dev libxslt-dev openjdk-7-jdk openjdk-7-jre zookeeper zookeeperd cassandra openvswitch-datapath-dkms linux-headers-`uname -r` maven screen git curl
-
-# Configure casandra
-sudo service cassandra stop
-sudo chown cassandra:cassandra /var/lib/cassandra
-sudo rm -rf /var/lib/cassandra/data/system/LocationInfo
-# Configure Cassandra and restart
-CASSANDRA_FILE='/etc/cassandra/cassandra.yaml'
-sudo sed -i -e "s/^cluster_name:.*$/cluster_name: \'midonet\'/g" $CASSANDRA_FILE
-CASSANDRA_ENV_FILE='/etc/cassandra/cassandra-env.sh'
-sudo sed -i 's/\(MAX_HEAP_SIZE=\).*$/\1128M/' $CASSANDRA_ENV_FILE
-sudo sed -i 's/\(HEAP_NEWSIZE=\).*$/\164M/' $CASSANDRA_ENV_FILE
-# Cassandra seems to need at least 228k stack working with Java 7.
-# Related bug: https://issues.apache.org/jira/browse/CASSANDRA-5895
-sudo sed -i -e "s/-Xss180k/-Xss228k/g" $CASSANDRA_ENV_FILE
-sudo service cassandra start
-
-# Maven installs Java 6; make sure we set Java 7 as primary
-# JDK so that MidoNet Maven build works
-sudo update-java-alternatives -s java-1.7.0-openjdk-amd64
-
-# Create the dest dir in case it doesn't exist
-# Github clone will fail to run otherwise
-if [ ! -d $MIDO_DEST ]; then
-    echo "Creating midonet destination directory... $MIDO_DEST"
-    sudo mkdir -p $MIDO_DEST
-    sudo chmod -R 777 $DEST
-fi
 
 
 if [ $BUILD_SOURCES = true ]; then
+    MIDONET_SRC_DIR=$MIDO_DEST/midonet
+
+    # Create the dest dir in case it doesn't exist
+    # Github clone will fail to run otherwise
+    if [ ! -d $MIDO_DEST ]; then
+        echo "Creating midonet destination directory... $MIDO_DEST"
+        sudo mkdir -p $MIDO_DEST
+        sudo chmod -R 777 $DEST
+    fi
 
     # Check if we have zinc installed
     ZINC_DIR=$MIDO_DEST/zinc
@@ -126,9 +175,6 @@ if [ $BUILD_SOURCES = true ]; then
 
     echo "Starting zinc"
     $ZINC_DIR/bin/zinc -start
-
-    MIDONET_SRC_DIR=$MIDO_DEST/midonet
-
 
     # Get MidoNet source and install
     if [ ! -d "$MIDONET_SRC_DIR" ]; then
@@ -159,7 +205,40 @@ if [ $BUILD_SOURCES = true ]; then
     if $MIDO_MVN_CLEAN ; then
         cd $MIDONET_SRC_DIR && mvn clean install -DskipTests -PfatJar
     else
-        cd $MIDONET_SRC_DIR && mvn install -DskipTests -PfatJar
+        # Install packages
+        if [[ "$os_VENDOR" =~ (Red Hat) || "$os_VENDOR" =~ (CentOS) ]]; then
+            sudo yum -y install midonet-api python-midonet-openstack python-midonetclient midolman
+        else 
+            MIDONET_SRC="deb [trusted=1 arch=amd64] http://$MIDO_APT_USER:$MIDO_APT_PASSWORD@apt.midokura.com/midonet/$PKG_MAJOR_VERSION/$PKG_STATUS_VERSION $PKG_OS_RELEASE main non-free test"
+            MIDONET_LIST_FILE=/etc/apt/sources.list.d/midonet.list
+            if [ ! -f $MIDONET_LIST_FILE ]; then
+                echo "Adding sources from Midonet package daily"
+                echo -e $MIDONET_SRC | sudo tee $MIDONET_LIST_FILE
+            fi
+            
+            # Download and install Midokura public key to validate software authenticity
+            curl -k http://$MIDO_APT_USER:$MIDO_APT_PASSWORD@apt.midokura.com/packages.midokura.key | sudo apt-key add -
+            sudo apt-get -y update
+            sudo apt-get -y install midonet-api python-midonet-openstack python-midonetclient midolman
+    
+            stop_service $TOMCAT
+        fi
+
+
+        # Set up web.xml for midonet-api
+        MIDONET_API_CFG=/usr/share/midonet-api/WEB-INF/web.xml
+        sudo cp $MIDONET_API_CFG.dev $MIDONET_API_CFG
+        sudo cp $MIDONET_API_CFG.dev $MIDONET_API_CFG.bak
+        # TODO(ryu): Improve this part
+        sudo sed -i -e "s/999888777666/$PASSWORD/g" $MIDONET_API_CFG
+        sudo sed -i -e "s/mido_admin/admin/g" $MIDONET_API_CFG
+        sudo sed -i -e "s/mido_tenant_admin/Member/g" $MIDONET_API_CFG
+        sudo sed -i -e "s/mido_tenant_user/Member/g" $MIDONET_API_CFG
+        sudo sed -i -e "s/org.midonet.api.auth.MockAuthService/org.midonet.api.auth.keystone.v2_0.KeystoneService/g" $MIDONET_API_CFG
+        sudo sed -i -e "/<param-name>keystone-service_host<\/param-name>/{n;s%.*%    <param-value>$KEYSTONE_AUTH_HOST</param-value>%g}" $MIDONET_API_CFG
+        sudo sed -i -e "/<param-name>keystone-admin_token<\/param-name>/{n;s%.*%    <param-value>$ADMIN_PASSWORD</param-value>%g}" $MIDONET_API_CFG
+        sudo cp $MIDONET_API_CFG $MIDONET_API_CFG.dev
+
     fi
     if [ $? -gt 0 ]
     then
@@ -211,19 +290,23 @@ if [ $BUILD_SOURCES = true ]; then
 else
 
     # Install packages
-    MIDONET_SRC="deb [trusted=1 arch=amd64] http://$MIDO_APT_USER:$MIDO_APT_PASSWORD@apt.midokura.com/midonet/$PKG_MAJOR_VERSION/$PKG_STATUS_VERSION $PKG_OS_RELEASE main non-free test"
-    MIDONET_LIST_FILE=/etc/apt/sources.list.d/midonet.list
-    if [ ! -f $MIDONET_LIST_FILE ]; then
-        echo "Adding sources from Midonet package daily"
-        echo -e $MIDONET_SRC | sudo tee $MIDONET_LIST_FILE
-    fi
-    
-    # Download and install Midokura public key to validate software authenticity
-    curl -k http://$MIDO_APT_USER:$MIDO_APT_PASSWORD@apt.midokura.com/packages.midokura.key | sudo apt-key add -
-    sudo apt-get -y update
-    sudo apt-get -y install midonet-api python-midonet-openstack python-midonetclient midolman
+    if [[ "$os_VENDOR" =~ (Red Hat) || "$os_VENDOR" =~ (CentOS) ]]; then
+        git pull https://github.com/abelboldu/midostack.git v1.4.0-havana-rhel
+    else
+        MIDONET_SRC="deb [trusted=1 arch=amd64] http://$MIDO_APT_USER:$MIDO_APT_PASSWORD@apt.midokura.com/midonet/$PKG_MAJOR_VERSION/$PKG_STATUS_VERSION $PKG_OS_RELEASE main non-free test"
+        MIDONET_LIST_FILE=/etc/apt/sources.list.d/midonet.list
+        if [ ! -f $MIDONET_LIST_FILE ]; then
+            echo "Adding sources from Midonet package daily"
+            echo -e $MIDONET_SRC | sudo tee $MIDONET_LIST_FILE
+        fi
+        
+        # Download and install Midokura public key to validate software authenticity
+        curl -k http://$MIDO_APT_USER:$MIDO_APT_PASSWORD@apt.midokura.com/packages.midokura.key | sudo apt-key add -
+        sudo apt-get -y update
+        sudo apt-get -y install midonet-api python-midonet-openstack python-midonetclient midolman
 
-    stop_service tomcat7
+        stop_service $TOMCAT
+    fi
 
     # Set up web.xml for midonet-api
     MIDONET_API_CFG=/usr/share/midonet-api/WEB-INF/web.xml
@@ -328,10 +411,9 @@ if [ $BUILD_SOURCES = true ]; then
     screen_it midonet-api "cd $MIDONET_SRC_DIR && MAVEN_OPTS=\"$MAVEN_OPTS_API\" mvn -pl midonet-api jetty:run -Djetty.port=$MIDONET_API_PORT"
     echo "* Making sure MidoNet API server is up and ready."
 else
-
-    sudo sed -i -e "s/8080/$MIDONET_API_PORT/g" /etc/tomcat7/server.xml
+    sudo sed -i -e "s/8080/$MIDONET_API_PORT/g" /etc/$TOMCAT/server.xml
     start_service midolman
-    start_service tomcat7
+    start_service $TOMCAT
 fi
 
 STARTUPTIME=0
@@ -348,7 +430,7 @@ done
 
 echo "* API server is up, took $STARTUPTIME seconds"
 
-# Execute stack scri
+# Execute stack script
 cp $MIDO_DIR/devstackrc $DEVSTACK_DIR/local.conf
 cd $DEVSTACK_DIR && source stack.sh
 
