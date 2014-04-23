@@ -200,45 +200,13 @@ if [ $BUILD_SOURCES = true ]; then
     sed -i -e "/<param-name>keystone-service_host<\/param-name>/{n;s%.*%    <param-value>$KEYSTONE_AUTH_HOST</param-value>%g}" $MIDONET_API_CFG
     sed -i -e "/<param-name>keystone-admin_token<\/param-name>/{n;s%.*%    <param-value>$ADMIN_PASSWORD</param-value>%g}" $MIDONET_API_CFG
     cp $MIDONET_API_CFG $MIDONET_API_CFG.bak
+    cat $MIDONET_API_CFG
 
     # Build midolman
     if $MIDO_MVN_CLEAN ; then
         cd $MIDONET_SRC_DIR && mvn clean install -DskipTests -PfatJar
     else
-        # Install packages
-        if [[ "$os_VENDOR" =~ (Red Hat) || "$os_VENDOR" =~ (CentOS) ]]; then
-            sudo yum -y install midonet-api python-midonet-openstack python-midonetclient midolman
-        else 
-            MIDONET_SRC="deb [trusted=1 arch=amd64] http://$MIDO_APT_USER:$MIDO_APT_PASSWORD@apt.midokura.com/midonet/$PKG_MAJOR_VERSION/$PKG_STATUS_VERSION $PKG_OS_RELEASE main non-free test"
-            MIDONET_LIST_FILE=/etc/apt/sources.list.d/midonet.list
-            if [ ! -f $MIDONET_LIST_FILE ]; then
-                echo "Adding sources from Midonet package daily"
-                echo -e $MIDONET_SRC | sudo tee $MIDONET_LIST_FILE
-            fi
-            
-            # Download and install Midokura public key to validate software authenticity
-            curl -k http://$MIDO_APT_USER:$MIDO_APT_PASSWORD@apt.midokura.com/packages.midokura.key | sudo apt-key add -
-            sudo apt-get -y update
-            sudo apt-get -y install midonet-api python-midonet-openstack python-midonetclient midolman
-    
-            stop_service $TOMCAT
-        fi
-
-
-        # Set up web.xml for midonet-api
-        MIDONET_API_CFG=/usr/share/midonet-api/WEB-INF/web.xml
-        sudo cp $MIDONET_API_CFG.dev $MIDONET_API_CFG
-        sudo cp $MIDONET_API_CFG.dev $MIDONET_API_CFG.bak
-        # TODO(ryu): Improve this part
-        sudo sed -i -e "s/999888777666/$PASSWORD/g" $MIDONET_API_CFG
-        sudo sed -i -e "s/mido_admin/admin/g" $MIDONET_API_CFG
-        sudo sed -i -e "s/mido_tenant_admin/Member/g" $MIDONET_API_CFG
-        sudo sed -i -e "s/mido_tenant_user/Member/g" $MIDONET_API_CFG
-        sudo sed -i -e "s/org.midonet.api.auth.MockAuthService/org.midonet.api.auth.keystone.v2_0.KeystoneService/g" $MIDONET_API_CFG
-        sudo sed -i -e "/<param-name>keystone-service_host<\/param-name>/{n;s%.*%    <param-value>$KEYSTONE_AUTH_HOST</param-value>%g}" $MIDONET_API_CFG
-        sudo sed -i -e "/<param-name>keystone-admin_token<\/param-name>/{n;s%.*%    <param-value>$ADMIN_PASSWORD</param-value>%g}" $MIDONET_API_CFG
-        sudo cp $MIDONET_API_CFG $MIDONET_API_CFG.dev
-
+        cd $MIDONET_SRC_DIR && mvn install -DskipTests -PfatJar
     fi
     if [ $? -gt 0 ]
     then
@@ -291,7 +259,7 @@ else
 
     # Install packages
     if [[ "$os_VENDOR" =~ (Red Hat) || "$os_VENDOR" =~ (CentOS) ]]; then
-        git pull https://github.com/abelboldu/midostack.git v1.4.0-havana-rhel
+        sudo yum -y install midonet-api python-midonet-openstack python-midonetclient midolman
     else
         MIDONET_SRC="deb [trusted=1 arch=amd64] http://$MIDO_APT_USER:$MIDO_APT_PASSWORD@apt.midokura.com/midonet/$PKG_MAJOR_VERSION/$PKG_STATUS_VERSION $PKG_OS_RELEASE main non-free test"
         MIDONET_LIST_FILE=/etc/apt/sources.list.d/midonet.list
