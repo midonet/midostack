@@ -1,7 +1,7 @@
 #####################################################
 ## General variables                               ##
 #####################################################
-BUILD_SOURCES=${BUILD_SOURCES:-false}
+BUILD_SOURCES=${BUILD_SOURCES:-true}
 MIDOSTACK_PASSWORD=${MIDOSTACK_PASSWORD:-gogomid0}
 
 #####################################################
@@ -10,7 +10,7 @@ MIDOSTACK_PASSWORD=${MIDOSTACK_PASSWORD:-gogomid0}
 
 MIDO_APT_USER=${MIDO_APT_USER:-midokura} 
 MIDO_APT_PASSWORD=${MIDO_APT_PASSWORD:-gogomid0}
-PKG_MAJOR_VERSION=${MAJOR_VERSION:-v1.4}
+PKG_MAJOR_VERSION=${MAJOR_VERSION:-v1.5}
 
 # STABLE OR TEST
 PKG_STATUS_VERSION=${STATUS_VERSION:-test}
