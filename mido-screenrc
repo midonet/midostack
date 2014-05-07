@@ -6,3 +6,5 @@ screen -t midolman bash
 stuff "cd /opt/stack/midonet/midonet && mvn -pl midolman exec:exec"
 screen -t midonet-api bash
 stuff "cd /opt/stack/midonet/midonet && mvn -pl midonet-api jetty:run -Djetty.port=8081"
+screen -t midonet-cp bash
+stuff "cd /opt/stack/midonet/midonet-cp2 && grunt server"

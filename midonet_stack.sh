@@ -196,7 +196,10 @@ if [ $BUILD_SOURCES = true ]; then
     sed -i -e "s/mido_admin/admin/g" $MIDONET_API_CFG
     sed -i -e "s/mido_tenant_admin/Member/g" $MIDONET_API_CFG
     sed -i -e "s/mido_tenant_user/Member/g" $MIDONET_API_CFG
-    sed -i -e "s/org.midonet.api.auth.MockAuthService/org.midonet.api.auth.keystone.v2_0.KeystoneService/g" $MIDONET_API_CFG
+    if [ $MIDONET_API_USE_KEYSTONE = true ]; then
+        sed -i -e "s/org.midonet.api.auth.MockAuthService/org.midonet.api.auth.keystone.v2_0.KeystoneService/g" $MIDONET_API_CFG
+    fi
+
     sed -i -e "/<param-name>keystone-service_host<\/param-name>/{n;s%.*%    <param-value>$KEYSTONE_AUTH_HOST</param-value>%g}" $MIDONET_API_CFG
     sed -i -e "/<param-name>keystone-admin_token<\/param-name>/{n;s%.*%    <param-value>$ADMIN_PASSWORD</param-value>%g}" $MIDONET_API_CFG
     cp $MIDONET_API_CFG $MIDONET_API_CFG.bak
@@ -259,8 +262,33 @@ if [ $BUILD_SOURCES = true ]; then
     export PATH=$PATH:$MIDONET_CLIENT_DIR/src:$MIDONET_CLIENT_DIR/src/bin
     export PYTHONPATH=$MIDONET_CLIENT_DIR/src:$MIDONET_CLIENT_DIR/src/bin
 
-else
+    # Install control panel
+    sudo apt-get install -y ruby1.9.1 make g++
+    sudo gem install compass
 
+    # Build node.js
+    git clone https://github.com/joyent/node.git -b v.0.11.12
+    git_clone $NODEJS_REPO $NODEJS_DEST $NODEJS_BRANCH
+    cd $NODEJS_DEST
+    ./configure && make
+    sudo make install
+
+
+    export PATH=/usr/local/bin:$PATH
+
+    sudo npm install -g grunt-cli
+    sudo npm install -g bower
+    sudo rm -rf $HOME/tmp
+
+    git_clone $MIDONET_CP_REPO $MIDONET_CP_DEST $MIDONET_CP_BRANCH
+    cd $MIDONET_CP_DEST
+    npm install
+    sed -i "/window.EmberENV.rootURL/c\window.EmberENV.rootURL = 'http://$HOST_IP:$MIDONET_CP_PORT';" ./config/user.js
+    sed -i "/window.EmberENV.api_host/c\window.EmberENV.api_host = 'http://$HOST_IP:$MIDONET_API_PORT';" ./config/user.js
+    sed -i "/window.EmberENV.openstack_host/c\window.EmberENV.openstack_host = 'http://$HOST_IP';" ./config/environment.js
+    sed -i "/window.EmberENV.API_TOKEN/c\window.EmberENV.API_TOKEN = '$ADMIN_PASSWORD';" ./config/environment.js
+
+else
     # Install packages
     if [[ "$os_VENDOR" =~ (Red Hat) || "$os_VENDOR" =~ (CentOS) ]]; then
         sudo yum -y install midonet-api python-midonet-openstack python-midonetclient midolman
@@ -358,7 +386,7 @@ if [ $BUILD_SOURCES = true ]; then
         exit 1
     fi
 
-    enable_service midolman midonet-api
+    enable_service midolman midonet-api midonet-cp
 
     # Midolman service must be stopped
     echo "Starting midolman"
@@ -381,6 +409,7 @@ if [ $BUILD_SOURCES = true ]; then
        $MIDONET_SRC_DIR/midonet-api/target/classes/logback.xml
 
     screen_it midonet-api "cd $MIDONET_SRC_DIR && MAVEN_OPTS=\"$MAVEN_OPTS_API\" mvn -pl midonet-api jetty:run -Djetty.port=$MIDONET_API_PORT"
+    screen_it midonet-cp "cd $MIDONET_CP_DEST && grunt server"
     echo "* Making sure MidoNet API server is up and ready."
 else
     sudo sed -i -e "s/8080/$MIDONET_API_PORT/g" /etc/$TOMCAT/server.xml
