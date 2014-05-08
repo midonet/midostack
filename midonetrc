@@ -1,7 +1,7 @@
 #####################################################
 ## General variables                               ##
 #####################################################
-BUILD_SOURCES=${BUILD_SOURCES:-false}
+BUILD_SOURCES=${BUILD_SOURCES:-true}
 MIDOSTACK_PASSWORD=${MIDOSTACK_PASSWORD:-gogomid0}
 
 #####################################################
