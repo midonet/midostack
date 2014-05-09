@@ -25,7 +25,7 @@ disable_service n-net
 enable_service q-svc
 enable_service q-dhcp
 enable_service q-meta
-enable_service q-lbaas
+#enable_service q-lbaas
 
 if [ $USE_MIDONET = false ]; then
     enable_service q-agt
@@ -37,7 +37,7 @@ else
     enable_service midonet
 fi
 
-[[post-config|$NOVA_CONF]] 
+[[post-config|$NOVA_CONF]]
 [DEFAULT]
 libvirt_vif_driver=midonet.nova.virt.libvirt.vif.MidonetVifDriver
 libvirt_type=qemu
@@ -45,11 +45,11 @@ security_group_api=neutron
 firewall_driver=nova.virt.firewall.NoopFirewallDriver
 
 [MIDONET]
-midonet_uri = http://$HOST_IP:$MIDONET_API_PORT/midonet-api  
-username = admin  
+midonet_uri = http://$HOST_IP:$MIDONET_API_PORT/midonet-api
+username = admin
 password = $ADMIN_PASSWORD
-project_id = admin  
-auth_url = http://$KEYSTONE_AUTH_HOST:35357/v2.0  
+project_id = admin
+auth_url = http://$KEYSTONE_AUTH_HOST:35357/v2.0
 midonet_use_tunctl = True
 
 [[post-config|$NEUTRON_CONF]]
@@ -60,7 +60,7 @@ quota_subnet = -1
 quota_port = -1
 quota_security_group = -1
 
-[[post-config|$LBAAS_AGENT_CONF_FILENAME]] 
+[[post-config|$LBAAS_AGENT_CONF_FILENAME]]
 [DEFAULT]
 interface_driver = neutron.plugins.midonet.agent.midonet_driver.MidonetInterfaceDriver
 
@@ -70,7 +70,7 @@ username = $MIDONET_USERNAME
 password = $MIDONET_PASSWORD
 project_id = $MIDONET_PROJECT_ID
 
-[[post-config|$Q_DHCP_CONF_FILE]] 
+[[post-config|$Q_DHCP_CONF_FILE]]
 [DEFAULT]
 interface_driver = neutron.plugins.midonet.agent.midonet_driver.MidonetInterfaceDriver
 
