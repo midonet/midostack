@@ -255,6 +255,10 @@ if [ $BUILD_SOURCES = true ]; then
     if [ ! -f $MIDOLMAN_CONF_DIR/midolman.conf ]; then
         sudo cp $MIDONET_SRC_DIR/midolman/conf/midolman.conf $MIDOLMAN_CONF_DIR/
     fi
+    
+    export PATH=$PATH:$MIDONET_CLIENT_DIR/src:$MIDONET_CLIENT_DIR/src/bin
+    export PYTHONPATH=$MIDONET_CLIENT_DIR/src:$MIDONET_CLIENT_DIR/src/bin
+
 else
 
     # Install packages
