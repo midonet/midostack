@@ -14,8 +14,8 @@ USE_MIDONET=${USE_MIDONET:-true}
 NOVA_USE_QUANTUM_API=v2
 NOVA_USE_NEUTRON_API=v2
 
-# Suddlently it does not work. Devstack issue?
-# KEYSTONE_TOKEN_FORMAT=UUID
+# Use UUID token, otherwise MN API would vomit with 500
+KEYSTONE_TOKEN_FORMAT=UUID
 
 # Need override here because we use it in 'midonet_stack' script
 SCREEN_NAME=stack
