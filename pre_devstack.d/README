@@ -1,0 +1,15 @@
+This directory contains hook executables that get called before 
+stack.sh from midonet_stack.sh
+
+The executable files in this directory get executed 
+in the order in which bash sorts with the current locale(set
+to C and exported in midonet_stack.sh)
+
+File name convention:
+
+The script filename must look like 
+NNN.descriptive_explanation_of_the_file.EXT,
+
+where NNN is 3 digit number and EXT is filename
+extention.
+

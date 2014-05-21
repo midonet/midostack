@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 
-MIDO_DIR=$(pwd)
-DEVSTACK_DIR="$MIDO_DIR/devstack"
+export LC_ALL=C
+export MIDO_DIR=$(pwd)
+export DEVSTACK_DIR="$MIDO_DIR/devstack"
+export PRE_DEVSTACK_DIR=$MIDO_DIR/pre_devstack.d
+export PATCHES_DIR=$MIDO_DIR/patches
 
 source $MIDO_DIR/functions
 
@@ -13,7 +16,10 @@ if [ -f $MIDO_DIR/localrc ]; then
     source $MIDO_DIR/localrc
 fi
 
-
+# execute pre devstack hooks
+for f in pre_devstack.d/* ; do 
+    test -x $f && ./$f
+done
 
 # Then load the midonetrc
 source $MIDO_DIR/midonetrc
@@ -221,16 +227,19 @@ if [ $BUILD_SOURCES = true ]; then
     MIDOLMAN_TGT_DIR="$MIDONET_SRC_DIR/midolman/target"
     MIDOLMAN_JAR_FILE="$MIDOLMAN_TGT_DIR/midolman-$MIDOLMAN_BUNDLE_VERSION-jar-with-dependencies.jar"
     echo "midolman-jar-file is $MIDOLMAN_JAR_FILE"
-    mvn install:install-file -Dfile="$MIDOLMAN_JAR_FILE" \
-                             -DgroupId=org.midonet \
-                             -DartifactId=midolman-with-dependencies \
-                             -Dversion=$MIDOLMAN_BUNDLE_VERSION \
-                             -Dpackaging=jar
-    if [ $? -gt 0 ]
-    then
-        echo "Exiting. MidoNet Maven install failed."
-        exit 1
-    fi
+
+# TODO(tomoe) Need to revisit. Comment out for upstream work as it's failing on v1.4 branch 
+# for some reason
+#    mvn install:install-file -Dfile="$MIDOLMAN_JAR_FILE" \
+#                             -DgroupId=org.midonet \
+#                             -DartifactId=midolman-with-dependencies \
+#                             -Dversion=$MIDOLMAN_BUNDLE_VERSION \
+#                             -Dpackaging=jar
+#    if [ $? -gt 0 ]
+#    then
+#        echo "Exiting. MidoNet Maven install failed."
+#        exit 1
+#    fi
 
     # Place our executables in /usr/local/bin
     LOCAL_BIN_DIR=/usr/local/bin/
@@ -529,15 +538,16 @@ sudo ip route add 200.200.200.0/24 via 172.19.0.2
 
 # 'VIRTUAL' world
 
+PYTHONPATH=/opt/stack/midonet/python-midonetclient/src
 # Get MidonetProviderRouter id
-PROVIDER_ROUTER_ID=$(midonet-cli -e router list | grep MidonetProviderRouter | awk '{ print$2 }')
+PROVIDER_ROUTER_ID=$(/opt/stack/midonet/python-midonetclient/src/bin/midonet-cli -e router list | grep MidonetProviderRouter | awk '{ print$2 }')
 
 # Add a port in the Provider Router id with the IP address 172.19.0.2
-PROVIDER_PORT_ID=$(midonet-cli -e router $PROVIDER_ROUTER_ID add port address 172.19.0.2 net 172.19.0.0/30)
+PROVIDER_PORT_ID=$(/opt/stack/midonet/python-midonetclient/src/bin/midonet-cli -e router $PROVIDER_ROUTER_ID add port address 172.19.0.2 net 172.19.0.0/30)
 
 # Route any packet to the recent created port
-midonet-cli -e router $PROVIDER_ROUTER_ID add route src 0.0.0.0/0 dst 0.0.0.0/0 type normal port router $PROVIDER_ROUTER_ID port $PROVIDER_PORT_ID gw 172.19.0.1
+/opt/stack/midonet/python-midonetclient/src/bin/midonet-cli -e router $PROVIDER_ROUTER_ID add route src 0.0.0.0/0 dst 0.0.0.0/0 type normal port router $PROVIDER_ROUTER_ID port $PROVIDER_PORT_ID gw 172.19.0.1
 
 # Create the binding with veth1
-HOST_ID=$(midonet-cli -e host list | awk '{print $2 }')
-midonet-cli -e host $HOST_ID add binding port router $PROVIDER_ROUTER_ID port $PROVIDER_PORT_ID interface veth1
+HOST_ID=$(/opt/stack/midonet/python-midonetclient/src/bin/midonet-cli -e host list | awk '{print $2 }')
+/opt/stack/midonet/python-midonetclient/src/bin/midonet-cli -e host $HOST_ID add binding port router $PROVIDER_ROUTER_ID port $PROVIDER_PORT_ID interface veth1
