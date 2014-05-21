@@ -1,12 +1,24 @@
-#####################################################
-## General variables                               ##
-#####################################################
+##########################################################
+## General variables                                    ##
+##########################################################
 BUILD_SOURCES=${BUILD_SOURCES:-true}
 MIDOSTACK_PASSWORD=${MIDOSTACK_PASSWORD:-gogomid0}
+MIDO_DEST=${MIDO_DEST:-$DEST/midonet}
 
-#####################################################
-## Package environment variables                   ##
-#####################################################
+# set screen log dir and EXTRA_OPTS
+SCREEN_LOGDIR=/tmp
+
+# For midonet.ini (configured in lib/neutron_plugins/midonet in devstack)
+MIDONET_API_PORT=${MIDONET_API_PORT:-8080}
+MIDONET_USERNAME=${MIDONET_USERNAME:-admin}
+MIDONET_PASSWORD=${MIDOSTACK_PASSWORD}
+MIDONET_PROJECT_ID=${MIDONET_PROJECT_ID:-admin}
+
+MIDONET_OS_REPO=${MIDONET_OS_REPO:-https://github.com/jdevesa/midonet-openstack.git}
+
+##########################################################
+## Package environment variables (BUILD_SOURCES=false)  ##
+##########################################################
 
 MIDO_APT_USER=${MIDO_APT_USER:-midokura} 
 MIDO_APT_PASSWORD=${MIDO_APT_PASSWORD:-gogomid0}
@@ -16,23 +28,28 @@ PKG_MAJOR_VERSION=${MAJOR_VERSION:-v1.5}
 PKG_STATUS_VERSION=${STATUS_VERSION:-test}
 PKG_OS_RELEASE=${PKG_OS_RELEASE:-precise}
 
-#####################################################
-## Source build based environment variables        ##
-#####################################################
+###################################################################
+## Source build based environment variables (BUILD_SOURCES=true) ##
+###################################################################
 
-MIDO_DEST=${MIDO_DEST:-$DEST/midonet}
 MIDO_MVN_CLEAN=${MIDO_MVN_CLEAN:-false}
 
 ZINC_URL=${ZINC_URL:-http://repo.typesafe.com/typesafe/zinc/com/typesafe/zinc/dist/0.2.5/zinc-0.2.5.tgz}
 MIDONET_GIT_REPO=${MIDONET_GIT_REPO:-git@github.com:midokura/midonet.git}
-MIDONET_GIT_BRANCH=${MIDONET_GIT_BRANCH:-icehouse}
+MIDONET_GIT_BRANCH=${MIDONET_GIT_BRANCH:-master}
 MIDONET_SCREEN_NAME=${MIDONET_SCREEN_NAME:-mido}
 
-MIDONET_CLIENT_BRANCH=${MIDONET_CLIENT_BRANCH:-v1.4}
+MIDONET_CLIENT_BRANCH=${MIDONET_CLIENT_BRANCH:-master}
 MIDONET_CLIENT_DIR=${MIDONET_CLIENT_DIR:-$MIDO_DEST/python-midonetclient}
 
 MIDOLMAN_CONF_DIR=${MIDOLMAN_CONF_DIR:-/etc/midolman}
-MIDOLMAN_BUNDLE_VERSION=${MIDOLMAN_BUNDLE_VERSION:-1.4.0-SNAPSHOT}
+MIDOLMAN_BUNDLE_VERSION=${MIDOLMAN_BUNDLE_VERSION:-1.5.0-SNAPSHOT}
+# Maven opts (mainly for remote debugging)
+MIDONET_API_DEBUG_PORT=8091
+MIDOLMAN_DEBUG_PORT=8092
+
+MAVEN_OPTS_API="-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,address=$MIDONET_API_DEBUG_PORT,server=y,suspend=n"
+MAVEN_OPTS_MIDOLMAN="-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,address=$MIDOLMAN_DEBUG_PORT,server=y,suspend=n"
 
 # Midonet CP vars
 MIDONET_CP_REPO=${MIDONET_CP_REPO:-git@github.com:midokura/midonet-cp2.git}
@@ -44,31 +61,3 @@ NODEJS_BRANCH=${NODEJS_BRANCH:-v0.11.13}
 NODEJS_DEST=${NODEJS_DEST:-$DEST/midonet/nodejs}
 # HOST_IP=119.15.112.231
 MIDONET_API_USE_KEYSTONE=${MIDONET_API_USE_KEYSTONE:-true}
-
-# Opendaylight
-ODP_CTRL_SRC_DIR=$MIDO_DEST/odp_controller
-ODP_CTRL=false
-ODP_CTRL_REPO=https://github.com/midokura/odp-controller.git
-ODP_CTRL_BRANCH=neutron_midonet_integration
-ODP_CTRL_BUNDLE=/opendaylight/distribution/opendaylight
-ODP_MN_BUNDLE=/opendaylight/networkconfiguration/neutron/midonet-parent
-
-# set screen log dir and EXTRA_OPTS
-SCREEN_LOGDIR=/tmp
-
-# For midonet.ini (configured in lib/neutron_plugins/midonet in devstack)
-MIDONET_API_PORT=${MIDONET_API_PORT:-8080}
-MIDONET_USERNAME=${MIDONET_USERNAME:-admin}
-MIDONET_PASSWORD=${MIDOSTACK_PASSWORD}
-MIDONET_PROJECT_ID=${MIDONET_PROJECT_ID:-admin}
-
-
-# Maven opts (mainly for remote debugging)
-
-MIDONET_API_DEBUG_PORT=8091
-MIDOLMAN_DEBUG_PORT=8092
-
-MAVEN_OPTS_API="-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,address=$MIDONET_API_DEBUG_PORT,server=y,suspend=n"
-MAVEN_OPTS_MIDOLMAN="-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,address=$MIDOLMAN_DEBUG_PORT,server=y,suspend=n"
-
-MIDONET_OS_REPO=${MIDONET_OS_REPO:-https://github.com/jdevesa/midonet-openstack.git}
