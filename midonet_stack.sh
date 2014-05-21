@@ -185,6 +185,7 @@ if [ $BUILD_SOURCES = true ]; then
             echo "Exiting. Cloning MidoNet git repo $MIDONET_GIT_REPO (branch $MIDONET_GIT_BRANCH) failed, please check if environment variable MIDONET_GIT_REPO and MIDONET_GIT_BRANCH."
             exit 1
         fi
+        cd $MIDONET_SRC_DIR && git submodule update --init
     fi
 
     # Set up web.xml for midonet-api
