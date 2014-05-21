@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 
-MIDO_DIR=$(pwd)
-DEVSTACK_DIR="$MIDO_DIR/devstack"
+export LC_ALL=C
+export MIDO_DIR=$(pwd)
+export DEVSTACK_DIR="$MIDO_DIR/devstack"
+export PRE_DEVSTACK_DIR=$MIDO_DIR/pre_devstack.d
+export PATCHES_DIR=$MIDO_DIR/patches
 
 source $MIDO_DIR/functions
 
@@ -13,7 +16,10 @@ if [ -f $MIDO_DIR/localrc ]; then
     source $MIDO_DIR/localrc
 fi
 
-
+# execute pre devstack hooks
+for f in pre_devstack.d/* ; do 
+    test -x $f && ./$f
+done
 
 # Then load the midonetrc
 source $MIDO_DIR/midonetrc
@@ -220,6 +226,9 @@ if [ $BUILD_SOURCES = true ]; then
     MIDOLMAN_TGT_DIR="$MIDONET_SRC_DIR/midolman/target"
     MIDOLMAN_JAR_FILE="$MIDOLMAN_TGT_DIR/midolman-$MIDOLMAN_BUNDLE_VERSION-jar-with-dependencies.jar"
     echo "midolman-jar-file is $MIDOLMAN_JAR_FILE"
+
+# TODO(tomoe) Need to revisit. Comment out for upstream work as it's failing on v1.4 branch 
+# for some reason
 #    mvn install:install-file -Dfile="$MIDOLMAN_JAR_FILE" \
 #                             -DgroupId=org.midonet \
 #                             -DartifactId=midolman-with-dependencies \

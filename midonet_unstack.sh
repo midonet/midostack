@@ -9,8 +9,8 @@ DEST=${DEST:-/opt/stack}
 source $MIDO_DIR/midonetrc
 source $MIDO_DIR/functions
 
-# Execute stack script
-cd $DEVSTACK_DIR && source unstack.sh
+# Reset devstack and Execute stack script
+cd $DEVSTACK_DIR && git reset --hard && source unstack.sh
 
 # Clean up ZK
 stop_service zookeeper
