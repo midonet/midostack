@@ -419,7 +419,7 @@ if [ $BUILD_SOURCES = true ]; then
        $MIDONET_SRC_DIR/midonet-api/target/classes/logback.xml
 
     screen_it midonet-api "cd $MIDONET_SRC_DIR && MAVEN_OPTS=\"$MAVEN_OPTS_API\" mvn -pl midonet-api jetty:run -Djetty.port=$MIDONET_API_PORT"
-    screen_it midonet-cp "cd $MIDONET_CP_DEST && grunt server"
+    screen_it midonet-cp "cd $MIDONET_CP_DEST && PORT=$MIDONET_CP_PORT grunt server"
     echo "* Making sure MidoNet API server is up and ready."
 else
     sudo sed -i -e "s/8080/$MIDONET_API_PORT/g" /etc/$TOMCAT/server.xml

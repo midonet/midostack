@@ -55,7 +55,7 @@ MAVEN_OPTS_MIDOLMAN="-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=
 MIDONET_CP_REPO=${MIDONET_CP_REPO:-git@github.com:midokura/midonet-cp2.git}
 MIDONET_CP_BRANCH=${MIDONET_CP_BRANCH:-master}
 MIDONET_CP_DEST=${MIDONET_CP_DEST:-$DEST/midonet/midonet-cp2}
-MIDONET_CP_PORT=${MIDONET_CP_PORT:-8000}
+MIDONET_CP_PORT=${MIDONET_CP_PORT:-7999}
 NODEJS_REPO=${NODEJS_REPO:-https://github.com/joyent/node.git}
 NODEJS_BRANCH=${NODEJS_BRANCH:-v0.11.13}
 NODEJS_DEST=${NODEJS_DEST:-$DEST/midonet/nodejs}
