@@ -17,7 +17,7 @@ if [ -f $MIDO_DIR/localrc ]; then
 fi
 
 # execute pre devstack hooks
-for f in pre_devstack.d/* ; do 
+for f in pre_devstack.d/* ; do
     test -x $f && ./$f
 done
 
@@ -53,15 +53,15 @@ if [[ "$os_VENDOR" =~ (Red Hat) || "$os_VENDOR" =~ (CentOS) ]]; then
         echo "Build sources not supported with Red Hat and CentOS distros currently";
         exit 1;
     fi
-    
+
     # midokura repo
     sudo cp $MIDO_DIR/config_files/midokura.repo /etc/yum.repos.d/
 
     # datastax repo
     sudo cp $MIDO_DIR/config_files/datastax.repo /etc/yum.repos.d/
-   
-    sudo yum install -y dsc1.1 zookeeper screen git curl java-1.7.0-openjdk 
-    
+
+    sudo yum install -y dsc1.1 zookeeper screen git curl java-1.7.0-openjdk
+
     sudo yum install -y python-setuptools dbus gcc python-devel libxslt-devel libxml2-devel
     # RHEL does not provide this package, installing directly from centos
     sudo yum install -y http://mirror.centos.org/centos-6/6/os/x86_64/Packages/libffi-devel-3.0.5-3.2.el6.x86_64.rpm
@@ -102,7 +102,7 @@ elif [[ "$os_VENDOR" =~ (Ubuntu) || "$os_VENDOR" =~ (Debian) ]]; then
         echo -e $SAUCY_SRC | sudo tee $SAUCY_LIST_FILE
     fi
     CASSANDRA_LIST_FILE=/etc/apt/sources.list.d/cassandra.list
-    if [ ! -f $CASSANDRA_LIST_FILE ]; then 
+    if [ ! -f $CASSANDRA_LIST_FILE ]; then
         echo "Adding Cassandra sources"
         echo -e 'deb http://www.apache.org/dist/cassandra/debian 11x main\ndeb-src http://www.apache.org/dist/cassandra/debian 11x main' | sudo tee $CASSANDRA_LIST_FILE
         sudo gpg --keyserver pgp.mit.edu --recv-keys F758CE318D77295D
@@ -228,7 +228,7 @@ if [ $BUILD_SOURCES = true ]; then
     MIDOLMAN_JAR_FILE="$MIDOLMAN_TGT_DIR/midolman-$MIDOLMAN_BUNDLE_VERSION-jar-with-dependencies.jar"
     echo "midolman-jar-file is $MIDOLMAN_JAR_FILE"
 
-# TODO(tomoe) Need to revisit. Comment out for upstream work as it's failing on v1.4 branch 
+# TODO(tomoe) Need to revisit. Comment out for upstream work as it's failing on v1.4 branch
 # for some reason
 #    mvn install:install-file -Dfile="$MIDOLMAN_JAR_FILE" \
 #                             -DgroupId=org.midonet \
@@ -268,7 +268,7 @@ if [ $BUILD_SOURCES = true ]; then
     if [ ! -f $MIDOLMAN_CONF_DIR/midolman.conf ]; then
         sudo cp $MIDONET_SRC_DIR/midolman/conf/midolman.conf $MIDOLMAN_CONF_DIR/
     fi
-    
+
     export PATH=$PATH:$MIDONET_CLIENT_DIR/src:$MIDONET_CLIENT_DIR/src/bin
     export PYTHONPATH=$MIDONET_CLIENT_DIR/src:$MIDONET_CLIENT_DIR/src/bin
 
@@ -311,7 +311,7 @@ else
             echo "Adding sources from Midonet package daily"
             echo -e $MIDONET_SRC | sudo tee $MIDONET_LIST_FILE
         fi
-        
+
         # Download and install Midokura public key to validate software authenticity
         curl -k http://$MIDO_APT_USER:$MIDO_APT_PASSWORD@apt.midokura.com/packages.midokura.key | sudo apt-key add -
         sudo apt-get -y update
@@ -483,37 +483,37 @@ iniset $MIDONETRC cli api_url "$MIDONET_API_URI"
 iniset $MIDONETRC cli tenant "$ADMIN_TENANT_ID"
 
 # To allow connectivity from the host to the 'external' devstack network
-# we are going to create the following topology and route the proper 
-# packages. 
+# we are going to create the following topology and route the proper
+# packages.
 #
 # 'MidonetProviderRouter' should already have been created.
 #
 #
-#             +–––––––––––––––+                                      
-#                             |                                      
-#                             | 172.19.0.1/30                        
-#          +––––––––––––––––––+–––––––––––––––+                      
-#          |                                  |                      
-#          |     Fakeuplink linux bridge      |                      
-#          |                                  |                      
-#          +––––––––––––––––––+–––––––––––––––+        'REAL' WORLD    
-#                             | veth0                                
-#                             |                                      
-#                             |                                      
-#                             |                                      
-# +––––––+  +–––––––+  +–––––––––––––+  +–––––+  +–––––+             
-#                             |                                      
-#                             |                                      
-#                             |                                      
-#               172.19.0.2/30 | veth1                                
-#          +––––––––––––––––––+––––––––––––––––+        'VIRTUAL' WORLD
-#          |                                   |                     
-#          |    MidonetProviderRouter          |                     
-#          |                                   |                     
-#          +––––––––––––––––––+––––––––––––––––+                     
-#                             |  200.200.200.0/24                    
-#             +               |                                      
-#             +–––––––––––––––+––––––––––––––––+                     
+#             +---------------+
+#                             |
+#                             | 172.19.0.1/30
+#          +------------------+---------------+
+#          |                                  |
+#          |     Fakeuplink linux bridge      |
+#          |                                  |
+#          +------------------+---------------+        'REAL' WORLD
+#                             | veth0
+#                             |
+#                             |
+#                             |
+# +------+  +-------+  +-------------+  +-----+  +-----+
+#                             |
+#                             |
+#                             |
+#               172.19.0.2/30 | veth1
+#          +------------------+----------------+        'VIRTUAL' WORLD
+#          |                                   |
+#          |    MidonetProviderRouter          |
+#          |                                   |
+#          +------------------+----------------+
+#                             |  200.200.200.0/24
+#             +               |
+#             +---------------+----------------+
 #                                        Midostack 'external' network
 
 # 'REAL' WORLD configuration
