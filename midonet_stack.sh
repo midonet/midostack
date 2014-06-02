@@ -277,11 +277,13 @@ if [ $BUILD_SOURCES = true ]; then
     sudo gem install compass
 
     # Build node.js
-    git clone https://github.com/joyent/node.git -b v.0.11.12
-    git_clone $NODEJS_REPO $NODEJS_DEST $NODEJS_BRANCH
-    cd $NODEJS_DEST
-    ./configure && make
-    sudo make install
+    if [ -z `which node` ]; then
+        git clone https://github.com/joyent/node.git -b v.0.11.12
+        git_clone $NODEJS_REPO $NODEJS_DEST $NODEJS_BRANCH
+        cd $NODEJS_DEST
+        ./configure && make
+        sudo make install
+    fi
 
 
     export PATH=/usr/local/bin:$PATH
