@@ -37,6 +37,14 @@ else
     enable_service midonet
 fi
 
+# Disable Heat in thirdparty CI
+if [ "$MIDONET_IN_THIRDPARTY_CI" = "True" ] ; then
+    disable_service h-eng
+    disable_service h-api
+    disable_service h-api-cfn
+    disable_service h-api-cw
+fi
+
 [[post-config|$NOVA_CONF]]
 [DEFAULT]
 libvirt_vif_driver=midonet.nova.virt.libvirt.vif.MidonetVifDriver
