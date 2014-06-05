@@ -53,6 +53,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.define :default, primary: true do |default|
     default.vm.box = "precise64"
+    default.vm.box_url = "https://cloud-images.ubuntu.com/vagrant/precise/current/precise-server-cloudimg-amd64-vagrant-disk1.box"
   end
 
   config.vm.define :midocker, autostart: false do |md|
