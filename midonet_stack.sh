@@ -40,24 +40,22 @@ KEYSTONE_AUTH_HOST=${KEYSTONE_AUTH_HOST:-$HOST_IP}
 
 GetDistro
 
-# execute pre devstack hooks
-for f in $PRE_DEVSTACK_HOOKS_DIR/* ; do
-    test -x $f && {
-        echo "Executing " $f
-        . $f && echo $f "[OK]" || echo $f "[FAIL]"
-    }
-done
+function exec_hooks_on_dir() {
+    local hook_dir=$1
+    for f in $hook_dir/* ; do
+	test -x $f && {
+            echo "Executing " $f
+            . $f && echo $f "[OK]" || echo $f "[FAIL]"
+	}
+    done
+}
 
+# execute pre devstack hooks
+exec_hooks_on_dir $PRE_DEVSTACK_HOOKS_DIR
 
 # Execute vanilla stack.sh script in devstack
 cp $MIDO_DIR/devstackrc $DEVSTACK_DIR/local.conf
 cd $DEVSTACK_DIR && source stack.sh
 
-
 # execute post devstack hooks
-for f in $POST_DEVSTACK_HOOKS_DIR/* ; do
-    test -x $f && {
-        echo "Executing " $f
-        . $f && echo $f "[OK]" || echo $f "[FAIL]"
-    }
-done
+exec_hooks_on_dir $POST_DEVSTACK_HOOKS_DIR
