@@ -158,9 +158,6 @@ done
 
 echo "* API server is up, took $STARTUPTIME seconds"
 
-export MIDOSTACK_PASSWORD
-echo "export MIDOSTACK_PASSWORD" >> ~/.bashrc
-
 # Execute stack script
 cp $MIDO_DIR/devstackrc $DEVSTACK_DIR/local.conf
 cd $DEVSTACK_DIR && source stack.sh
