@@ -40,22 +40,47 @@ KEYSTONE_AUTH_HOST=${KEYSTONE_AUTH_HOST:-$HOST_IP}
 
 GetDistro
 
+LOGDIR=$MIDO_DIR/logs/$(date +'%Y-%m-%d-%H:%M:%S')
+MIDO_LOGDIR=$LOGDIR/mido
+DEVSTACK_LOGDIR=$LOGDIR/devstack
+mkdir -p $MIDO_LOGDIR
+mkdir -p $DEVSTACK_LOGDIR
+
 function exec_hooks_on_dir() {
     local hook_dir=$1
     for f in $hook_dir/* ; do
 	test -x $f && {
-            echo "Executing " $f
-            . $f && echo $f "[OK]" || echo $f "[FAIL]"
+            echo -n "Executing $f..."
+	    LOGFILE=$MIDO_LOGDIR/$(basename $f).log
+            . $f > $LOGFILE 2>&1  && echo " [OK]" || {
+		echo $f " [FAILED]"
+		echo "Exiting midostack. Check out the log file: $LOGFILE"
+		exit 1
+	    }
 	}
     done
 }
 
-# execute pre devstack hooks
+echo ====================
+echo Running midostack...
+echo ====================
+echo Log directory: $LOGDIR
+echo
+
+echo =================================
+echo Executing pre devstack scripts...
+echo =================================
 exec_hooks_on_dir $PRE_DEVSTACK_HOOKS_DIR
 
-# Execute vanilla stack.sh script in devstack
+echo ================================================
+echo Executing vanilla stack.sh script in devstack...
+echo ================================================
 cp $MIDO_DIR/devstackrc $DEVSTACK_DIR/local.conf
-cd $DEVSTACK_DIR && source stack.sh
+cd $DEVSTACK_DIR && source stack.sh > $DEVSTACK_LOGDIR/devstack.log 2>&1
 
-# execute post devstack hooks
+echo ==================================
+echo Executing post devstack scripts...
+echo ==================================
 exec_hooks_on_dir $POST_DEVSTACK_HOOKS_DIR
+
+echo "Midostack has successfully completed in $SECONDS seconds."
