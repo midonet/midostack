@@ -53,27 +53,6 @@ cp $MIDO_DIR/devstackrc $DEVSTACK_DIR/local.conf
 cd $DEVSTACK_DIR && source stack.sh
 
 
-# Add a filter to allow rootwrap to use mm-ctl from /usr/local/bin/
-sudo cp $MIDO_DIR/config_files/midonet_devstack.filters /etc/nova/rootwrap.d/
-
-if [ -f /etc/libvirt/qemu.conf ]; then
-
-    # Copy the file for backup purposes
-    sudo cp /etc/libvirt/qemu.conf /etc/libvirt/qemu.conf.bak
-
-    # Change libvirt config file for qemu to allow "ethernet" mode.
-    sudo sed -i -e 's/#user/user/'  -e 's/#group/group/'  -e 's/.*\(clear_emulator_capabilities =\) 1/\1 0/' /etc/libvirt/qemu.conf
-    grep  -q '^cgroup_device_acl' /etc/libvirt/qemu.conf | cat <<EOF | sudo tee -a /etc/libvirt/qemu.conf && sudo service libvirt-bin restart
-cgroup_device_acl = [
-       "/dev/null", "/dev/full", "/dev/zero",
-       "/dev/random", "/dev/urandom",
-       "/dev/ptmx", "/dev/kvm", "/dev/kqemu",
-       "/dev/rtc", "/dev/hpet", "/dev/net/tun",
-]
-
-EOF
-fi
-
 # Configure midonet-cli
 ADMIN_TENANT_ID=$(keystone tenant-list | grep -w admin | awk '{ print $2 }')
 MIDONETRC=~/.midonetrc
