@@ -72,11 +72,13 @@ echo Executing pre devstack scripts...
 echo =================================
 exec_hooks_on_dir $PRE_DEVSTACK_HOOKS_DIR
 
+LOGFILE=$DEVSTACK_LOGDIR/devstack.log
 echo ================================================
 echo Executing vanilla stack.sh script in devstack...
+echo Logfile: $LOGFILE
 echo ================================================
 cp $MIDO_DIR/devstackrc $DEVSTACK_DIR/local.conf
-cd $DEVSTACK_DIR && source stack.sh > $DEVSTACK_LOGDIR/devstack.log 2>&1
+cd $DEVSTACK_DIR && source stack.sh
 
 echo ==================================
 echo Executing post devstack scripts...
