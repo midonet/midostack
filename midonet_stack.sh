@@ -4,6 +4,7 @@ export LC_ALL=C
 export MIDO_DIR=$(pwd)
 export DEVSTACK_DIR="$MIDO_DIR/devstack"
 export PRE_DEVSTACK_HOOKS_DIR=$MIDO_DIR/hooks/pre_devstack.d
+export POST_DEVSTACK_HOOKS_DIR=$MIDO_DIR/hooks/post_devstack.d
 export PATCHES_DIR=$MIDO_DIR/patches
 
 source $MIDO_DIR/functions
@@ -53,15 +54,14 @@ cp $MIDO_DIR/devstackrc $DEVSTACK_DIR/local.conf
 cd $DEVSTACK_DIR && source stack.sh
 
 
-# Configure midonet-cli
-ADMIN_TENANT_ID=$(keystone tenant-list | grep -w admin | awk '{ print $2 }')
-MIDONETRC=~/.midonetrc
-touch $MIDONETRC
-iniset $MIDONETRC cli username "admin"
-iniset $MIDONETRC cli password "$ADMIN_PASSWORD"
-iniset $MIDONETRC cli project_id "admin"
-iniset $MIDONETRC cli api_url "$MIDONET_API_URI"
-iniset $MIDONETRC cli tenant "$ADMIN_TENANT_ID"
+# execute post devstack hooks
+for f in $POST_DEVSTACK_HOOKS_DIR/* ; do
+    test -x $f && {
+        echo "Executing " $f
+        . $f && echo $f "[OK]" || echo $f "[FAIL]"
+    }
+done
+
 
 # To allow connectivity from the host to the 'external' devstack network
 # we are going to create the following topology and route the proper
