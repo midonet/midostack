@@ -48,30 +48,7 @@ for f in $PRE_DEVSTACK_HOOKS_DIR/* ; do
 done
 
 
-if [[ "$os_VENDOR" =~ (Red Hat) || "$os_VENDOR" =~ (CentOS) ]]; then
-    :
-elif [[ "$os_VENDOR" =~ (Ubuntu) || "$os_VENDOR" =~ (Debian) ]]; then
-    :
-else
-    echo "Distro not supported."
-    exit 1
-fi
-
-
-
-if [ $BUILD_SOURCES = true ]; then
-
-    :
-else
-    :
-fi
-
-# Start midonet-api and midolman in a screen
-# TODO: Set up midolman.conf properly as well in midolman/conf of Maven.
-# Still TODO?? we will see..
-
-
-# Execute stack script
+# Execute vanilla stack.sh script in devstack
 cp $MIDO_DIR/devstackrc $DEVSTACK_DIR/local.conf
 cd $DEVSTACK_DIR && source stack.sh
 
