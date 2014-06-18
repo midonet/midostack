@@ -49,9 +49,7 @@ done
 
 
 if [[ "$os_VENDOR" =~ (Red Hat) || "$os_VENDOR" =~ (CentOS) ]]; then
-    #Iptables disabled for now
-    sudo service iptables stop
-
+    :
 elif [[ "$os_VENDOR" =~ (Ubuntu) || "$os_VENDOR" =~ (Debian) ]]; then
     :
 else
@@ -71,11 +69,6 @@ fi
 # Start midonet-api and midolman in a screen
 # TODO: Set up midolman.conf properly as well in midolman/conf of Maven.
 # Still TODO?? we will see..
-
-
-# Make sure to load ovs kmod
-sudo modprobe openvswitch
-
 
 
 # Execute stack script
