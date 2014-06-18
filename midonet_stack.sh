@@ -3,7 +3,7 @@
 export LC_ALL=C
 export MIDO_DIR=$(pwd)
 export DEVSTACK_DIR="$MIDO_DIR/devstack"
-export PRE_DEVSTACK_HOOKS_DIR=$MIDO_DIR/pre_devstack.d
+export PRE_DEVSTACK_HOOKS_DIR=$MIDO_DIR/hooks/pre_devstack.d
 export PATCHES_DIR=$MIDO_DIR/patches
 
 source $MIDO_DIR/functions
