@@ -67,17 +67,8 @@ fi
 if [ $BUILD_SOURCES = true ]; then
 
     :
-
-
 else
-    # Install packages
-    if [[ "$os_VENDOR" =~ (Red Hat) || "$os_VENDOR" =~ (CentOS) ]]; then
-        sudo yum -y install midonet-api python-midonet-openstack python-midonetclient midolman
-    else
-        sudo apt-get -y install midonet-api python-midonet-openstack python-midonetclient midolman
-
-        stop_service $TOMCAT
-    fi
+    stop_service $TOMCAT
 fi
 
 # Start midonet-api and midolman in a screen
