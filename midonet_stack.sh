@@ -40,7 +40,7 @@ KEYSTONE_AUTH_HOST=${KEYSTONE_AUTH_HOST:-$HOST_IP}
 
 GetDistro
 
-LOGDIR=$MIDO_DIR/logs/$(date +'%Y-%m-%d-%H:%M:%S')
+LOGDIR=$MIDO_DIR/logs/$(date +'%Y-%m-%d-%H%M%S')
 MIDO_LOGDIR=$LOGDIR/mido
 DEVSTACK_LOGDIR=$LOGDIR/devstack
 mkdir -p $MIDO_LOGDIR
