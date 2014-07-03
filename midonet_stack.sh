@@ -1,24 +1,34 @@
 #!/usr/bin/env bash
+set -a
+set -x
+
+LOGDIR=${MIDOSTACK_LOG_DIR:-$MIDOSTACK_TOPDIR/logs/$(date +'%Y-%m-%d-%H%M%S')}
+MIDONET_LOGDIR=$LOGDIR/midonet
+DEVSTACK_LOGDIR=$LOGDIR/devstack
+mkdir -p $MIDONET_LOGDIR
+mkdir -p $DEVSTACK_LOGDIR
+
+exec 2> $MIDONET_LOGDIR/midonet_stack.sh.stderr.log
 
 export LC_ALL=C
 export MIDO_DIR=$(pwd)
-export DEVSTACK_DIR="$MIDO_DIR/devstack"
-export PRE_DEVSTACK_HOOKS_DIR=$MIDO_DIR/hooks/pre_devstack.d
-export POST_DEVSTACK_HOOKS_DIR=$MIDO_DIR/hooks/post_devstack.d
-export PATCHES_DIR=$MIDO_DIR/patches
+export DEVSTACK_DIR="$MIDOSTACK_TOPDIR/devstack"
+export PRE_DEVSTACK_HOOKS_DIR=$MIDOSTACK_TOPDIR/hooks/pre_devstack.d
+export POST_DEVSTACK_HOOKS_DIR=$MIDOSTACK_TOPDIR/hooks/post_devstack.d
+export PATCHES_DIR=$MIDOSTACK_TOPDIR/patches
 
-source $MIDO_DIR/functions
+source $MIDOSTACK_TOPDIR/functions
 
 # Destination directory
 DEST=${DEST:-/opt/stack}
 
 # First configuration file is our own 'localrc'
-if [ -f $MIDO_DIR/localrc ]; then
-    source $MIDO_DIR/localrc
+if [ -f $MIDOSTACK_TOPDIR/localrc ]; then
+    source $MIDOSTACK_TOPDIR/localrc
 fi
 
 # Then load the midonetrc
-source $MIDO_DIR/midonetrc
+source $MIDOSTACK_TOPDIR/midonetrc
 
 # Midonet password. Used to simplify the passwords in the configurated localrc
 ADMIN_PASSWORD=${ADMIN_PASSWORD:-$MIDOSTACK_PASSWORD}
@@ -40,18 +50,13 @@ KEYSTONE_AUTH_HOST=${KEYSTONE_AUTH_HOST:-$HOST_IP}
 
 GetDistro
 
-LOGDIR=$MIDO_DIR/logs/$(date +'%Y-%m-%d-%H%M%S')
-MIDO_LOGDIR=$LOGDIR/mido
-DEVSTACK_LOGDIR=$LOGDIR/devstack
-mkdir -p $MIDO_LOGDIR
-mkdir -p $DEVSTACK_LOGDIR
 
 function exec_hooks_on_dir() {
     local hook_dir=$1
     for f in $hook_dir/* ; do
 	test -x $f && {
             echo -n "Executing $f..."
-	    LOGFILE=$MIDO_LOGDIR/$(basename $f).log
+	    LOGFILE=$MIDONET_LOGDIR/$(basename $f).log
             . $f > $LOGFILE 2>&1  && echo " [OK]" || {
 		echo $f " [FAILED]"
 		echo "Exiting midostack. Check out the log file: $LOGFILE"
@@ -72,13 +77,21 @@ echo Executing pre devstack scripts...
 echo =================================
 exec_hooks_on_dir $PRE_DEVSTACK_HOOKS_DIR
 
-LOGFILE=$DEVSTACK_LOGDIR/devstack.log
+
+LOGFILE=$DEVSTACK_LOGDIR/stack.sh.log
 echo ================================================
 echo Executing vanilla stack.sh script in devstack...
 echo Logfile: $LOGFILE
 echo ================================================
-cp $MIDO_DIR/devstackrc $DEVSTACK_DIR/local.conf
-cd $DEVSTACK_DIR && source stack.sh
+cp $MIDOSTACK_TOPDIR/devstackrc $DEVSTACK_DIR/local.conf
+cd $DEVSTACK_DIR && ./stack.sh
+
+# save vanilla devstack logs
+
+# Copy devstack service logs
+mkdir -p $DEVSTACK_LOGDIR/services
+cp $(find /tmp/ -type l) $DEVSTACK_LOGDIR/services
+
 
 echo ==================================
 echo Executing post devstack scripts...
