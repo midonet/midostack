@@ -90,3 +90,4 @@ while [ $CONNECTED -ne 0 ]
 done
 
 echo "* API server is up, took $STARTUPTIME seconds"
+unset ENABLED_SERVICES

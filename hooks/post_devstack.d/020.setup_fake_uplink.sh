@@ -67,5 +67,16 @@ PROVIDER_PORT_ID=$(midonet-cli -e router $PROVIDER_ROUTER_ID add port address 17
 midonet-cli -e router $PROVIDER_ROUTER_ID add route src 0.0.0.0/0 dst 0.0.0.0/0 type normal port router $PROVIDER_ROUTER_ID port $PROVIDER_PORT_ID gw 172.19.0.1
 
 # Create the binding with veth1
+TUNNEL_ZONE_NAME='default_tz'
+TUNNEL_ZONE_ID=$(midonet-cli -e create tunnel-zone name $TUNNEL_ZONE_NAME type gre)
+echo "Created a new tunnel zone with ID ${TUNNEL_ZONE_ID} and name ${TUNNEL_ZONE_NAME}"
+
+HOST_ID=$(midonet-cli -e host list | awk '{ print $2 }')
+midonet-cli -e tunnel-zone $TUNNEL_ZONE_ID add member host $HOST_ID address 172.19.0.2
+echo "Added host ${HOST_ID} to the tunnel zone"
+
+# Create the binding with veth1
 HOST_ID=$(midonet-cli -e host list | awk '{print $2 }')
 midonet-cli -e host $HOST_ID add binding port router $PROVIDER_ROUTER_ID port $PROVIDER_PORT_ID interface veth1
+
+echo "Midostack has successfully completed."
