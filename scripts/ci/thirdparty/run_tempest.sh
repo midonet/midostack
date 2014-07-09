@@ -1,8 +1,6 @@
 #!/bin/bash
 
-cd /opt/stack/tempest
-
-nosetests -vv tempest.api.network.admin.test_agent_management \
+PYTHONPATH=/opt/stack/tempest nosetests -vv tempest.api.network.admin.test_agent_management \
 tempest.api.network.admin.test_external_network_extension \
 tempest.api.network.test_networks:BulkNetworkOpsTestJSON.test_bulk_create_delete_network \
 tempest.api.network.test_networks:BulkNetworkOpsTestJSON.test_bulk_create_delete_subnet \
@@ -35,4 +33,4 @@ tempest.api.network.test_networks:NetworksTestXML.test_show_subnet_fields \
 tempest.api.network.test_networks_negative \
 tempest.api.network.test_security_groups \
 tempest.api.network.test_security_groups_negative \
---with-xunit
+--with-xunit --xunit-file=${TEMPEST_XUNIT_FILE:-tempest-results.xml}
