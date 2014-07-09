@@ -5,6 +5,13 @@ if [ $BUILD_SOURCES = true ]; then
     # Set up web.xml for midonet-api
     MIDONET_API_CFG=$MIDONET_SRC_DIR/midonet-api/src/main/webapp/WEB-INF/web.xml
 else
+    # Install tomcat explicitly
+    if [[ "$os_VENDOR" =~ (Red Hat) || "$os_VENDOR" =~ (CentOS) ]]; then
+        sudo yum install -y tomcat
+    elif [[ "$os_VENDOR" =~ (Ubuntu) || "$os_VENDOR" =~ (Debian) ]]; then
+        sudo apt-get install -y tomcat7
+    fi
+
     # Set up web.xml for midonet-api
     MIDONET_API_CFG=/usr/share/midonet-api/WEB-INF/web.xml
 fi
