@@ -1,0 +1,86 @@
+#!/usr/bin/env bash
+
+# Set env variables used in midonet-cli.
+while getopts a:u:p:i:c:h: OPT; do
+    case "$OPT" in
+      a)
+        export MIDO_API_URL="$OPTARG" ;;
+      u)
+        export MIDO_USER="$OPTARG" ;;
+      p)
+        export MIDO_PASSWORD="$OPTARG" ;;
+      i)
+        export MIDO_PROJECT_ID="$OPTARG" ;;
+      c)
+        export PYTHONPATH=$OPTARG/src:$OPTARG/src/bin
+        PATH=$PATH:$PYTHONPATH ;;
+      h)
+        echo "Usage: $0 [-a midonet_api_url] [-u username] [-p password] [-i project_id] [-c client_path]" >&2
+        exit 0 ;;
+      [?])
+        # got invalid option
+        echo "KUsage: $0 [-a midonet_api_url] [-u username] [-p password] [-i project_id] [-c client_path]" >&2
+        exit 1 ;;
+    esac
+done
+shift $(($OPTIND-1))
+
+# Get MidonetProviderRouter id.  The provider router name differs
+# between Havana and Icehouse.  In Havana, it's 'MidonetProviderRouter'.
+PROVIDER_ROUTER_NAME=${PROVIDER_ROUTER_NAME:-'MidoNet Provider Router'}
+PROVIDER_ROUTER_ID=${provider_router_id:-$(midonet-cli -e router list | grep "$PROVIDER_ROUTER_NAME" | awk '{ print $2 }')}
+if [ ! ${#PROVIDER_ROUTER_ID} -gt 1 ]; then
+    echo "FAILED to find provider router"
+    exit 1
+fi
+echo "Found Provider Router with ID ${PROVIDER_ROUTER_ID}"
+
+# Add a port in the Provider Router id with the IP address 172.19.0.2
+PROVIDER_PORT_ID=$(midonet-cli -e router $PROVIDER_ROUTER_ID add port address 172.19.0.2 net 172.19.0.0/30)
+if [ ! ${#PROVIDER_PORT_ID} -gt 1 ]; then
+    echo "FAILED to create port on provider router"
+    exit 1
+fi
+echo "Found Provider Router Port with ID ${PROVIDER_PORT_ID}"
+
+# Route any packet to the recent created port
+ROUTE=$(midonet-cli -e router $PROVIDER_ROUTER_ID add route src 0.0.0.0/0 dst 0.0.0.0/0 type normal port router $PROVIDER_ROUTER_ID port $PROVIDER_PORT_ID gw 172.19.0.1)
+if [ ! ${#ROUTE} -gt 1 ]; then
+    echo "FAILED to create route on provider router"
+    exit 1
+fi
+echo "Created Route on provider router with ID ${ROUTE}"
+
+# Create a tunnel zone for this host
+TUNNEL_ZONE_NAME='default_tz'
+TUNNEL_ZONE_ID=$(midonet-cli -e create tunnel-zone name $TUNNEL_ZONE_NAME type gre)
+if [ ! ${#TUNNEL_ZONE_ID} -gt 1 ]; then
+    echo "FAILED to create tunnel zone"
+    exit 1
+fi
+echo "Created a new tunnel zone with ID ${TUNNEL_ZONE_ID} and name \
+      ${TUNNEL_ZONE_NAME}"
+
+# Get our host id
+HOST_ID=$(midonet-cli -e host list | awk '{ print $2 }')
+if [ ! ${#HOST_ID} -gt 1 ]; then
+    echo "FAILED to obtain host id"
+    exit 1
+fi
+echo "Found host with id ${HOST_ID}"
+
+# add our host as a member to the tunnel zone
+MEMBER=$(midonet-cli -e tunnel-zone $TUNNEL_ZONE_ID add member host $HOST_ID address 172.19.0.2)
+if [ ! ${#MEMBER} -gt 1 ]; then
+    echo "FAILED to create tunnel zone member"
+    exit 1
+fi
+echo "Added member ${MEMBER} to the tunnel zone"
+
+# Create the binding with veth1
+BINDING=$(midonet-cli -e host $HOST_ID add binding port router $PROVIDER_ROUTER_ID port $PROVIDER_PORT_ID interface veth1)
+if [ ! ${#BINDING} -gt 1 ]; then
+    echo "FAILED to create host binding"
+    exit 1
+fi
+echo "Added binding ${BINDING}"
