@@ -19,6 +19,9 @@ fi
 
 sudo cp $MIDONET_API_CFG.dev $MIDONET_API_CFG
 sudo cp $MIDONET_API_CFG.dev $MIDONET_API_CFG.bak
+# Set up Tomcat configuration for midonet-api
+sudo cp $DEST/midonet/midonet-api/conf/midonet-api.xml \
+    /etc/$TOMCAT/Catalina/localhost/midonet-api.xml
 # TODO(ryu): Improve this part
 sudo sed -i -e "s/999888777666/$PASSWORD/g" $MIDONET_API_CFG
 sudo sed -i -e "s/mido_admin/admin/g" $MIDONET_API_CFG
