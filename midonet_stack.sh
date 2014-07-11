@@ -2,6 +2,7 @@
 set -a
 set -x
 
+MIDOSTACK_TOPDIR=$(cd $(dirname $0) && pwd)
 LOGDIR=${MIDOSTACK_LOG_DIR:-$MIDOSTACK_TOPDIR/logs/$(date +'%Y-%m-%d-%H%M%S')}
 MIDONET_LOGDIR=$LOGDIR/midonet
 DEVSTACK_LOGDIR=$LOGDIR/devstack
