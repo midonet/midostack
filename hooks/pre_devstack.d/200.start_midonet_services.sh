@@ -73,6 +73,13 @@ else # Use packages
 
     sudo sed -i -e "s/8080/$MIDONET_API_PORT/g" /etc/$TOMCAT/server.xml
 
+    # Set up Tomcat configuration for midonet-api
+    cat <<EOF | sudo tee /etc/$TOMCAT/Catalina/localhost/midonet-api.xml
+    <Context path="/midonet-api"
+            docBase="/usr/share/midonet-api"
+                            antiResourceLocking="false" privileged="true" />
+EOF
+
     start_service $TOMCAT
     start_service midolman
 fi
