@@ -41,7 +41,10 @@ TEMPEST_CONSOLE_LOGFILE=$PUBLIC_LOG_DIR/tempest_console.log
 $MIDOSTACK_TOPDIR/midonet_stack.sh | tee $MIDOSTACK_MIDONET_STACK_LOGFILE
 
 RESULT=${PIPESTATUS[0]}
-#TODO(tomoe) exit when errord out
+if [ $RESULT -ne 0 ] ; then
+    echo "midonet_stack.sh failed. Exitting..."
+    exit 1
+fi
 
 # Run tempest now
 $CI_SCRIPT_DIR/run_tempest.sh 2>&1 | tee $TEMPEST_CONSOLE_LOGFILE
