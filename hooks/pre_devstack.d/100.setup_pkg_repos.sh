@@ -17,12 +17,6 @@ if [[ "$os_VENDOR" =~ (Red Hat) || "$os_VENDOR" =~ (CentOS) ]]; then
 elif [[ "$os_VENDOR" =~ (Ubuntu) || "$os_VENDOR" =~ (Debian) ]]; then
     # apt package pinning (zookeeper 3.4.5, ovs-dp 1.10)
     UBUNTU_ARCHIVE="http://us.archive.ubuntu.com/ubuntu/"
-    RARING_SRC="deb $UBUNTU_ARCHIVE raring universe\ndeb-src $UBUNTU_ARCHIVE raring universe"
-    RARING_LIST_FILE=/etc/apt/sources.list.d/raring.list
-    if [ ! -f $RARING_LIST_FILE ]; then
-        echo "Adding sources from Ubuntu Raring release"
-        echo -e $RARING_SRC | sudo tee $RARING_LIST_FILE
-    fi
     SAUCY_SRC="deb $UBUNTU_ARCHIVE saucy universe\ndeb-src $UBUNTU_ARCHIVE saucy universe"
     SAUCY_LIST_FILE=/etc/apt/sources.list.d/saucy.list
     if [ ! -f $SAUCY_LIST_FILE ]; then
