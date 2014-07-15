@@ -59,9 +59,13 @@ function exec_hooks_on_dir() {
             echo -n "Executing $f..."
 	    LOGFILE=$MIDONET_LOGDIR/$(basename $f).log
             . $f > $LOGFILE 2>&1  && echo " [OK]" || {
-		echo $f " [FAILED]"
-		echo "Exiting midostack. Check out the log file: $LOGFILE"
-		exit 1
+                echo $f " [FAILED]"
+                echo "Exiting midostack. Check out the log (also stored in $LOGFILE):"
+                echo "========== LOG:"
+                cat $LOGFILE
+                echo "=== End of LOG ==="
+                echo Exitting...
+                exit 1
 	    }
 	}
     done
