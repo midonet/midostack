@@ -52,6 +52,7 @@ MAVEN_OPTS_API="-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_so
 MAVEN_OPTS_MIDOLMAN="-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,address=$MIDOLMAN_DEBUG_PORT,server=y,suspend=n"
 
 # Midonet CP vars
+MIDONET_CP_ENABLED=${MIDONET_CP_ENABLED:-false}
 MIDONET_CP_REPO=${MIDONET_CP_REPO:-git@github.com:midokura/midonet-cp2.git}
 MIDONET_CP_BRANCH=${MIDONET_CP_BRANCH:-master}
 MIDONET_CP_DEST=${MIDONET_CP_DEST:-$DEST/midonet/midonet-cp2}
