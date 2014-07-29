@@ -98,3 +98,4 @@ done
 
 echo "* API server is up, took $STARTUPTIME seconds"
 unset ENABLED_SERVICES
+unset SCREENRC
