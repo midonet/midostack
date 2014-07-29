@@ -89,7 +89,10 @@ echo Executing vanilla stack.sh script in devstack...
 echo Logfile: $LOGFILE
 echo ================================================
 cp $MIDOSTACK_TOPDIR/devstackrc $DEVSTACK_DIR/local.conf
-cd $DEVSTACK_DIR && ./stack.sh
+cd $DEVSTACK_DIR && ./stack.sh || {
+    echo stack.sh failed. Exiting...
+    exit 1
+}
 
 # save vanilla devstack logs
 
