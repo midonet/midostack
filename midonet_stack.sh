@@ -64,7 +64,7 @@ function exec_hooks_on_dir() {
                 echo "========== LOG:"
                 cat $LOGFILE
                 echo "=== End of LOG ==="
-                echo Exitting...
+                echo Exiting...
                 exit 1
 	    }
 	}
