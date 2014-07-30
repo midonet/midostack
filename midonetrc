@@ -6,7 +6,7 @@ MIDOSTACK_PASSWORD=${MIDOSTACK_PASSWORD:-gogomid0}
 MIDO_DEST=${MIDO_DEST:-$DEST/midonet}
 
 # set screen log dir and EXTRA_OPTS
-SCREEN_LOGDIR=/tmp
+SCREEN_LOGDIR=${SCREEN_LOGDIR:-/tmp}
 
 # For midonet.ini (configured in lib/neutron_plugins/midonet in devstack)
 MIDONET_API_PORT=${MIDONET_API_PORT:-8080}
