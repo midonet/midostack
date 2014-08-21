@@ -68,18 +68,16 @@ if [ "$BUILD_SOURCES" = "true" ]; then
     MIDOLMAN_JAR_FILE="$MIDOLMAN_TGT_DIR/midolman-$MIDOLMAN_BUNDLE_VERSION-jar-with-dependencies.jar"
     echo "midolman-jar-file is $MIDOLMAN_JAR_FILE"
 
-# TODO(tomoe) Need to revisit. Comment out for upstream work as it's failing on v1.4 branch
-# for some reason
-#    mvn install:install-file -Dfile="$MIDOLMAN_JAR_FILE" \
-#                             -DgroupId=org.midonet \
-#                             -DartifactId=midolman-with-dependencies \
-#                             -Dversion=$MIDOLMAN_BUNDLE_VERSION \
-#                             -Dpackaging=jar
-#    if [ $? -gt 0 ]
-#    then
-#        echo "Exiting. MidoNet Maven install failed."
-#        exit 1
-#    fi
+    mvn install:install-file -Dfile="$MIDOLMAN_JAR_FILE" \
+                             -DgroupId=org.midonet \
+                             -DartifactId=midolman-with-dependencies \
+                             -Dversion=$MIDOLMAN_BUNDLE_VERSION \
+                             -Dpackaging=jar
+    if [ $? -gt 0 ]
+    then
+        echo "Exiting. MidoNet Maven install failed."
+        exit 1
+    fi
 
     # Place our executables in /usr/local/bin
     LOCAL_BIN_DIR=/usr/local/bin/
