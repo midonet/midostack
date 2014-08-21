@@ -2,20 +2,12 @@
 
 # Configure and start Cassandra
 
-if [[ "$os_VENDOR" =~ (Red Hat) || "$os_VENDOR" =~ (CentOS) ]]; then
-    CASSANDRA_FILE='/etc/cassandra/conf/cassandra.yaml'
-    CASSANDRA_ENV_FILE='/etc/cassandra/conf/cassandra-env.sh'
+CASSANDRA_FILE='/etc/cassandra/cassandra.yaml'
+CASSANDRA_ENV_FILE='/etc/cassandra/cassandra-env.sh'
 
-    sudo chkconfig cassandra on
-
-elif [[ "$os_VENDOR" =~ (Ubuntu) || "$os_VENDOR" =~ (Debian) ]]; then
-    CASSANDRA_FILE='/etc/cassandra/cassandra.yaml'
-    CASSANDRA_ENV_FILE='/etc/cassandra/cassandra-env.sh'
-
-    sudo service cassandra stop
-    sudo chown cassandra:cassandra /var/lib/cassandra
-    sudo rm -rf /var/lib/cassandra/data/system/LocationInfo
-fi
+sudo service cassandra stop
+sudo chown cassandra:cassandra /var/lib/cassandra
+sudo rm -rf /var/lib/cassandra/data/system/LocationInfo
 
 # Modify configurations
 sudo sed -i -e "s/^cluster_name:.*$/cluster_name: \'midonet\'/g" $CASSANDRA_FILE

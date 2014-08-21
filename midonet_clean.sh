@@ -42,23 +42,19 @@ fi
 sudo service cassandra stop
 sudo service zookeeper stop
 
-if [[ "$os_VENDOR" =~ (Red Hat) || "$os_VENDOR" =~ (CentOS) ]]; then
-    sudo yum remove -y dsc1.1 zookeeper midolman midonet*
-else
-    # Install packages
-    sudo apt-get purge -y python-dev libxml2-dev libxslt-dev openjdk-7-jdk openjdk-7-jre zookeeper zookeeperd cassandra openvswitch-datapath-dkms linux-headers-`uname -r` maven screen
-    sudo apt-get -y autoremove
+# Install packages
+sudo apt-get purge -y python-dev libxml2-dev libxslt-dev openjdk-7-jdk openjdk-7-jre zookeeper zookeeperd cassandra openvswitch-datapath-dkms linux-headers-`uname -r` maven screen
+sudo apt-get -y autoremove
 
-    # Clean the preferences
-    RARING_LIST_FILE=/etc/apt/sources.list.d/raring.list
-    SAUCY_LIST_FILE=/etc/apt/sources.list.d/saucy.list
-    CASSANDRA_LIST_FILE=/etc/apt/sources.list.d/cassandra.list
-    MIDOKURA_LIST_FILE=/etc/apt/sources.list.d/midonet.list
+# Clean the preferences
+RARING_LIST_FILE=/etc/apt/sources.list.d/raring.list
+SAUCY_LIST_FILE=/etc/apt/sources.list.d/saucy.list
+CASSANDRA_LIST_FILE=/etc/apt/sources.list.d/cassandra.list
+MIDOKURA_LIST_FILE=/etc/apt/sources.list.d/midonet.list
 
-    sudo rm $RARING_LIST_FILE $SAUCY_LIST_FILE $CASSANDRA_LIST_FILE $MIDOKURA_LIST_FILE
+sudo rm $RARING_LIST_FILE $SAUCY_LIST_FILE $CASSANDRA_LIST_FILE $MIDOKURA_LIST_FILE
 
-    sudo rm /etc/apt/apt.conf.d/01midokura_apt_config
-    sudo rm /etc/apt/preferences.d/01midokura_apt_preferences
+sudo rm /etc/apt/apt.conf.d/01midokura_apt_config
+sudo rm /etc/apt/preferences.d/01midokura_apt_preferences
 
-    sudo apt-get -y update
-fi
+sudo apt-get -y update

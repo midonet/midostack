@@ -5,12 +5,7 @@
 MIDONET_API_PORT=${MIDONET_API_PORT:-8081}
 MIDONET_API_URI=${MIDONET_API_URI:-http://$HOST_IP:$MIDONET_API_PORT/midonet-api}
 
-if [[ "$os_VENDOR" =~ (Red Hat) || "$os_VENDOR" =~ (CentOS) ]]; then
-    TOMCAT=tomcat6
-else
-    TOMCAT=tomcat7
-fi
-stop_service $TOMCAT
+stop_service tomcat7
 
 
 if [ $BUILD_SOURCES = true ]; then
