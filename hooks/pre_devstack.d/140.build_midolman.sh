@@ -108,6 +108,5 @@ if [ "$BUILD_SOURCES" = "true" ]; then
     fi
 
     export PATH=$PATH:$MIDONET_CLIENT_DIR/src:$MIDONET_CLIENT_DIR/src/bin
-    export PYTHONPATH=$MIDONET_CLIENT_DIR/src:$MIDONET_CLIENT_DIR/src/bin
 
 fi

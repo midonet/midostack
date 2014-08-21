@@ -70,7 +70,7 @@ quota_security_group = -1
 
 [[post-config|$LBAAS_AGENT_CONF_FILENAME]]
 [DEFAULT]
-interface_driver = neutron.plugins.midonet.agent.midonet_driver.MidonetInterfaceDriver
+interface_driver = midonet.neutron.agent.midonet_driver.MidonetInterfaceDriver
 
 [MIDONET]
 midonet_uri = $MIDONET_API_URI
@@ -80,7 +80,7 @@ project_id = $MIDONET_PROJECT_ID
 
 [[post-config|$Q_DHCP_CONF_FILE]]
 [DEFAULT]
-interface_driver = neutron.plugins.midonet.agent.midonet_driver.MidonetInterfaceDriver
+interface_driver = midonet.neutron.agent.midonet_driver.MidonetInterfaceDriver
 
 [MIDONET]
 midonet_uri = $MIDONET_API_URI
