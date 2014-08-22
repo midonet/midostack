@@ -94,13 +94,6 @@ cd $DEVSTACK_DIR && ./stack.sh || {
     exit 1
 }
 
-# save vanilla devstack logs
-
-# Copy devstack service logs
-mkdir -p $DEVSTACK_LOGDIR/services
-cp $(find /tmp/ -type l) $DEVSTACK_LOGDIR/services
-
-
 echo ==================================
 echo Executing post devstack scripts...
 echo ==================================
