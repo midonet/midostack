@@ -46,6 +46,14 @@ if [ $BUILD_SOURCES = true ]; then
     SCREEN_NAME=$MIDONET_SCREEN_NAME
     TOP_DIR=$MIDO_DIR
 
+    # set loglevel to DEBUG for Midolman
+    sed -e 's/"INFO"/"DEBUG"/'  \
+        $MIDONET_SRC_DIR/midolman/conf/midolman-akka.conf > \
+        $MIDONET_SRC_DIR/midolman/target/classes/midolman-akka.conf
+    sed -e 's/<root level="INFO">/<root level="DEBUG">/'  \
+        $MIDONET_SRC_DIR/midolman/conf/logback.xml > \
+        $MIDONET_SRC_DIR/midolman/target/classes/logback.xml
+
     screen_it midolman "cd $MIDONET_SRC_DIR && MAVEN_OPTS=\"$MAVEN_OPTS_MIDOLMAN\" mvn -pl midolman exec:exec"
     # Run the API with jetty:plugin
     # Tomcat need to be stopped
