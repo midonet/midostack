@@ -10,11 +10,8 @@ function is_devstack_cloned() {
             echo "Exiting. Can't authenticate with Github via ssh; please check that your ssh key is present in ~/.ssh."
             exit 1
         }
-
-        git submodule update --init
     fi
 }
 
-is_devstack_cloned
 
 source devstack/functions
