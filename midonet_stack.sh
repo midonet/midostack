@@ -71,6 +71,9 @@ function exec_hooks_on_dir() {
     done
 }
 
+# sanity checks
+is_authenticated_to_github
+
 echo ====================
 echo Running midostack...
 echo ====================

@@ -1,15 +1,20 @@
 #!/usr/bin/env bash
 # functions - Common functions used by MidoStack components
+
+
+function is_authenticated_to_github() {
+    # Check access to github.com
+    ssh -T -o StrictHostKeyChecking=no git@github.com
+    [ $? == 255 ] && {
+        echo "Exiting. Can't authenticate with Github via ssh; please check that you use a right key."
+        exit 1
+    }
+}
+
 function is_devstack_cloned() {
     MIDO_DIR=$(pwd)
     DEVSTACK_DIR="$MIDO_DIR/devstack"
     if [ ! "$(ls -A $DEVSTACK_DIR)" ]; then
-        # Check access to github.com
-        ssh -T -o StrictHostKeyChecking=no git@github.com
-        [ $? == 255 ] && {
-            echo "Exiting. Can't authenticate with Github via ssh; please check that your ssh key is present in ~/.ssh."
-            exit 1
-        }
     fi
 }
 
