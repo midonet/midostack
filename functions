@@ -11,12 +11,56 @@ function is_authenticated_to_github() {
     }
 }
 
-function is_devstack_cloned() {
+function check_git_branch() {
+    local git_dir=$1
+    local expected=$2
+    cd $git_dir
+    local cur_branch=$(git branch | grep ^*| awk '{print $2}')
+
+    if [ "$cur_branch" != "$expected" ]; then
+        echo "branch($cur_branch) in $git_dir doesn't match the expected one($expected) specified for midostack. "
+        echo "Be sure to checkout the right branch for $git_dir."
+        exit 1
+    fi
+    cd - > /dev/null
+
+}
+
+function check_devstack_branch() {
     MIDO_DIR=$(pwd)
     DEVSTACK_DIR="$MIDO_DIR/devstack"
-    if [ ! "$(ls -A $DEVSTACK_DIR)" ]; then
+    if [ ! -d $DEVSTACK_DIR ]; then
+        # Clone devstack if missing
+        git clone git@github.com:openstack-dev/devstack devstack -b $MIDOSTACK_OPENSTACK_BRANCH
+    else
+        check_git_branch $DEVSTACK_DIR $MIDOSTACK_OPENSTACK_BRANCH
     fi
 }
 
+function check_openstack_branch() {
+    if [ ! -d /opt/stack ] ; then
+        # Devstack should checkout the code of right branch
+        return 0
+    fi
 
-source devstack/functions
+    # check branch for major openstack components. nova, glance, keystone, neutron
+    for repo in /opt/stack/{nova,glance,keystone,neutron}; do
+        check_git_branch $repo $MIDOSTACK_OPENSTACK_BRANCH
+    done
+}
+
+function check_midonet_branch() {
+    if [ ! -d /opt/stack/midonet/midonet ] ; then
+        # Midostack should checkout the code of right branch
+        return 0
+    fi
+    check_git_branch /opt/stack/midonet/midonet $MIDONET_GIT_BRANCH
+}
+
+function check_python_midonetclient_branch() {
+    if [ ! -d /opt/stack/midonet/python-midonetclient ] ; then
+        # Midostack should checkout the code of right branch
+        return 0
+    fi
+    check_git_branch /opt/stack/midonet/python-midonetclient $MIDONET_CLIENT_BRANCH
+}

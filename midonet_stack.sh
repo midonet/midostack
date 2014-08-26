@@ -44,15 +44,6 @@ PUBLIC_NETWORK_GATEWAY=${PUBLIC_NETWORK_GATEWAY:-200.200.200.1}
 FIXED_RANGE=${FIXED_RANGE:-10.0.0.0/24}
 FIXED_NETWORK_SIZE=${FIXED_NETWORK_SIZE:-256}
 
-HOST_IP=$(get_default_host_ip $FIXED_RANGE $FLOATING_RANGE "$HOST_IP_IFACE" "$HOST_IP")
-if [ "$HOST_IP" == "" ]; then
-    die $LINENO "Could not determine host ip address. Either localrc specified dhcp on ${HOST_IP_IFACE} or defaulted"
-fi
-KEYSTONE_AUTH_HOST=${KEYSTONE_AUTH_HOST:-$HOST_IP}
-
-GetDistro
-
-
 function exec_hooks_on_dir() {
     local hook_dir=$1
     for f in $hook_dir/* ; do
@@ -72,8 +63,92 @@ function exec_hooks_on_dir() {
     done
 }
 
-# sanity checks
+
+# Parse option parameters
+# Default values
+MIDOSTACK_NEUTRON_PLUGIN_LOCATION=downstream
+MIDONET_GIT_BRANCH=master
+MIDONET_CLIENT_BRANCH=master
+MIDOSTACK_OPENSTACK_BRANCH=stable/icehouse
+MIDOSTACK_OPTION_CHECK=yes
+
+while getopts n:m:c:o:qh OPT; do
+    case "$OPT" in
+      n)
+        export MIDOSTACK_NEUTRON_PLUGIN_LOCATION=$OPTARG
+        ;;
+      m)
+        export MIDONET_GIT_BRANCH=$OPTARG
+        ;;
+      c)
+        export MIDONET_CLIENT_BRANCH=$OPTARG
+        ;;
+      o)
+        export MIDOSTACK_OPENSTACK_BRANCH=$OPTARG
+        ;;
+      q)
+        export MIDOSTACK_OPTION_CHECK=no
+        ;;
+      h)
+        # got invalid option
+        echo 'Usage: $0 [-n neutron_plugin_location] [-m midonet_branch]'
+        echo '          [-c midonet_client_branch] [-o openstack_branch ] [-q]'
+        echo
+        echo '    neutron_plugin_location: Specifies the location of the'
+        echo '                             neutron plugin.'
+        echo '                             Should be either "upstream" or'
+        echo '                             "downstream"'
+        echo '                             Default: downstream'
+        echo
+        echo '    midonet_branch: Specify a branch for midonet'
+        echo '                    Default: master'
+        echo
+        echo '    midonet_client_branch: Specify a branch for python-midonetclient'
+        echo '                           Default: master'
+        echo
+        echo '    openstack_branch: Specify branch for openstack, such as master,'
+        echo '                      stable/icehouse.'
+        echo '                      Default: master'
+        echo
+        echo '    -q: quiet mode. With this option, midostack does not prompt'
+        echo '         you for confirming branch setup.'
+        echo '        Default: off'
+
+        exit 0 ;;
+    esac
+done
+
+echo ========== Running Midostack with
+echo Neutron Plugin location: $MIDOSTACK_NEUTRON_PLUGIN_LOCATION
+echo MidoNet branch: $MIDONET_GIT_BRANCH
+echo MidoNet client branch: $MIDONET_CLIENT_BRANCH
+echo OpenStack branch: $MIDOSTACK_OPENSTACK_BRANCH
+echo ====================================
+if [ "$MIDOSTACK_OPTION_CHECK" == "yes" ] ; then
+    echo -n "Confirm the above configuration. Are you sure to proceed? (y/n): "
+    read answer
+    if [ "$answer" != "y" ] ; then
+        echo "exitting..."
+        exit 1
+    fi
+fi
+
+# Check for github accessibility
 is_authenticated_to_github
+# Sanity check for openstack branches
+check_devstack_branch
+check_openstack_branch
+check_midonet_branch
+check_python_midonetclient_branch
+
+# Source devstack's functions
+source $DEVSTACK_DIR/functions
+HOST_IP=$(get_default_host_ip $FIXED_RANGE $FLOATING_RANGE "$HOST_IP_IFACE" "$HOST_IP")
+if [ "$HOST_IP" == "" ]; then
+    die $LINENO "Could not determine host ip address. Either localrc specified dhcp on ${HOST_IP_IFACE} or defaulted"
+fi
+KEYSTONE_AUTH_HOST=${KEYSTONE_AUTH_HOST:-$HOST_IP}
+GetDistro
 
 echo ====================
 echo Running midostack...
