@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 set -a
-set -x
 
 MIDOSTACK_TOPDIR=$(cd $(dirname $0) && pwd)
 LOGDIR=${MIDOSTACK_LOG_DIR:-$MIDOSTACK_TOPDIR/logs/$(date +'%Y-%m-%d-%H%M%S')}
@@ -9,7 +8,9 @@ DEVSTACK_LOGDIR=$LOGDIR/devstack
 mkdir -p $MIDONET_LOGDIR
 mkdir -p $DEVSTACK_LOGDIR
 
+set -x
 exec 2> $MIDONET_LOGDIR/midonet_stack.sh.stderr.log
+echo "Trace log for $0 is at $MIDONET_LOGDIR/midonet_stack.sh.stderr.log"
 
 export LC_ALL=C
 export MIDO_DIR=$(pwd)
