@@ -1,0 +1,28 @@
+diff --git a/tools/fixup_stuff.sh b/tools/fixup_stuff.sh
+index 1732ecc..8aed7cb 100755
+--- a/tools/fixup_stuff.sh
++++ b/tools/fixup_stuff.sh
+@@ -51,17 +51,17 @@ fi
+ keystone_ports=${KEYSTONE_AUTH_PORT:-35357},${KEYSTONE_AUTH_PORT_INT:-35358}
+
+ # Get any currently reserved ports, strip off leading whitespace
+-reserved_ports=$(sysctl net.ipv4.ip_local_reserved_ports | awk -F'=' '{print $2;}' | sed 's/^ //')
++#reserved_ports=$(sysctl net.ipv4.ip_local_reserved_ports | awk -F'=' '{print $2;}' | sed 's/^ //')
+
+-if [[ -z "${reserved_ports}" ]]; then
++#if [[ -z "${reserved_ports}" ]]; then
+     # If there are no currently reserved ports, reserve the keystone ports
+-    sudo sysctl -w net.ipv4.ip_local_reserved_ports=${keystone_ports}
+-else
++#    sudo sysctl -w net.ipv4.ip_local_reserved_ports=${keystone_ports}
++#else
+     # If there are currently reserved ports, keep those and also reserve the
+     # keystone specific ports. Duplicate reservations are merged into a single
+     # reservation (or range) automatically by the kernel.
+-    sudo sysctl -w net.ipv4.ip_local_reserved_ports=${keystone_ports},${reserved_ports}
+-fi
++#    sudo sysctl -w net.ipv4.ip_local_reserved_ports=${keystone_ports},${reserved_ports}
++#fi
+
+
+ # Python Packages

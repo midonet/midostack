@@ -18,7 +18,6 @@ if [ ! -f $CASSANDRA_LIST_FILE ]; then
     sudo gpg --export --armor 2B5C1B00 | sudo apt-key add -
 fi
 
-sudo cp $MIDO_DIR/config_files/01midokura_apt_config /etc/apt/apt.conf.d/
 sudo cp $MIDO_DIR/config_files/01midokura_apt_preferences /etc/apt/preferences.d/
 
 

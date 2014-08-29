@@ -43,6 +43,8 @@ if [ $BUILD_SOURCES = true ]; then
     # Midolman service must be stopped
     echo "Starting midolman"
 
+    # We are over writing SCREEN_NAME, so lets save and restore
+    TMP_SCREEN_NAME=$SCREEN_NAME
     SCREEN_NAME=$MIDONET_SCREEN_NAME
     TOP_DIR=$MIDO_DIR
 
@@ -102,3 +104,4 @@ done
 echo "* API server is up, took $STARTUPTIME seconds"
 unset ENABLED_SERVICES
 unset SCREENRC
+SCREEN_NAME=$TMP_SCREEN_NAME

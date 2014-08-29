@@ -1,5 +1,7 @@
 #!/bin/sh
 export MIDO_HOME=/opt/stack/midonet/midonet/midodeps
+export MIDO_BOOTSTRAP_JAR=$MIDO_HOME/midonet-jdk-bootstrap.jar
+export MIDO_JAR=$MIDO_HOME/midolman.jar
 
 SCRIPT_NAME=`basename $0`
 exec /opt/stack/midonet/midonet/midolman/src/deb/bin/$SCRIPT_NAME "$@"

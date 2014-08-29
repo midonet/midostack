@@ -69,7 +69,7 @@ function exec_hooks_on_dir() {
 MIDOSTACK_NEUTRON_PLUGIN_LOCATION=downstream
 MIDONET_GIT_BRANCH=master
 MIDONET_CLIENT_BRANCH=master
-MIDOSTACK_OPENSTACK_BRANCH=stable/icehouse
+MIDOSTACK_OPENSTACK_BRANCH=master
 MIDOSTACK_OPTION_CHECK=yes
 
 while getopts n:m:c:o:qh OPT; do
@@ -162,6 +162,12 @@ echo Executing pre devstack scripts...
 echo =================================
 exec_hooks_on_dir $PRE_DEVSTACK_HOOKS_DIR
 
+
+
+# Temporary Hack to get around SCREEN_NAME nonsense introduced in:
+# devstack: d3bf9bdbda9acab17223cf25dd0a2b83b96db522
+#  https://review.openstack.org/#/c/117475/
+SCREEN_NAME=${SCREEN_NAME:-stack}
 
 LOGFILE=$DEVSTACK_LOGDIR/stack.sh.log
 echo ================================================

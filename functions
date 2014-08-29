@@ -45,7 +45,9 @@ function check_openstack_branch() {
 
     # check branch for major openstack components. nova, glance, keystone, neutron
     for repo in /opt/stack/{nova,glance,keystone,neutron}; do
-        check_git_branch $repo $MIDOSTACK_OPENSTACK_BRANCH
+        if [ -d $repo ] ; then
+            check_git_branch $repo $MIDOSTACK_OPENSTACK_BRANCH
+        fi
     done
 }
 

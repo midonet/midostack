@@ -64,6 +64,12 @@ if [ "$BUILD_SOURCES" = "true" ]; then
         exit 1
     fi
 
+    # Change MIDO_HOME (used by mm-ctl / mm-dpctl) to point at deps dir
+    MIDO_HOME=$MIDONET_SRC_DIR/midodeps
+    MIDO_BOOTSTRAP_JAR=$MIDO_HOME/midonet-jdk-bootstrap.jar
+    MIDO_JAR=$MIDO_HOME/midolman.jar
+
+    MIDOLMAN_BUNDLE_VERSION=`mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.version | grep -v INFO | grep -v WARNING`
     MIDOLMAN_TGT_DIR="$MIDONET_SRC_DIR/midolman/target"
     MIDOLMAN_JAR_FILE="$MIDOLMAN_TGT_DIR/midolman-$MIDOLMAN_BUNDLE_VERSION-jar-with-dependencies.jar"
     echo "midolman-jar-file is $MIDOLMAN_JAR_FILE"
@@ -79,20 +85,20 @@ if [ "$BUILD_SOURCES" = "true" ]; then
         exit 1
     fi
 
+    MIDO_BOOTSTRAP_TGT_DIR="$MIDONET_SRC_DIR/midonet-jdk-bootstrap/target"
+    MIDO_BOOTSTRAP_JAR_FILE="$MIDO_BOOTSTRAP_TGT_DIR/midonet-jdk-bootstrap-$MIDOLMAN_BUNDLE_VERSION.jar"
+    echo "midonet-jdk-bootstrap-jar-file is $MIDO_BOOTSTRAP_JAR_FILE"
+
+    # Jars have been created in earlier build step, put them all in one deps dir
+    mkdir -p $MIDO_HOME
+    cp $MIDOLMAN_JAR_FILE $MIDO_JAR
+    cp $MIDO_BOOTSTRAP_JAR_FILE $MIDO_BOOTSTRAP_JAR
+    cp -r $MIDOLMAN_TGT_DIR/dep $MIDO_HOME/
+
     # Place our executables in /usr/local/bin
     LOCAL_BIN_DIR=/usr/local/bin/
     sudo cp $MIDO_DIR/scripts/binproxy $LOCAL_BIN_DIR/mm-ctl
     sudo cp $MIDO_DIR/scripts/binproxy $LOCAL_BIN_DIR/mm-dpctl
-
-    # Jars have been created in earlier build step, put them all in one deps dir
-    MIDONET_DEPS_DIR=$MIDONET_SRC_DIR/midodeps
-    mkdir -p $MIDONET_DEPS_DIR
-    cp $MIDOLMAN_TGT_DIR/midolman-*.jar $MIDONET_DEPS_DIR/midolman.jar
-    cp $MIDONET_SRC_DIR/midonet-jdk-bootstrap/target/midonet-jdk-bootstrap-*.jar $MIDONET_DEPS_DIR/midonet-jdk-bootstrap.jar
-    cp -r $MIDOLMAN_TGT_DIR/dep $MIDONET_DEPS_DIR/
-
-    # Change MIDO_HOME (used by mm-ctl / mm-dpctl) to point at deps dir
-    export MIDO_HOME=$MIDONET_DEPS_DIR
 
     # Create the midolman dir in case it doesn't exist
     # Midolman will fail to run otherwise
