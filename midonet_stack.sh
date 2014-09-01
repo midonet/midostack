@@ -85,6 +85,7 @@ while getopts n:m:c:o:qh OPT; do
         ;;
       o)
         export MIDOSTACK_OPENSTACK_BRANCH=$OPTARG
+        export MIDONET_NEUTRON_PLUGIN_GIT_BRANCH=$OPTARG
         ;;
       q)
         export MIDOSTACK_OPTION_CHECK=no
