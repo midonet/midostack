@@ -71,9 +71,13 @@ MIDONET_GIT_BRANCH=master
 MIDONET_CLIENT_BRANCH=master
 MIDOSTACK_OPENSTACK_BRANCH=master
 MIDOSTACK_OPTION_CHECK=yes
+MIDOSTACK_SUPPRESS_MIDO_BRANCH_CHECKS=no
 
-while getopts n:m:c:o:qh OPT; do
+while getopts n:m:c:o:qhB OPT; do
     case "$OPT" in
+      B)
+        MIDOSTACK_SUPPRESS_MIDO_BRANCH_CHECKS=yes
+        ;;
       n)
         export MIDOSTACK_NEUTRON_PLUGIN_LOCATION=$OPTARG
         ;;
@@ -114,6 +118,11 @@ while getopts n:m:c:o:qh OPT; do
         echo '    -q: quiet mode. With this option, midostack does not prompt'
         echo '         you for confirming branch setup.'
         echo '        Default: off'
+        echo
+        echo '    -B: suppress branch sanity checks for midokura produced repos. '
+        echo '        Useful when used with gerrit, which checks out the code on'
+        echo '        anonymoous branch'
+        echo '        Default: no'
 
         exit 0 ;;
     esac
@@ -139,8 +148,10 @@ is_authenticated_to_github
 # Sanity check for openstack branches
 check_devstack_branch
 check_openstack_branch
-check_midonet_branch
-check_python_midonetclient_branch
+if [ $MIDOSTACK_SUPPRESS_MIDO_BRANCH_CHECKS != "yes" ] ; then
+    check_midonet_branch
+    check_python_midonetclient_branch
+fi
 
 # Source devstack's functions
 source $DEVSTACK_DIR/functions
