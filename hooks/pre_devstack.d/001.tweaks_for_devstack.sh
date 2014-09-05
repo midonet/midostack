@@ -9,6 +9,7 @@ if [ $MIDOSTACK_NEUTRON_PLUGIN_LOCATION == "upstream" ] ; then
 fi
 
 if [ $MIDOSTACK_NEUTRON_PLUGIN_LOCATION == "downstream" ] ; then
+    export DHCP_DRIVER="midonet.neutron.agent.midonet_driver.DhcpNoOpDriver"
     if [ $MIDOSTACK_OPENSTACK_BRANCH == "master" ] ; then
         patch -N -d $DEVSTACK_DIR -p1 < $PATCHES_DIR/downstream_plugin_with_juno.patch
     else
