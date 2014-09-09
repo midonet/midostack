@@ -1,3 +1,6 @@
 localrc
 mido-screenrc
 *.sw[po]
+
+devstack/
+logs/
