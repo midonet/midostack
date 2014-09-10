@@ -51,7 +51,7 @@ if [ $BUILD_SOURCES = true ]; then
     # set loglevel to DEBUG for Midolman
     sed -e 's/"INFO"/"DEBUG"/'  \
         $MIDONET_SRC_DIR/midolman/conf/midolman-akka.conf > \
-        $MIDONET_SRC_DIR/midolman/target/classes/midolman-akka.conf
+        $MIDONET_SRC_DIR/midolman/target/classes/application.conf
     sed -e 's/<root level="INFO">/<root level="DEBUG">/'  \
         $MIDONET_SRC_DIR/midolman/conf/logback.xml > \
         $MIDONET_SRC_DIR/midolman/target/classes/logback.xml
