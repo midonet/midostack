@@ -7,6 +7,13 @@ MIDONET_API_URI=${MIDONET_API_URI:-http://$HOST_IP:$MIDONET_API_PORT/midonet-api
 
 stop_service tomcat7
 
+# work around screen function inconsistency between different branches
+shopt -s expand_aliases
+if [ $MIDOSTACK_OPENSTACK_BRANCH == "stable/icehouse" -o $MIDOSTACK_OPENSTACK_BRANCH == "stable/havana" ] ; then
+    alias run_in_screen=screen_it
+else
+    alias run_in_screen=screen_service
+fi
 
 if [ $BUILD_SOURCES = true ]; then
 
@@ -56,7 +63,7 @@ if [ $BUILD_SOURCES = true ]; then
         $MIDONET_SRC_DIR/midolman/conf/logback.xml > \
         $MIDONET_SRC_DIR/midolman/target/classes/logback.xml
 
-    screen_service midolman "cd $MIDONET_SRC_DIR && MAVEN_OPTS=\"$MAVEN_OPTS_MIDOLMAN\" mvn -pl midolman exec:exec"
+    run_in_screen midolman "cd $MIDONET_SRC_DIR && MAVEN_OPTS=\"$MAVEN_OPTS_MIDOLMAN\" mvn -pl midolman exec:exec"
     # Run the API with jetty:plugin
     # Tomcat need to be stopped
     echo "Starting midonet-api"
@@ -70,8 +77,8 @@ if [ $BUILD_SOURCES = true ]; then
        $MIDONET_SRC_DIR/midonet-api/conf/logback.xml.sample > \
        $MIDONET_SRC_DIR/midonet-api/target/classes/logback.xml
 
-    screen_service midonet-api "cd $MIDONET_SRC_DIR && MAVEN_OPTS=\"$MAVEN_OPTS_API\" mvn -pl midonet-api jetty:run -Djetty.port=$MIDONET_API_PORT"
-    screen_service midonet-cp "cd $MIDONET_CP_DEST && PORT=$MIDONET_CP_PORT grunt server"
+    run_in_screen midonet-api "cd $MIDONET_SRC_DIR && MAVEN_OPTS=\"$MAVEN_OPTS_API\" mvn -pl midonet-api jetty:run -Djetty.port=$MIDONET_API_PORT"
+    run_in_screen midonet-cp "cd $MIDONET_CP_DEST && PORT=$MIDONET_CP_PORT grunt server"
     echo "* Making sure MidoNet API server is up and ready."
 
 else # Use packages
