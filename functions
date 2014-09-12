@@ -66,3 +66,13 @@ function check_python_midonetclient_branch() {
     fi
     check_git_branch /opt/stack/midonet/python-midonetclient $MIDONET_CLIENT_BRANCH
 }
+
+function pull_devstack() {
+    if [ -d devstack/.git ] ; then
+        echo pulling devstack...
+        cd devstack
+        git pull
+        git log --oneline -n 5
+        cd -
+    fi
+}

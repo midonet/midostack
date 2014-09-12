@@ -71,9 +71,10 @@ MIDONET_GIT_BRANCH=master
 MIDONET_CLIENT_BRANCH=master
 MIDOSTACK_OPENSTACK_BRANCH=master
 MIDOSTACK_OPTION_CHECK=yes
+MIDOSTACK_PULL_DEVSTACK=yes
 MIDOSTACK_SUPPRESS_MIDO_BRANCH_CHECKS=no
 
-while getopts n:m:c:o:qhB OPT; do
+while getopts n:m:c:o:qhBP OPT; do
     case "$OPT" in
       B)
         MIDOSTACK_SUPPRESS_MIDO_BRANCH_CHECKS=yes
@@ -90,6 +91,9 @@ while getopts n:m:c:o:qhB OPT; do
       o)
         export MIDOSTACK_OPENSTACK_BRANCH=$OPTARG
         export MIDONET_NEUTRON_PLUGIN_GIT_BRANCH=$OPTARG
+        ;;
+      P)
+        MIDOSTACK_PULL_DEVSTACK=no
         ;;
       q)
         export MIDOSTACK_OPTION_CHECK=no
@@ -115,6 +119,9 @@ while getopts n:m:c:o:qhB OPT; do
         echo '                      stable/icehouse.'
         echo '                      Default: master'
         echo
+        echo '    -P: Do NOT pull openstack related repos under /opt/stack and'
+        echo '        devstack'
+        echo
         echo '    -q: quiet mode. With this option, midostack does not prompt'
         echo '         you for confirming branch setup.'
         echo '        Default: off'
@@ -128,11 +135,12 @@ while getopts n:m:c:o:qhB OPT; do
     esac
 done
 
-echo ========== Running Midostack with
+echo ========== Running Midostack with the following configuration:
 echo Neutron Plugin location: $MIDOSTACK_NEUTRON_PLUGIN_LOCATION
 echo MidoNet branch: $MIDONET_GIT_BRANCH
 echo MidoNet client branch: $MIDONET_CLIENT_BRANCH
 echo OpenStack branch: $MIDOSTACK_OPENSTACK_BRANCH
+echo Pull devstack repo: $MIDOSTACK_PULL_DEVSTACK
 echo ====================================
 if [ "$MIDOSTACK_OPTION_CHECK" == "yes" ] ; then
     echo -n "Confirm the above configuration. Are you sure to proceed? (y/n): "
@@ -151,6 +159,10 @@ check_openstack_branch
 if [ $MIDOSTACK_SUPPRESS_MIDO_BRANCH_CHECKS != "yes" ] ; then
     check_midonet_branch
     check_python_midonetclient_branch
+fi
+
+if [ "$MIDOSTACK_PULL_DEVSTACK" == "yes" ] ; then
+    pull_devstack
 fi
 
 # Source devstack's functions
