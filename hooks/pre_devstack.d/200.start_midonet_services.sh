@@ -98,6 +98,7 @@ fi
 
 STARTUPTIME=0
 CONNECTED=1
+MIDOSTACK_MIDONET_API_STARTUPTIME_LIMIT=${MIDOSTACK_MIDONET_API_STARTUPTIME_LIMIT:-180} # in sec
 
 while [ $CONNECTED -ne 0 ]
   do
@@ -106,6 +107,10 @@ while [ $CONNECTED -ne 0 ]
     echo "Waiting for API server to start, may take some time. Have waited $STARTUPTIME seconds so far."
     sleep 2
     let STARTUPTIME=STARTUPTIME+2
+    if [ $STARTUPTIME -gt $MIDOSTACK_MIDONET_API_STARTUPTIME_LIMIT ] ;then
+        echo "API server didn't start in $MIDOSTACK_MIDONET_API_STARTUPTIME_LIMIT seconds"
+        exit 1
+    fi
 done
 
 echo "* API server is up, took $STARTUPTIME seconds"
