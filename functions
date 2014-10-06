@@ -76,3 +76,7 @@ function pull_devstack() {
         cd -
     fi
 }
+
+function get_ubuntu_codename() {
+    lsb_release  -c | cut -f 2
+}
