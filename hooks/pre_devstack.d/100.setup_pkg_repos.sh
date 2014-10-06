@@ -11,11 +11,16 @@ fi
 CASSANDRA_LIST_FILE=/etc/apt/sources.list.d/cassandra.list
 if [ ! -f $CASSANDRA_LIST_FILE ]; then
     echo "Adding Cassandra sources"
-    echo -e 'deb http://www.apache.org/dist/cassandra/debian 11x main\ndeb-src http://www.apache.org/dist/cassandra/debian 11x main' | sudo tee $CASSANDRA_LIST_FILE
-    sudo gpg --keyserver pgp.mit.edu --recv-keys F758CE318D77295D
-    sudo gpg --export --armor F758CE318D77295D | sudo apt-key add -
-    sudo gpg --keyserver pgp.mit.edu --recv-keys 2B5C1B00
-    sudo gpg --export --armor 2B5C1B00 | sudo apt-key add -
+    if  [ `get_ubuntu_codename` == "trusty" ]; then
+        echo "deb http://debian.datastax.com/community stable main" | sudo tee $CASSANDRA_LIST_FILE
+        curl -L http://debian.datastax.com/debian/repo_key | sudo apt-key add -
+    else
+        echo -e 'deb http://www.apache.org/dist/cassandra/debian 11x main\ndeb-src http://www.apache.org/dist/cassandra/debian 11x main' | sudo tee $CASSANDRA_LIST_FILE
+        sudo gpg --keyserver pgp.mit.edu --recv-keys F758CE318D77295D
+        sudo gpg --export --armor F758CE318D77295D | sudo apt-key add -
+        sudo gpg --keyserver pgp.mit.edu --recv-keys 2B5C1B00
+        sudo gpg --export --armor 2B5C1B00 | sudo apt-key add -
+    fi
 fi
 
 sudo cp $MIDO_DIR/config_files/01midokura_apt_preferences /etc/apt/preferences.d/

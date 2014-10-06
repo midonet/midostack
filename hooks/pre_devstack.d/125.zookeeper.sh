@@ -3,6 +3,12 @@
 # Start Zookeeper
 
 
+if [ `get_ubuntu_codename` = "trusty" ]; then
+    sudo apt-get install -y zookeeper zookeeperd
+else
+    sudo apt-get install -y zookeeper
+fi
+
 stop_service zookeeper
 start_service zookeeper
 if [ $? -gt 0 ]
