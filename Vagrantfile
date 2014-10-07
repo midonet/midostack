@@ -55,13 +55,6 @@ Vagrant.configure("2") do |config|
     default.vm.box = "ubuntu/trusty64"
   end
 
-  config.vm.define :midocker, autostart: false do |md|
-    # md.vm.box = nil
-    config.vm.provider :docker do |d|
-      d.image = "ooyala/precise64-base"
-    end
-  end
-
   # SSH agent forwarding seting
   config.ssh.forward_agent = true
 end
