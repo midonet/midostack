@@ -180,12 +180,13 @@ echo ====================
 echo Log directory: $LOGDIR
 echo
 
+# define midonet specific config in devstack's locl.conf
+cp $MIDOSTACK_TOPDIR/devstack_local.conf $DEVSTACK_DIR/local.conf
+
 echo =================================
 echo Executing pre devstack scripts...
 echo =================================
 exec_hooks_on_dir $PRE_DEVSTACK_HOOKS_DIR
-
-
 
 # Temporary Hack to get around SCREEN_NAME nonsense introduced in:
 # devstack: d3bf9bdbda9acab17223cf25dd0a2b83b96db522
@@ -197,7 +198,6 @@ echo ================================================
 echo Executing vanilla stack.sh script in devstack...
 echo Logfile: $LOGFILE
 echo ================================================
-cp $MIDOSTACK_TOPDIR/devstack_local.conf $DEVSTACK_DIR/local.conf
 cd $DEVSTACK_DIR && ./stack.sh || {
     echo stack.sh failed. Exiting...
     exit 1
