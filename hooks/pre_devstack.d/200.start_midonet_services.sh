@@ -2,7 +2,6 @@
 
 # Start MidoNet services
 
-MIDONET_API_PORT=${MIDONET_API_PORT:-8081}
 MIDONET_API_URI=${MIDONET_API_URI:-http://$HOST_IP:$MIDONET_API_PORT/midonet-api}
 
 stop_service tomcat7
