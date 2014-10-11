@@ -13,33 +13,6 @@ if [ "$BUILD_SOURCES" = "true" ]; then
         sudo chmod -R 777 $DEST
     fi
 
-    # Check if we have zinc installed
-    ZINC_DIR=$MIDO_DEST/zinc
-    if [ ! -d $ZINC_DIR ]; then
-        ZINC_FILE_NAME=${ZINC_URL##*/}
-        ZINC_FILE=$MIDO_DEST/$ZINC_FILE_NAME
-        if [ -f $ZINC_FILE ]; then
-            rm -f $ZINC_FILE
-        fi
-        sudo wget -c $ZINC_URL -O $ZINC_FILE
-        echo "Downloading zinc from $ZINC_URL to $ZINC_FILE"
-        sudo tar -zxf $ZINC_FILE -C "$MIDO_DEST"
-        ZINC_DIR_NAME=${ZINC_FILE_NAME%%.tgz}
-        ZINC_TMP_DIR=$MIDO_DEST/$ZINC_DIR_NAME
-        sudo mv $ZINC_TMP_DIR $ZINC_DIR
-        sudo rm $ZINC_FILE
-    fi
-
-    # Start zinc, restart if running
-    if is_running "zinc"
-    then
-        echo "Stopping zinc"
-        $ZINC_DIR/bin/zinc -shutdown
-    fi
-
-    echo "Starting zinc"
-    $ZINC_DIR/bin/zinc -start
-
     # Get MidoNet source and install
     if [ ! -d "$MIDONET_SRC_DIR" ]; then
         git_clone $MIDONET_GIT_REPO $MIDONET_SRC_DIR $MIDONET_GIT_BRANCH

@@ -34,7 +34,6 @@ PKG_OS_RELEASE=${PKG_OS_RELEASE:-precise}
 
 MIDO_MVN_CLEAN=${MIDO_MVN_CLEAN:-false}
 
-ZINC_URL=${ZINC_URL:-http://repo.typesafe.com/typesafe/zinc/com/typesafe/zinc/dist/0.2.5/zinc-0.2.5.tgz}
 MIDONET_GIT_REPO=${MIDONET_GIT_REPO:-git@github.com:midokura/midonet.git}
 MIDONET_GIT_BRANCH=${MIDONET_GIT_BRANCH:master}
 MIDONET_SCREEN_NAME=${MIDONET_SCREEN_NAME:-mido}

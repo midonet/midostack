@@ -32,12 +32,6 @@ sudo rm -rf /usr/local/bin/mm-*
 sudo rm -rf $DEST
 sudo rm -rf $MIDOLMAN_CONF_DIR
 
-if  [ $BUILD_SOURCES = true ]; then
-    # Remove maven repo
-    rm -rf ~/.m2/repository/*
-    $ZINC_DIR/bin/zinc -shutdown
-fi
-
 # Stop the services
 sudo service cassandra stop
 sudo service zookeeper stop

@@ -26,15 +26,7 @@ fi
 stop_service cassandra
 sudo rm -rf /var/lib/cassandra/*
 
-# Start zinc, restart if running
-ZINC_DIR=$MIDO_DEST/zinc
-if is_running "zinc"
-then
-    echo "Stopping zinc"
-    $ZINC_DIR/bin/zinc -shutdown
-fi
-
-# Shut down midonet screen 
+# Shut down midonet screen
 MIDO_SCREEN=$(which screen)
 if [[ -n "$MIDO_SCREEN" ]]; then
     MIDO_SESSION=$(screen -ls | awk '/[0-9].mido/ { print $1 }')
