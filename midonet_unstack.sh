@@ -15,12 +15,7 @@ cd $DEVSTACK_DIR && git reset --hard && source unstack.sh
 # Clean up ZK
 stop_service zookeeper
 sleep 3
-if [ `dpkg -l | grep zookeeper | grep mido | awk '{print $3}'` = "3.4.5-mido" ]
-then
-    sudo rm -rf /var/lib/zookeeper/data/version-2/
-else
-    sudo rm -rf /var/lib/zookeeper/version-2/
-fi
+sudo rm -rf /var/lib/zookeeper/*
 
 # Clean up Cassandra
 stop_service cassandra
