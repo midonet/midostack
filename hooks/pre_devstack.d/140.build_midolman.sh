@@ -48,17 +48,6 @@ if [ "$BUILD_SOURCES" = "true" ]; then
     MIDOLMAN_JAR_FILE="$MIDOLMAN_TGT_DIR/midolman-$MIDOLMAN_BUNDLE_VERSION-jar-with-dependencies.jar"
     echo "midolman-jar-file is $MIDOLMAN_JAR_FILE"
 
-    mvn install:install-file -Dfile="$MIDOLMAN_JAR_FILE" \
-                             -DgroupId=org.midonet \
-                             -DartifactId=midolman-with-dependencies \
-                             -Dversion=$MIDOLMAN_BUNDLE_VERSION \
-                             -Dpackaging=jar
-    if [ $? -gt 0 ]
-    then
-        echo "Exiting. MidoNet Maven install failed."
-        exit 1
-    fi
-
     MIDO_BOOTSTRAP_TGT_DIR="$MIDONET_SRC_DIR/midonet-jdk-bootstrap/target"
     MIDO_BOOTSTRAP_JAR_FILE="$MIDO_BOOTSTRAP_TGT_DIR/midonet-jdk-bootstrap-$MIDOLMAN_BUNDLE_VERSION.jar"
     echo "midonet-jdk-bootstrap-jar-file is $MIDO_BOOTSTRAP_JAR_FILE"
