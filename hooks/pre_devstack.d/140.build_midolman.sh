@@ -42,7 +42,8 @@ if [ "$BUILD_SOURCES" = "true" ]; then
     MIDO_BOOTSTRAP_JAR=$MIDO_HOME/midonet-jdk-bootstrap.jar
     MIDO_JAR=$MIDO_HOME/midolman.jar
 
-    MIDOLMAN_BUNDLE_VERSION=`mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.version | grep -v INFO | grep -v WARNING`
+    MIDOLMAN_BUNDLE_VERSION=`mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate \
+         -Dexpression=project.version | grep -v INFO | grep -v WARNING | grep -v Download`
     MIDOLMAN_TGT_DIR="$MIDONET_SRC_DIR/midolman/target"
     MIDOLMAN_JAR_FILE="$MIDOLMAN_TGT_DIR/midolman-$MIDOLMAN_BUNDLE_VERSION-jar-with-dependencies.jar"
     echo "midolman-jar-file is $MIDOLMAN_JAR_FILE"
