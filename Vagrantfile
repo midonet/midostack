@@ -57,4 +57,8 @@ Vagrant.configure("2") do |config|
 
   # SSH agent forwarding seting
   config.ssh.forward_agent = true
+
+  # initial provision script
+  config.vm.provision "shell",
+    inline: "sudo apt-get update && sudo apt-get install -y git"
 end
