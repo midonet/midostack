@@ -7,9 +7,6 @@
 sudo modprobe openvswitch
 
 
-# Add a filter to allow rootwrap to use mm-ctl from /usr/local/bin/
-sudo cp $MIDO_DIR/config_files/midonet_devstack.filters /etc/nova/rootwrap.d/
-
 # Configure libvirt to allow generic ethernet mode
 
 if [ -f /etc/libvirt/qemu.conf ]; then
