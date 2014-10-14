@@ -15,8 +15,8 @@ echo "Trace log for $0 is at $MIDONET_LOGDIR/midonet_stack.sh.stderr.log"
 export LC_ALL=C
 export MIDO_DIR=$(pwd)
 export DEVSTACK_DIR="$MIDOSTACK_TOPDIR/devstack"
-export PRE_DEVSTACK_HOOKS_DIR=$MIDOSTACK_TOPDIR/hooks/pre_devstack.d
-export POST_DEVSTACK_HOOKS_DIR=$MIDOSTACK_TOPDIR/hooks/post_devstack.d
+export PRE_DEVSTACK_HOOKS_DIR=$MIDOSTACK_TOPDIR/scripts/pre_devstack.d
+export POST_DEVSTACK_HOOKS_DIR=$MIDOSTACK_TOPDIR/scripts/post_devstack.d
 export PATCHES_DIR=$MIDOSTACK_TOPDIR/patches
 
 source $MIDOSTACK_TOPDIR/functions
