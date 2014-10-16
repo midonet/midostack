@@ -1,91 +1,77 @@
 MidoStack
 =========
 
-New midokura scripts to build a Devstack environment with MidoNet as Neutron plugin.
+Midostack enables you to start an all-in-one node OpenStack + MidoNet
+environment with a single command, by making use of
+[devstack](https://github.com/openstack-dev/devstack).
+It installs MidoNet and configures devstack to use MidoNet as the Neutron
+plugin.
 
-Prerequisites
--------------
+Requirements
+------------
 
-### Importing devstack
+- Ubuntu 14.04 with 4GB of RAM + swap
 
-MidoStack depends on [OpenStack's devstack project][devstack], which is imported
-as the Git submodule. To import it, please run the following commands first.
-
-```bash
-$ cd midostack
-midostack$ git submodule init
-midostack$ git submodule update
-```
-
-[devstack]: https://github.com/openstack-dev/devstack
-
-### Checking your branch out
-
-Then, please checkout your working branch. For instance, if you'd like to work
-with `v1.4-havana` branch, you can run the following command.
-
-```bash
-midostack$ git checkout origin/v1.4-havana -b v1.4-havana
-```
-
-Pelase don't forget to switch to the appropriate devstack.
-
-```bash
-midostack$ git submodule update
-```
-
-Up and Running MidoStack
+Running MidoStack
 ------------------------
 
-### Launching a VM with Vagrant (Optional)
+### Launching a Midostack VM with Vagrant (Optional)
 
-This section describes about how to launch your VM for MidoStack. If you'd like
-to run MidoStack on your host environment directly, please skip this section and
-move to [Stacking up](#stacking-up) section.
+This section describes how to run MidoStack on a Vagrant VM. If you'd
+like to run MidoStack on your host environment directly, please skip this
+section and move to [Stacking up](#stacking-up) section.
 
 #### Prerequisites
 
 * [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
 * [Vagrant (>= 1.6.x)](http://www.vagrantup.com/downloads.html)
 
-#### Up and Running a VM
+#### Launching a VM
 
-If you'd like to launch a VM for MidoStack, please use the following command.
+Run the following command to launch a VM for MidoStack:
 
 ```bash
 $ cd midostack
 midostack$ vagrant up
 ```
 
-It launches the default VM with the several port forwarding and mounting
-`midostack` directory to `/midostack`.
+It launches the default VM with the following port forwarding and mount
+configurations:
+
+#### Port Forwarding
+
+* For horizon: host's port 8080 is forwarded to guest's port 80 so you can
+               access to horizon at `http://localhost:8080` on the host.
+
+* For VNC console: host's port 6080 is forward to guest's port 6080.
+                   Define the following environment variable before
+                   running `midonet_stack.sh`  so you can access to VNC console
+                   for OpenStack VMs on the horizon connected from the host.
+
+```bash
+export NOVNCPROXY_URL="http://localhost:6080/vnc_auto.html"
+```
+
+#### Mount
+
+`midostack` directory on the host is mounted `/midostack` in the guest.
 
 ### Stacking up
 
-`midonet_stack.sh` script takes care of everything for you. It installs devstack
-with the MidoNet suites and the appropriate configurations for it.
+`midonet_stack.sh` script takes care of everything for you. It sets up
+OpenStack and MidoNet development environment.
 
 ```bash
 midostack$ ./midonet_stack.sh
 ```
 
-Cleaning your MidoStack up
+Stopping MidoStack
 ---------------------------
 
-When you finished your work or you'd like to clean the remainded environment up,
-please run the following command.
+Run the following command to stop the running MidoStack:
 
 ```bash
 midostack$ ./midonet_unstack.sh
 ```
 
-Changing your branch
---------------------
-
-When you changed your working branch, you need to clean your environment with
-recloning dependencies.
-
-```bash
-midostack$ ./midonet_unstack.sh
-midostack$ RECLONE=true ./midonet_stack.sh
-```
+This stops all the services and wipes out the data.
