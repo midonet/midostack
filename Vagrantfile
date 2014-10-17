@@ -30,12 +30,8 @@ Vagrant.configure("2") do |config|
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
-  config.vm.network :forwarded_port, guest: 80, host: 8080
-  config.vm.network :forwarded_port, guest: 6080, host: 6080
-  # for remote debugging API
-  config.vm.network :forwarded_port, guest: 8091, host: 8091
-  # for remote debugging Midolman
-  config.vm.network :forwarded_port, guest: 8092, host: 8092
+  config.vm.network :forwarded_port, guest: 80, host: 8080 # for Horizon
+  config.vm.network :forwarded_port, guest: 6080, host: 6080 # for novncproxy
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
