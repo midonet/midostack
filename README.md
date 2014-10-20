@@ -4,8 +4,14 @@ MidoStack
 Midostack enables you to start an all-in-one node OpenStack + MidoNet
 environment with a single command, by making use of
 [devstack](https://github.com/openstack-dev/devstack).
-It installs MidoNet and configures devstack to use MidoNet as the Neutron
-plugin.
+It builds MidoNet from source and configures/runs devstack to use MidoNet as
+the Neutron plugin. By default, master branch is used for MidoNet as well as
+openstack projects(Neutron, Nova, etc).
+See `midonet_stack.sh -h` for more options to configure Midostack environment.
+
+
+Note that this is intended for a developer environment, not for a production
+environment.
 
 Requirements
 ------------
@@ -36,7 +42,9 @@ midostack$ vagrant up
 ```
 
 It launches the default VM with the following port forwarding and mount
-configurations:
+configurations as explained below.
+Once the VM is up, you can do `vagrant ssh` to ssh into the vagrant VM and
+go to `/midostack` where the midostack repository on the host is mounted.
 
 #### Port Forwarding
 
