@@ -30,18 +30,6 @@ MIDONET_PROJECT_ID=${MIDONET_PROJECT_ID:-admin}
 
 MIDONET_OS_REPO=${MIDONET_OS_REPO:-https://github.com/jdevesa/midonet-openstack.git}
 
-##########################################################
-## Package environment variables (BUILD_SOURCES=false)  ##
-##########################################################
-
-MIDO_APT_USER=${MIDO_APT_USER:-midokura}
-MIDO_APT_PASSWORD=${MIDO_APT_PASSWORD:-gogomid0}
-PKG_MAJOR_VERSION=${MAJOR_VERSION:-v1.5}
-
-# STABLE OR TEST
-PKG_STATUS_VERSION=${STATUS_VERSION:-test}
-PKG_OS_RELEASE=${PKG_OS_RELEASE:-precise}
-
 ###################################################################
 ## Source build based environment variables (BUILD_SOURCES=true) ##
 ###################################################################

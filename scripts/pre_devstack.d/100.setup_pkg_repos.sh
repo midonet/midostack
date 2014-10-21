@@ -39,15 +39,4 @@ fi
 
 sudo cp $MIDO_DIR/config_files/01midokura_apt_preferences /etc/apt/preferences.d/
 
-
-# Add Midokura Repository
-MIDONET_SRC="deb [trusted=1 arch=amd64] http://$MIDO_APT_USER:$MIDO_APT_PASSWORD@apt.midokura.com/midonet/$PKG_MAJOR_VERSION/$PKG_STATUS_VERSION $PKG_OS_RELEASE main non-free test"
-MIDONET_LIST_FILE=/etc/apt/sources.list.d/midonet.list
-if [ ! -f $MIDONET_LIST_FILE ]; then
-    echo "Adding sources from Midonet package daily"
-    echo -e $MIDONET_SRC | sudo tee $MIDONET_LIST_FILE
-fi
-# Download and install Midokura public key to validate software authenticity
-curl -k http://$MIDO_APT_USER:$MIDO_APT_PASSWORD@apt.midokura.com/packages.midokura.key | sudo apt-key add -
-
 sudo apt-get -y update
