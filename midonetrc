@@ -60,11 +60,4 @@ MIDOLMAN_CONF_DIR=${MIDOLMAN_CONF_DIR:-/etc/midolman}
 MIDONET_NEUTRON_PLUGIN_GIT_REPO=${MIDONET_NEUTRON_PLUGIN_GIT_REPO:-git@github.com:midokura/python-neutron-plugin-midonet.git}
 MIDONET_NEUTRON_PLUGIN_GIT_BRANCH=${MIDONET_NEUTRON_PLUGIN_GIT_BRANCH:-master}
 
-# Maven opts (mainly for remote debugging)
-MIDONET_API_DEBUG_PORT=8091
-MIDOLMAN_DEBUG_PORT=8092
-
-MAVEN_OPTS_API="-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,address=$MIDONET_API_DEBUG_PORT,server=y,suspend=n"
-MAVEN_OPTS_MIDOLMAN="-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,address=$MIDOLMAN_DEBUG_PORT,server=y,suspend=n"
-
 MIDONET_API_USE_KEYSTONE=${MIDONET_API_USE_KEYSTONE:-true}

@@ -76,7 +76,7 @@ if [ $BUILD_SOURCES = true ]; then
         $MIDONET_SRC_DIR/midolman/conf/logback.xml > \
         $MIDONET_SRC_DIR/midolman/target/classes/logback.xml
 
-    run_in_screen midolman "cd $MIDONET_SRC_DIR && MAVEN_OPTS=\"$MAVEN_OPTS_MIDOLMAN\" mvn -pl midolman exec:exec"
+    run_in_screen midolman "cd $MIDONET_SRC_DIR && mvn -pl midolman exec:exec"
     # Run the API with jetty:plugin
     # Tomcat need to be stopped
     echo "Starting midonet-api"
@@ -90,7 +90,7 @@ if [ $BUILD_SOURCES = true ]; then
        $MIDONET_SRC_DIR/midonet-api/conf/logback.xml.sample > \
        $MIDONET_SRC_DIR/midonet-api/target/classes/logback.xml
 
-    run_in_screen midonet-api "cd $MIDONET_SRC_DIR && MAVEN_OPTS=\"$MAVEN_OPTS_API\" mvn -pl midonet-api jetty:run -Djetty.port=$MIDONET_API_PORT"
+    run_in_screen midonet-api "cd $MIDONET_SRC_DIR && mvn -pl midonet-api jetty:run -Djetty.port=$MIDONET_API_PORT"
     echo "* Making sure MidoNet API server is up and ready."
 
 else # Use packages
