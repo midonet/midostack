@@ -34,7 +34,7 @@ MIDONET_OS_REPO=${MIDONET_OS_REPO:-https://github.com/jdevesa/midonet-openstack.
 ## Source build based environment variables (BUILD_SOURCES=true) ##
 ###################################################################
 
-MIDO_MVN_CLEAN=${MIDO_MVN_CLEAN:-false}
+MIDONET_BUILD_CLEAN=${MIDONET_BUILD_CLEAN:-false}
 
 MIDONET_GIT_REPO=${MIDONET_GIT_REPO:-git@github.com:midokura/midonet.git}
 MIDONET_GIT_BRANCH=${MIDONET_GIT_BRANCH:master}

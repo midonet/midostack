@@ -95,3 +95,71 @@ function pull_devstack() {
 function get_ubuntu_codename() {
     lsb_release  -c | cut -f 2
 }
+
+
+#
+# Midonet build related functions.
+# CWD should be the top directory of "midonet" repo
+#
+
+function build_midonet() {
+    # Because some source code has unnicode characters
+    LC_ALL=en_US.UTF-8
+
+    # Use sudo to clean up stuff that previous :midolman:runWithSudo might
+    # have created and chown .gradle dirs
+    cd $MIDONET_SRC_DIR && sudo ./gradlew clean
+    sudo chown $(whoami) .gradle/ ~/.gradle -R
+
+    cd $MIDONET_SRC_DIR && ./gradlew assemble
+    if [ $? -gt 0 ]; then
+        echo "Exiting. MidoNet build failed."
+        exit 1
+    fi
+    LC_ALL=C
+}
+
+function install_midonet() {
+
+    # install jar to midolman's build dir
+    cd $MIDONET_SRC_DIR && ./gradlew :midolman:installApp
+
+    # Change MIDO_HOME (used by mm-ctl / mm-dpctl) to point at deps dir
+    MIDO_HOME=$MIDONET_SRC_DIR/midodeps
+    rm -rf $MIDO_HOME ; mkdir -p $MIDO_HOME
+
+    # Jars have been created in earlier build step, put them all in one deps dir
+    MIDOLMAN_BUILD_TARGET_DIR="$MIDONET_SRC_DIR/midolman/build/install/midolman/lib"
+    cp $MIDOLMAN_BUILD_TARGET_DIR/midolman-*.jar  $MIDO_HOME/midolman.jar
+    cp $MIDOLMAN_BUILD_TARGET_DIR/midonet-jdk-bootstrap-*.jar $MIDO_HOME/midonet-jdk-bootstrap.jar
+    cp -r $MIDOLMAN_BUILD_TARGET_DIR $MIDO_HOME/dep
+
+    # Place our executables in /usr/local/bin
+    LOCAL_BIN_DIR=/usr/local/bin/
+    sudo cp $MIDO_DIR/scripts/binproxy $LOCAL_BIN_DIR/mm-ctl
+    sudo cp $MIDO_DIR/scripts/binproxy $LOCAL_BIN_DIR/mm-dpctl
+
+    # Create the midolman's conf dir in case it doesn't exist
+    # Midolman will fail to run otherwise
+    if [ ! -d $MIDOLMAN_CONF_DIR ]; then
+        sudo mkdir -p $MIDOLMAN_CONF_DIR
+    fi
+    # These config files are needed - create if not present
+    if [ ! -f $MIDOLMAN_CONF_DIR/logback-dpctl.xml ]; then
+        sudo cp $MIDONET_SRC_DIR/midolman/conf/logback-dpctl.xml $MIDOLMAN_CONF_DIR/
+    fi
+    if [ ! -f $MIDOLMAN_CONF_DIR/midolman.conf ]; then
+        sudo cp $MIDONET_SRC_DIR/midolman/conf/midolman.conf $MIDOLMAN_CONF_DIR/
+    fi
+}
+
+
+function run_midolman() {
+    ./gradlew -a :midolman:runWithSudo
+}
+
+function run_midonet_api() {
+    LC_ALL=en_US.UTF-8 # because some source code has unnicode characters
+    ./gradlew -a :midonet-api:jettyRun -Pport=$MIDONET_API_PORT
+    LC_ALL=C
+}

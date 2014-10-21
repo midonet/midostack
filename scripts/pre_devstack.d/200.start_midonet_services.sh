@@ -70,19 +70,18 @@ if [ $BUILD_SOURCES = true ]; then
     SCREEN_NAME=$MIDONET_SCREEN_NAME
     TOP_DIR=$MIDO_DIR
 
-    # set loglevel to DEBUG for Midolman
+    # put config to the classpath and set loglevel to DEBUG for Midolman
     sed -e 's/"INFO"/"DEBUG"/'  \
         $MIDONET_SRC_DIR/midolman/conf/midolman-akka.conf > \
-        $MIDONET_SRC_DIR/midolman/target/classes/application.conf
-    sed -e 's/<root level="INFO">/<root level="DEBUG">/'  \
-        $MIDONET_SRC_DIR/midolman/conf/logback.xml > \
-        $MIDONET_SRC_DIR/midolman/target/classes/logback.xml
+        $MIDONET_SRC_DIR/midolman/build/classes/main/application.conf
+    cp  $MIDONET_SRC_DIR/midolman/src/test/resources/logback-test.xml  \
+        $MIDONET_SRC_DIR/midolman/build/classes/main/logback.xml
 
-    run_in_screen midolman "cd $MIDONET_SRC_DIR && mvn -pl midolman exec:exec"
+    run_in_screen midolman "cd $MIDONET_SRC_DIR && run_midolman "
     # Run the API with jetty:plugin
     # Tomcat need to be stopped
     echo "Starting midonet-api"
-# put logback.xml to the classpath with "debug" level so mvn jetty:run can pick up
+# put logback.xml to the classpath with "debug" level
     sed -e 's/info/debug/' \
         -e 's,</configuration>,\
 <logger name="org.apache.zookeeper" level="INFO" />\
@@ -90,9 +89,9 @@ if [ $BUILD_SOURCES = true ]; then
 <logger name="me.prettyprint.cassandra" level="INFO" />\
 </configuration>,' \
        $MIDONET_SRC_DIR/midonet-api/conf/logback.xml.sample > \
-       $MIDONET_SRC_DIR/midonet-api/target/classes/logback.xml
+       $MIDONET_SRC_DIR/midonet-api/build/classes/main/logback.xml
 
-    run_in_screen midonet-api "cd $MIDONET_SRC_DIR && mvn -pl midonet-api jetty:run -Djetty.port=$MIDONET_API_PORT"
+    run_in_screen midonet-api "cd $MIDONET_SRC_DIR && run_midonet_api"
     echo "* Making sure MidoNet API server is up and ready."
 
 else # Use packages
