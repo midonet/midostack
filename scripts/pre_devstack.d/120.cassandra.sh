@@ -19,11 +19,7 @@
 CASSANDRA_FILE='/etc/cassandra/cassandra.yaml'
 CASSANDRA_ENV_FILE='/etc/cassandra/cassandra-env.sh'
 
-if [ `get_ubuntu_codename` == "trusty" ] ; then
-    sudo apt-get -y --force-yes install dsc21
-else
-    sudo apt-get install cassandra
-fi
+sudo apt-get -y --force-yes install dsc21
 
 sudo service cassandra stop
 sudo chown cassandra:cassandra /var/lib/cassandra
