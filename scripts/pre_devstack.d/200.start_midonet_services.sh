@@ -24,8 +24,10 @@ stop_service tomcat7
 shopt -s expand_aliases
 if [ "$MIDOSTACK_OPENSTACK_BRANCH" == "stable/havana" ] ; then
     alias run_in_screen=screen_it
-else
+elif [ "$MIDOSTACK_OPENSTACK_BRANCH" == "stable/icehouse" ] ; then
     alias run_in_screen=screen_service
+else
+    alias run_in_screen=screen_process
 fi
 
 if [ $BUILD_SOURCES = true ]; then
