@@ -160,6 +160,6 @@ function run_midolman() {
 
 function run_midonet_api() {
     LC_ALL=en_US.UTF-8 # because some source code has unnicode characters
-    ./gradlew -a :midonet-api:jettyRun -Pport=$MIDONET_API_PORT
+    ./gradlew :midonet-api:jettyRun -Pport=$MIDONET_API_PORT
     LC_ALL=C
 }
