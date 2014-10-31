@@ -16,9 +16,7 @@
 
 export MIDONET_CLIENT_REPO=${MIDONET_CLIENT_REPO:-https://github.com/midonet/python-midonetclient.git}
 
-if [ $MIDOSTACK_OPENSTACK_BRANCH == "master" ] ; then
-    patch -N -d $DEVSTACK_DIR -p1 < $PATCHES_DIR/dont_use_reserved_ports.patch
-fi
+patch -N -d $DEVSTACK_DIR -p1 < $PATCHES_DIR/dont_use_reserved_ports.patch
 
 if [ $MIDOSTACK_NEUTRON_PLUGIN_LOCATION == "upstream" ] ; then
     patch -N -d $DEVSTACK_DIR -p1 < $PATCHES_DIR/upstream_provider_router.patch
