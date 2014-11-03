@@ -36,7 +36,7 @@ function check_devstack_branch() {
     DEVSTACK_DIR="$MIDO_DIR/devstack"
     if [ ! -d $DEVSTACK_DIR ]; then
         # Clone devstack if missing
-        git clone git@github.com:openstack-dev/devstack devstack -b $MIDOSTACK_OPENSTACK_BRANCH
+        git clone http://github.com/openstack-dev/devstack devstack -b $MIDOSTACK_OPENSTACK_BRANCH
     else
         check_git_branch $DEVSTACK_DIR $MIDOSTACK_OPENSTACK_BRANCH
     fi
