@@ -166,8 +166,6 @@ if [ "$MIDOSTACK_OPTION_CHECK" == "yes" ] ; then
     fi
 fi
 
-# Check for github accessibility
-is_authenticated_to_github
 # Sanity check for openstack branches
 check_devstack_branch
 check_openstack_branch

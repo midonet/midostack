@@ -16,16 +16,6 @@
 
 # functions - Common functions used by MidoStack components
 
-
-function is_authenticated_to_github() {
-    # Check access to github.com
-    ssh -T -o StrictHostKeyChecking=no git@github.com
-    [ $? == 255 ] && {
-        echo "Exiting. Can't authenticate with Github via ssh; please check that you use a right key."
-        exit 1
-    }
-}
-
 function check_git_branch() {
     local git_dir=$1
     local expected=$2
