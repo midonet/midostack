@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a6b29fe_e111b1ad",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002732
+      },
+      "writtenOn": "2014-11-05T07:12:32Z",
+      "side": 1,
+      "message": "Don\u0027t be. could you remove this line?",
+      "revId": "12eedea825d42b4d742460b81d21cac09b26fe8b",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
