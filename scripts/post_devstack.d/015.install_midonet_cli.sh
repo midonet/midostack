@@ -21,7 +21,7 @@ MIDONET_CLIENT_DIR=${MIDO_DEST}/python-midonetclient
 sudo rm -rf /usr/local/bin/midonet-cli /usr/local/lib/python2.7/dist-packages/midonetclient*
 
 # Install python module and midonet-cli
-sudo apt-get install -y ncurses-dev readline readline-dev
+sudo apt-get install -y ncurses-dev libreadline-dev
 sudo pip install -U webob readline httplib2
 cd $MIDONET_CLIENT_DIR
 sudo python setup.py develop
