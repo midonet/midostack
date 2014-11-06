@@ -115,7 +115,7 @@ while getopts n:m:c:o:qhBP OPT; do
         ;;
       h)
         # got invalid option
-        echo 'Usage: $0 [-n neutron_plugin_location] [-m midonet_branch]'
+        echo "Usage: $0 [-n neutron_plugin_location] [-m midonet_branch]"
         echo '          [-c midonet_client_branch] [-o openstack_branch ] [-q]'
         echo
         echo '    neutron_plugin_location: Specifies the location of the'
