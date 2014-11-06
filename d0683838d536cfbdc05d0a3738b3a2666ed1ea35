@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a6b29fe_970abfd0",
+        "filename": "README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002760
+      },
+      "writtenOn": "2014-11-06T07:09:10Z",
+      "side": 1,
+      "message": "\"need to be submitted via Gerrit\"",
+      "range": {
+        "startLine": 90,
+        "startChar": 23,
+        "endLine": 90,
+        "endChar": 46
+      },
+      "revId": "d0683838d536cfbdc05d0a3738b3a2666ed1ea35",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_f70fb3df",
+        "filename": "README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002760
+      },
+      "writtenOn": "2014-11-06T07:09:10Z",
+      "side": 1,
+      "message": "\"We use a publicly hosted instance\"",
+      "range": {
+        "startLine": 91,
+        "startChar": 30,
+        "endLine": 91,
+        "endChar": 50
+      },
+      "revId": "d0683838d536cfbdc05d0a3738b3a2666ed1ea35",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_d71437f7",
+        "filename": "README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002760
+      },
+      "writtenOn": "2014-11-06T07:09:10Z",
+      "side": 1,
+      "message": "s/and/which is/",
+      "range": {
+        "startLine": 92,
+        "startChar": 24,
+        "endLine": 92,
+        "endChar": 27
+      },
+      "revId": "d0683838d536cfbdc05d0a3738b3a2666ed1ea35",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_37f92bc9",
+        "filename": "README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002760
+      },
+      "writtenOn": "2014-11-06T07:09:10Z",
+      "side": 1,
+      "message": "simply \"Jenkins\".",
+      "range": {
+        "startLine": 92,
+        "startChar": 44,
+        "endLine": 93,
+        "endChar": 7
+      },
+      "revId": "d0683838d536cfbdc05d0a3738b3a2666ed1ea35",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_17f6afd7",
+        "filename": "README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002760
+      },
+      "writtenOn": "2014-11-06T07:09:10Z",
+      "side": 1,
+      "message": "To set up a account at GerritHub,",
+      "range": {
+        "startLine": 95,
+        "startChar": 0,
+        "endLine": 95,
+        "endChar": 17
+      },
+      "revId": "d0683838d536cfbdc05d0a3738b3a2666ed1ea35",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_7703a3b8",
+        "filename": "README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002760
+      },
+      "writtenOn": "2014-11-06T07:09:10Z",
+      "side": 1,
+      "message": "s/set up/copy/",
+      "range": {
+        "startLine": 96,
+        "startChar": 12,
+        "endLine": 96,
+        "endChar": 18
+      },
+      "revId": "d0683838d536cfbdc05d0a3738b3a2666ed1ea35",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_570027aa",
+        "filename": "README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002760
+      },
+      "writtenOn": "2014-11-06T07:09:10Z",
+      "side": 1,
+      "message": "\"information on how to set up\"",
+      "range": {
+        "startLine": 97,
+        "startChar": 5,
+        "endLine": 97,
+        "endChar": 26
+      },
+      "revId": "d0683838d536cfbdc05d0a3738b3a2666ed1ea35",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_b72c1b4c",
+        "filename": "README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002760
+      },
+      "writtenOn": "2014-11-06T07:09:10Z",
+      "side": 1,
+      "message": "\"maintainers\" to make it consistent with the wiki.",
+      "range": {
+        "startLine": 108,
+        "startChar": 61,
+        "endLine": 108,
+        "endChar": 71
+      },
+      "revId": "d0683838d536cfbdc05d0a3738b3a2666ed1ea35",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_776c439d",
+        "filename": "README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1002760
+      },
+      "writtenOn": "2014-11-06T07:09:10Z",
+      "side": 1,
+      "message": "Please remove.",
+      "range": {
+        "startLine": 113,
+        "startChar": 25,
+        "endLine": 113,
+        "endChar": 28
+      },
+      "revId": "d0683838d536cfbdc05d0a3738b3a2666ed1ea35",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_5769478a",
+        "filename": "README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1002760
+      },
+      "writtenOn": "2014-11-06T07:09:10Z",
+      "side": 1,
+      "message": "s/Development/developer/",
+      "range": {
+        "startLine": 113,
+        "startChar": 29,
+        "endLine": 113,
+        "endChar": 40
+      },
+      "revId": "d0683838d536cfbdc05d0a3738b3a2666ed1ea35",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_b7053bc4",
+        "filename": "README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002760
+      },
+      "writtenOn": "2014-11-06T07:09:10Z",
+      "side": 1,
+      "message": "Please remove.",
+      "range": {
+        "startLine": 114,
+        "startChar": 21,
+        "endLine": 114,
+        "endChar": 24
+      },
+      "revId": "d0683838d536cfbdc05d0a3738b3a2666ed1ea35",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_97311fa5",
+        "filename": "README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002760
+      },
+      "writtenOn": "2014-11-06T07:09:10Z",
+      "side": 1,
+      "message": "Why chose midostack in particular?",
+      "range": {
+        "startLine": 116,
+        "startChar": 61,
+        "endLine": 116,
+        "endChar": 70
+      },
+      "revId": "d0683838d536cfbdc05d0a3738b3a2666ed1ea35",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
