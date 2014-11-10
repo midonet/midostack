@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "7a6b29fe_4e5d2921",
+        "filename": "README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2014-11-10T04:23:07Z",
+      "side": 1,
+      "message": "I think this section can just have a reference to:\n\nhttp://wiki.midonet.org/How%20to%20contribute\n\nto avoid multiple places containing the same information.  Contribution process for MidoStack is the same as that for other MidoNet projects.",
+      "revId": "d0683838d536cfbdc05d0a3738b3a2666ed1ea35",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a6b29fe_970abfd0",
         "filename": "README.md",
         "patchSetId": 1
