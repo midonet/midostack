@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a6b29fe_ab0caf43",
+        "filename": "patches/mido_migration.patch",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2014-11-10T03:12:51Z",
+      "side": 1,
+      "message": "Is it possible to achieve this without patching?  Since midonet DB migration is completely separated from the neutron\u0027s, it seems possible.  I think we should avoid patching devstack unless it\u0027s absolutely necessary since it produces stronger dependency to upstream devstack.",
+      "revId": "89840a62ebb3cd768173a196f085c9a95b627860",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
