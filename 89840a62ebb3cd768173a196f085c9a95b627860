@@ -16,6 +16,24 @@
       "revId": "89840a62ebb3cd768173a196f085c9a95b627860",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6b29fe_0e05f110",
+        "filename": "patches/mido_migration.patch",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002741
+      },
+      "writtenOn": "2014-11-10T03:41:17Z",
+      "side": 1,
+      "message": "Agreed that patching should only be done as a last resort. Unfortunately, patching is required here because stack.sh will create a couple of networks before it returns, leaving us no window between the time the database is created and the first resource is created.",
+      "parentUuid": "7a6b29fe_ab0caf43",
+      "revId": "89840a62ebb3cd768173a196f085c9a95b627860",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
     }
   ]
 }
