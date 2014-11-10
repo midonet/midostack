@@ -1,6 +1,8 @@
 MidoStack
 =========
 
+jdevesa rocks!!!!
+
 Midostack enables you to start an all-in-one node OpenStack + MidoNet
 environment with a single command, by making use of
 [devstack](https://github.com/openstack-dev/devstack).
