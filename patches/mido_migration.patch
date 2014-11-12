@@ -6,7 +6,7 @@ index ec13338..800d1e7 100755
  # Once neutron agents are started setup initial network elements
  if is_service_enabled q-svc; then
      echo_summary "Creating initial neutron network elements"
-+    sed -i 's/user:pass/root:'"$MIDONET_PASSWORD"'/' $MIDONET_PLUGIN_SRC_DIR/midonet/neutron/db/migration/alembic.ini
++    iniset $MIDONET_PLUGIN_SRC_DIR/midonet/neutron/db/migration/alembic.ini alembic sqlalchemy.url `database_connection_url $Q_DB_NAME`
 +    cd $MIDONET_PLUGIN_SRC_DIR/midonet/neutron/db/migration/
 +    alembic upgrade head
 +    cd -
