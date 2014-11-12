@@ -28,8 +28,6 @@ MIDONET_USERNAME=${MIDONET_USERNAME:-admin}
 MIDONET_PASSWORD=${MIDOSTACK_PASSWORD}
 MIDONET_PROJECT_ID=${MIDONET_PROJECT_ID:-admin}
 
-MIDONET_OS_REPO=${MIDONET_OS_REPO:-https://github.com/jdevesa/midonet-openstack.git}
-
 ###################################################################
 ## Source build based environment variables (BUILD_SOURCES=true) ##
 ###################################################################
