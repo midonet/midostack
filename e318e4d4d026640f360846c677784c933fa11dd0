@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a65312a_7a5a9184",
+        "filename": "midonet_stack.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2014-11-12T12:55:10Z",
+      "side": 1,
+      "message": "I\u0027m wondering if it\u0027s better to make the default value to equal the branch of the OpenStack version specified.  So if \u0027-p\u0027 is not specified and \u0027-o\u0027 is specified as \u0027stable/icehouse\u0027, then the neutron plugin branch should also be \u0027stable/icehouse\u0027.  It\u0027s only when you supply both \u0027-o\u0027 and \u0027-p\u0027 that they could potentially differ.  What do you think?",
+      "revId": "e318e4d4d026640f360846c677784c933fa11dd0",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_5a5fd572",
+        "filename": "scripts/pre_devstack.d/200.start_midonet_services.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2014-11-12T12:55:10Z",
+      "side": 1,
+      "message": "Consider separating this into a different patch",
+      "revId": "e318e4d4d026640f360846c677784c933fa11dd0",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
