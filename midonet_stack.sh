@@ -89,7 +89,7 @@ MIDOSTACK_OPTION_CHECK=yes
 MIDOSTACK_PULL_DEVSTACK=yes
 MIDOSTACK_SUPPRESS_MIDO_BRANCH_CHECKS=no
 
-while getopts n:m:c:o:qhBP OPT; do
+while getopts n:m:c:o::p:qhBP OPT; do
     case "$OPT" in
       B)
         MIDOSTACK_SUPPRESS_MIDO_BRANCH_CHECKS=yes
@@ -104,8 +104,10 @@ while getopts n:m:c:o:qhBP OPT; do
         export MIDONET_CLIENT_BRANCH=$OPTARG
         ;;
       o)
-        export MIDOSTACK_OPENSTACK_BRANCH=$OPTARG
-        export MIDONET_NEUTRON_PLUGIN_GIT_BRANCH=$OPTARG
+        MIDOSTACK_OPENSTACK_BRANCH=$OPTARG
+        ;;
+      p)
+        MIDONET_NEUTRON_PLUGIN_GIT_BRANCH=$OPTARG
         ;;
       P)
         MIDOSTACK_PULL_DEVSTACK=no
@@ -130,9 +132,11 @@ while getopts n:m:c:o:qhBP OPT; do
         echo '    midonet_client_branch: Specify a branch for python-midonetclient'
         echo '                           Default: master'
         echo
-        echo '    openstack_branch: Specify branch for openstack, such as master,'
-        echo '                      stable/icehouse.'
+        echo '    -o: Specify branch for openstack, such as master, stable/icehouse.'
         echo '                      Default: master'
+        echo
+        echo '    -p: Specify the branch for plugin neutron plugin. It is recommended'
+        echo '        to use the same one as the -o option'
         echo
         echo '    -P: Do NOT pull openstack related repos under /opt/stack and'
         echo '        devstack'
@@ -150,10 +154,13 @@ while getopts n:m:c:o:qhBP OPT; do
     esac
 done
 
+export MIDONET_NEUTRON_PLUGIN_GIT_BRANCH=${MIDONET_NEUTRON_PLUGIN_GIT_BRANCH:-$MIDOSTACK_OPENSTACK_BRANCH}
+
 echo ========== Running Midostack with the following configuration:
 echo Neutron Plugin location: $MIDOSTACK_NEUTRON_PLUGIN_LOCATION
 echo MidoNet branch: $MIDONET_GIT_BRANCH
 echo MidoNet client branch: $MIDONET_CLIENT_BRANCH
+echo MidoNet plugin branch: $MIDONET_NEUTRON_PLUGIN_GIT_BRANCH
 echo OpenStack branch: $MIDOSTACK_OPENSTACK_BRANCH
 echo Pull devstack repo: $MIDOSTACK_PULL_DEVSTACK
 echo ====================================
