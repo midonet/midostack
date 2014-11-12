@@ -26,6 +26,8 @@ if [ "$MIDOSTACK_OPENSTACK_BRANCH" == "stable/havana" ] ; then
     alias run_in_screen=screen_it
 elif [ "$MIDOSTACK_OPENSTACK_BRANCH" == "stable/icehouse" ] ; then
     alias run_in_screen=screen_service
+elif [ "$MIDOSTACK_OPENSTACK_BRANCH" == "stable/juno" ] ; then
+    alias run_in_screen=screen_service
 else
     alias run_in_screen=screen_process
 fi
