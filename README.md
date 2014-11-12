@@ -16,7 +16,7 @@ environment.
 Requirements
 ------------
 
-- Ubuntu 14.04 with 4GB of RAM + swap
+- Ubuntu 14.04 with 8GB of RAM + swap
 
 Running MidoStack
 ------------------------
