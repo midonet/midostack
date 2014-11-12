@@ -85,6 +85,7 @@ MIDOSTACK_NEUTRON_PLUGIN_LOCATION=downstream
 MIDONET_GIT_BRANCH=master
 MIDONET_CLIENT_BRANCH=master
 MIDOSTACK_OPENSTACK_BRANCH=master
+MIDONET_NEUTRON_PLUGIN_GIT_BRANCH=master
 MIDOSTACK_OPTION_CHECK=yes
 MIDOSTACK_PULL_DEVSTACK=yes
 MIDOSTACK_SUPPRESS_MIDO_BRANCH_CHECKS=no
@@ -105,6 +106,8 @@ while getopts n:m:c:o:qhBP OPT; do
         ;;
       o)
         export MIDOSTACK_OPENSTACK_BRANCH=$OPTARG
+        ;;
+      p)
         export MIDONET_NEUTRON_PLUGIN_GIT_BRANCH=$OPTARG
         ;;
       P)
@@ -130,9 +133,11 @@ while getopts n:m:c:o:qhBP OPT; do
         echo '    midonet_client_branch: Specify a branch for python-midonetclient'
         echo '                           Default: master'
         echo
-        echo '    openstack_branch: Specify branch for openstack, such as master,'
-        echo '                      stable/icehouse.'
+        echo '    -o: Specify branch for openstack, such as master, stable/icehouse.'
         echo '                      Default: master'
+        echo
+        echo '    -p: Specify the branch for plugin neutron plugin. It is recommended'
+        echo '        to use the same one as the -o option'
         echo
         echo '    -P: Do NOT pull openstack related repos under /opt/stack and'
         echo '        devstack'
@@ -154,6 +159,7 @@ echo ========== Running Midostack with the following configuration:
 echo Neutron Plugin location: $MIDOSTACK_NEUTRON_PLUGIN_LOCATION
 echo MidoNet branch: $MIDONET_GIT_BRANCH
 echo MidoNet client branch: $MIDONET_CLIENT_BRANCH
+echo MidoNet plugin branch: $MIDONET_NEUTRON_PLUGIN_GIT_BRANCH
 echo OpenStack branch: $MIDOSTACK_OPENSTACK_BRANCH
 echo Pull devstack repo: $MIDOSTACK_PULL_DEVSTACK
 echo ====================================
