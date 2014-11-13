@@ -19,6 +19,15 @@ if [ "$BUILD_SOURCES" = "true" ]; then
     if [ ! -d "$MIDONET_PLUGIN_SRC_DIR" ]; then
         git_clone $MIDONET_NEUTRON_PLUGIN_GIT_REPO $MIDONET_PLUGIN_SRC_DIR  $MIDONET_NEUTRON_PLUGIN_GIT_BRANCH
     fi
+
+    # install the executables to /usr/local
+    cd $MIDONET_PLUGIN_SRC_DIR
+    sudo python setup.py develop
+    cd -
+
+    # clean up easy-install.pth
+    grep -v /usr/lib/python2.7 /usr/local/lib/python2.7/dist-packages/easy-install.pth| sudo tee /usr/local/lib/python2.7/dist-packages/easy-install.pth
+
     export PYTHONPATH=$MIDONET_CLIENT_DIR/src:$MIDONET_CLIENT_DIR/src/bin:$MIDONET_PLUGIN_SRC_DIR
 else
     echo "BUILD_SOURCES false not supported"

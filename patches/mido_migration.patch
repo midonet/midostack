@@ -8,7 +8,7 @@ index ec13338..800d1e7 100755
      echo_summary "Creating initial neutron network elements"
 +    iniset $MIDONET_PLUGIN_SRC_DIR/midonet/neutron/db/migration/alembic.ini alembic sqlalchemy.url `database_connection_url $Q_DB_NAME`
 +    cd $MIDONET_PLUGIN_SRC_DIR/midonet/neutron/db/migration/
-+    alembic upgrade head
++    midonet-db-manage upgrade head
 +    cd -
      create_neutron_initial_network
      setup_neutron_debug
