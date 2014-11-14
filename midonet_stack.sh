@@ -19,9 +19,9 @@ set -a
 MIDOSTACK_TOPDIR=$(cd $(dirname $0) && pwd)
 LOGDIR=${MIDOSTACK_LOG_DIR:-$MIDOSTACK_TOPDIR/logs/$(date +'%Y-%m-%d-%H%M%S')}
 MIDONET_LOGDIR=$LOGDIR/midonet
-DEVSTACK_LOGDIR=$LOGDIR/devstack
+SCREEN_LOGDIR=$LOGDIR/devstack
 mkdir -p $MIDONET_LOGDIR
-mkdir -p $DEVSTACK_LOGDIR
+mkdir -p $SCREEN_LOGDIR
 
 set -x
 exec 2> $MIDONET_LOGDIR/midonet_stack.sh.stderr.log
@@ -207,7 +207,7 @@ exec_hooks_on_dir $PRE_DEVSTACK_HOOKS_DIR
 #  https://review.openstack.org/#/c/117475/
 SCREEN_NAME=${SCREEN_NAME:-stack}
 
-LOGFILE=$DEVSTACK_LOGDIR/stack.sh.log
+LOGFILE=$SCREEN_LOGDIR/stack.sh.log
 echo ================================================
 echo Executing vanilla stack.sh script in devstack...
 echo Logfile: $LOGFILE
