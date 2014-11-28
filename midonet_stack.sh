@@ -19,7 +19,7 @@ set -a
 MIDOSTACK_TOPDIR=$(cd $(dirname $0) && pwd)
 LOGDIR=${MIDOSTACK_LOG_DIR:-$MIDOSTACK_TOPDIR/logs/$(date +'%Y-%m-%d-%H%M%S')}
 MIDONET_LOGDIR=$LOGDIR/midonet
-SCREEN_LOGDIR=$LOGDIR/devstack
+SCREEN_LOGDIR=${SCREEN_LOGDIR:-$LOGDIR/devstack}
 mkdir -p $MIDONET_LOGDIR
 mkdir -p $SCREEN_LOGDIR
 
