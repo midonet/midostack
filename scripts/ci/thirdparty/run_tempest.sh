@@ -14,37 +14,25 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-PYTHONPATH=/opt/stack/tempest nosetests -vv tempest.api.network.admin.test_agent_management \
-tempest.api.network.admin.test_external_network_extension \
-tempest.api.network.test_networks:BulkNetworkOpsTestJSON.test_bulk_create_delete_network \
-tempest.api.network.test_networks:BulkNetworkOpsTestJSON.test_bulk_create_delete_subnet \
-tempest.api.network.test_networks:BulkNetworkOpsTestXML.test_bulk_create_delete_network \
-tempest.api.network.test_networks:BulkNetworkOpsTestXML.test_bulk_create_delete_subnet \
-tempest.api.network.test_networks:NetworksTestJSON.test_create_delete_subnet_with_gw \
-tempest.api.network.test_networks:NetworksTestJSON.test_create_delete_subnet_without_gw \
-tempest.api.network.test_networks:NetworksTestJSON.test_create_update_delete_network_subnet \
-tempest.api.network.test_networks:NetworksTestJSON.test_delete_network_with_subnet \
-tempest.api.network.test_networks:NetworksTestJSON.test_list_networks \
-tempest.api.network.test_networks:NetworksTestJSON.test_list_networks_fields \
-tempest.api.network.test_networks:NetworksTestJSON.test_list_subnets \
-tempest.api.network.test_networks:NetworksTestJSON.test_list_subnets_fields \
-tempest.api.network.test_networks:NetworksTestJSON.test_show_network \
-tempest.api.network.test_networks:NetworksTestJSON.test_show_network_fields \
-tempest.api.network.test_networks:NetworksTestJSON.test_show_subnet \
-tempest.api.network.test_networks:NetworksTestJSON.test_show_subnet_fields \
-tempest.api.network.test_networks:NetworksTestXML.test_create_delete_subnet_with_gw \
-tempest.api.network.test_networks:NetworksTestXML.test_create_delete_subnet_without_gw \
-tempest.api.network.test_networks:NetworksTestXML.test_create_update_delete_network_subnet \
-tempest.api.network.test_networks:NetworksTestXML.test_delete_network_with_subnet \
-tempest.api.network.test_networks:NetworksTestXML.test_list_networks \
-tempest.api.network.test_networks:NetworksTestXML.test_list_networks_fields \
-tempest.api.network.test_networks:NetworksTestXML.test_list_subnets \
-tempest.api.network.test_networks:NetworksTestXML.test_list_subnets_fields \
-tempest.api.network.test_networks:NetworksTestXML.test_show_network \
-tempest.api.network.test_networks:NetworksTestXML.test_show_network_fields \
-tempest.api.network.test_networks:NetworksTestXML.test_show_subnet \
-tempest.api.network.test_networks:NetworksTestXML.test_show_subnet_fields \
+sudo pip install junitxml
+
+cd /opt/stack/tempest
+sudo pip install -r test-requirements.txt
+
+# testtools 1.3.0 breaks everything!
+sudo pip uninstall -y testtools
+sudo pip install testtools==1.1.0
+
+echo "---------------------- tempest.conf"
+cat etc/tempest.conf
+
+#disable IPv6 tests
+export IPV6_ENABLED=False
+
+python -m subunit.run tempest.api.network.test_networks \
+tempest.api.network.test_ports \
 tempest.api.network.test_networks_negative \
 tempest.api.network.test_security_groups \
-tempest.api.network.test_security_groups_negative \
---with-xunit --xunit-file=${TEMPEST_XUNIT_FILE:-tempest-results.xml}
+tempest.api.network.test_security_groups_negative | tee test_results | subunit-2to1 | tools/colorizer.py
+
+subunit2junitxml test_results > ${TEMPEST_XUNIT_FILE:-tempest-results.xml}
