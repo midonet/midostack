@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fafc7978_694be2b0",
+        "filename": "scripts/ci/thirdparty/midostack.conf",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002732
+      },
+      "writtenOn": "2014-12-03T17:20:06Z",
+      "side": 1,
+      "message": "Could you remove this or comment it out? \nMidostack should run on a KVM capable host.\nYou could also move it to run.sh",
+      "revId": "991245c0a0b7dca5b73a298ee84305d886d389ad",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_89e566aa",
+        "filename": "scripts/ci/thirdparty/run_tempest.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002732
+      },
+      "writtenOn": "2014-12-03T17:20:06Z",
+      "side": 1,
+      "message": "Nit: This should also work. \nexport IPV6_ENABLED\u003dFalse",
+      "revId": "991245c0a0b7dca5b73a298ee84305d886d389ad",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
