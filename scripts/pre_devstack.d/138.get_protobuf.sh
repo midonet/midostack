@@ -15,7 +15,7 @@
 # limitations under the License.
 
 if [ $MIDONET_GIT_BRANCH == "master" ] ; then
-    wget https://github.com/google/protobuf/releases/download/2.6.1/protobuf-2.6.1.tar.gz
+    wget https://github.com/google/protobuf/releases/download/v2.6.1/protobuf-2.6.1.tar.gz
     tar -xzf protobuf-2.6.1.tar.gz
     cd protobuf-2.6.1
     ./configure
