@@ -1,12 +1,13 @@
-diff --git a/stack.sh b/stack.sh
-index ec13338..800d1e7 100755
---- a/stack.sh
-+++ b/stack.sh
-@@ -1277,6 +1277,10 @@ fi
- # Once neutron agents are started setup initial network elements
- if is_service_enabled q-svc; then
-     echo_summary "Creating initial neutron network elements"
+diff --git a/lib/neutron_thirdparty/midonet b/lib/neutron_thirdparty/midonet
+index 099a66e..4d2d08b 100644
+--- a/lib/neutron_thirdparty/midonet
++++ b/lib/neutron_thirdparty/midonet
+@@ -21,7 +21,7 @@ MN3_XTRACE=$(set +o | grep xtrace)
+ set +o xtrace
+
+ function configure_midonet {
+-    :
 +    midonet-db-manage upgrade head
-     create_neutron_initial_network
-     setup_neutron_debug
- fi
+ }
+
+ function init_midonet {
