@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fafc7978_642ca7ac",
+        "filename": "patches/mido_migration.patch",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2014-12-04T09:10:24Z",
+      "side": 1,
+      "message": "trailing white space",
+      "revId": "e867d3dc0fb3d4b4643afdd84f6903eb8dadcbd2",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_c418f386",
+        "filename": "patches/mido_migration.patch",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2014-12-04T09:10:24Z",
+      "side": 1,
+      "message": "trailing white space",
+      "revId": "e867d3dc0fb3d4b4643afdd84f6903eb8dadcbd2",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
