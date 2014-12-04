@@ -14,6 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+echo ika
+echo uma
+exit 1
 set -a
 
 MIDOSTACK_TOPDIR=$(cd $(dirname $0) && pwd)
