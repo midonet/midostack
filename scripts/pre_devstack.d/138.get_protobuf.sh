@@ -15,14 +15,16 @@
 # limitations under the License.
 
 if [ $MIDONET_GIT_BRANCH == "master" ] ; then
-    wget https://github.com/google/protobuf/releases/download/v2.6.1/protobuf-2.6.1.tar.gz
-    tar -xzf protobuf-2.6.1.tar.gz
-    cd protobuf-2.6.1
-    ./configure
-    make
-    sudo make install
-    sudo ldconfig
-    cd -
-    rm -rf protobuf-2.6.1
-    rm protobuf-2.6.1.tar.gz
+    if ! which protoc > /dev/null || [ "$(protoc --version | awk '{print $2}')" != "2.6.1" ]; then
+        wget https://github.com/google/protobuf/releases/download/v2.6.1/protobuf-2.6.1.tar.gz
+        tar -xzf protobuf-2.6.1.tar.gz
+        cd protobuf-2.6.1
+        ./configure
+        make
+        sudo make install
+        sudo ldconfig
+        cd -
+        rm -rf protobuf-2.6.1
+        rm protobuf-2.6.1.tar.gz
+    fi
 fi
