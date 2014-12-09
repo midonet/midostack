@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-if [ $BUILD_SOURCES = true ]; then
+if use_midonet_sources ; then
     # Set up web.xml for midonet-api
     MIDONET_API_CFG=$MIDONET_SRC_DIR/midonet-api/src/main/webapp/WEB-INF/web.xml
 else
@@ -37,3 +37,4 @@ if [ $MIDONET_API_USE_KEYSTONE = true ]; then
 fi
 sudo sed -i -e "/<param-name>keystone-service_host<\/param-name>/{n;s%.*%    <param-value>$KEYSTONE_AUTH_HOST</param-value>%g}" $MIDONET_API_CFG
 sudo sed -i -e "/<param-name>keystone-admin_token<\/param-name>/{n;s%.*%    <param-value>$ADMIN_PASSWORD</param-value>%g}" $MIDONET_API_CFG
+sudo sed -i -e "/<param-name>rest_api-base_uri<\/param-name>/{n;s%.*%    <param-value>http://$HOST_IP:$MIDONET_API_PORT/midonet-api</param-value>%g}" $MIDONET_API_CFG
