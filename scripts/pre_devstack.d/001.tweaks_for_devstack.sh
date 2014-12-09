@@ -39,3 +39,9 @@ fi
 if advanced_services_split ; then
     patch -N -d $DEVSTACK_DIR -p1 < $PATCHES_DIR/clone_neutron_lbaas.patch
 fi
+
+if [ ! -z $MIDONETCLI_PACKAGE_URL ]; then
+
+    # When Midonetcli package is informed, patch devstack to don't clone it by sources
+    patch -N -d $DEVSTACK_DIR -p1 < $PATCHES_DIR/remove_midonetcli_clone.patch
+fi
