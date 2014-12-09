@@ -14,7 +14,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-if [ "$BUILD_SOURCES" = "true" ]; then
+if ! use_midonet_sources ; then
+
+    sudo apt-get install -y bridge-utils haproxy quagga iproute
+    curl $MIDOLMAN_PACKAGE_URL -o /tmp/midolman.deb
+    curl $MIDONETAPI_PACKAGE_URL -o /tmp/midonet-api.deb
+    sudo dpkg -i /tmp/midolman.deb
+    sudo dpkg -i /tmp/midonet-api.deb
+
+else
+
+    echo "Building midonet from sources"
+    MIDONET_SRC_DIR=$MIDO_DEST/midonet
 
     # Create the dest dir in case it doesn't exist
     # Github clone will fail to run otherwise
@@ -42,3 +53,14 @@ if [ "$BUILD_SOURCES" = "true" ]; then
     # install midonet jars and command line tools
     install_midonet $MIDONET_SRC_DIR
 fi
+
+# Clean up previous installation
+sudo rm -rf /usr/local/bin/midonet-cli /usr/local/lib/python2.7/dist-packages/midonetclient*
+
+# Install python midonetcli
+if [ ! -z $MIDONETCLI_PACKAGE_URL ]; then
+    sudo apt-get install -y libjs-sphinxdoc libjs-underscore python-eventlet python-greenlet python-webob
+    curl $MIDONETCLI_PACKAGE_URL -o /tmp/midonet-cli.deb
+    sudo dpkg -i /tmp/midonet-cli.deb
+fi
+

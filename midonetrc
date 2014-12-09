@@ -15,7 +15,6 @@
 ##########################################################
 ## General variables                                    ##
 ##########################################################
-BUILD_SOURCES=${BUILD_SOURCES:-true}
 MIDOSTACK_PASSWORD=${MIDOSTACK_PASSWORD:-gogomid0}
 MIDONET_DIR=${MIDONET_DIR:-$DEST/midonet}
 
@@ -37,8 +36,16 @@ MIDOSTACK_OPTION_CHECK=${MIDOSTACK_OPTION_CHECK:-yes}
 MIDOSTACK_PULL_DEVSTACK=${MIDOSTACK_PULL_DEVSTACK:-yes}
 MIDOSTACK_SUPPRESS_MIDO_BRANCH_CHECKS=${MIDOSTACK_SUPRESS_MIDO_BRANCH_CHECKS:-no}
 
+##########################################################
+## Package-based variables                              ##
+##########################################################
+MIDOLMAN_PACKAGE_URL=${MIDOLMAN_PACKAGE_URL:-}
+MIDONETAPI_PACKAGE_URL=${MIDONETAPI_PACKAGE_URL:-}
+MIDONETCLI_PACKAGE_URL=${MIDONETCLI_PACKAGE_URL:-}
+NEUTRONPLUGIN_PACKAGE_URL=${NEUTRONPLUGIN_PACKAGE_URL:-}
+
 ###################################################################
-## Source build based environment variables (BUILD_SOURCES=true) ##
+## Source build based environment variables                      ##
 ## Define repositories                                           ##
 ###################################################################
 
