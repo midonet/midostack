@@ -35,3 +35,5 @@ if [ $MIDOSTACK_NEUTRON_PLUGIN_LOCATION == "downstream" ] ; then
         patch -N -d $DEVSTACK_DIR -p1 < $PATCHES_DIR/devstack-use-downstream-neutron-plugin.patch
     fi
 fi
+
+patch -N -d $DEVSTACK_DIR -p1 < $PATCHES_DIR/remove_midonetcli_clone.patch

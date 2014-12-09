@@ -14,8 +14,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-if [ "$BUILD_SOURCES" = "true" ]; then
+if [ ! -z $MIDOLMAN_PACKAGE_URL ] && [ ! -z $MIDONETAPI_PACKAGE_URL ] ; then
 
+    sudo apt-get install -y bridge-utils haproxy quagga iproute
+    wget $MIDOLMAN_PACKAGE_URL -O /tmp/midolman.deb
+    wget $MIDONETAPI_PACKAGE_URL -O /tmp/midonet-api.deb
+    sudo dpkg -i /tmp/midolman.deb
+    sudo dpkg -i /tmp/midonet-api.deb
+
+else
+
+    echo "Building midonet from sources"
     MIDONET_SRC_DIR=$MIDO_DEST/midonet
 
     # Create the dest dir in case it doesn't exist
@@ -44,3 +53,23 @@ if [ "$BUILD_SOURCES" = "true" ]; then
     # install midonet jars and command line tools
     install_midonet
 fi
+
+# Clean up previous installation
+sudo rm -rf /usr/local/bin/midonet-cli /usr/local/lib/python2.7/dist-packages/midonetclient*
+
+# Install python module and midonet-cli
+sudo apt-get install -y ncurses-dev libreadline-dev
+sudo pip install -U webob readline httplib2
+cd $MIDONET_CLIENT_DIR
+sudo python setup.py develop
+
+# Install python midonetcli
+if [ -z $MIDONETCLI_PACKAGE_URL ]; then
+    git_clone $MIDONET_CLIENT_REPO $MIDONET_CLIENT_DIR $MIDONET_CLIENT_BRANCH
+    export PYTHONPATH=$MIDONET_CLIENT_DIR/src:$PYTHONPATH
+else
+    sudo apt-get install -y libjs-sphinxdoc libjs-underscore python-eventlet python-greenlet python-webob
+    wget $MIDONETCLI_PACKAGE_URL -O /tmp/midonet-cli.deb
+    sudo dpkg -i /tmp/midonet-cli.deb
+fi
+
