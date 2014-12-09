@@ -32,7 +32,7 @@ else
     alias run_in_screen=screen_process
 fi
 
-if [ $BUILD_SOURCES = true ]; then
+if [ -z $MIDOSTACK_MIDOLMAN_PACKAGE_URL ] || [ -z $MIDOSTACK_MIDONETAPI_PACKAGE_URL ] ; then
 
     MIDO_SCREEN_EXISTS=$(screen -ls | egrep "[0-9].$MIDONET_SCREEN_NAME")
     if [[ $MIDO_SCREEN_EXISTS == '' ]]; then
@@ -98,16 +98,16 @@ if [ $BUILD_SOURCES = true ]; then
 
 else # Use packages
 
-    sudo sed -i -e "s/8080/$MIDONET_API_PORT/g" /etc/$TOMCAT/server.xml
+    sudo sed -i -e "s/8080/$MIDONET_API_PORT/g" /etc/tomcat7/server.xml
 
     # Set up Tomcat configuration for midonet-api
-    cat <<EOF | sudo tee /etc/$TOMCAT/Catalina/localhost/midonet-api.xml
+    cat <<EOF | sudo tee /etc/tomcat7/Catalina/localhost/midonet-api.xml
     <Context path="/midonet-api"
             docBase="/usr/share/midonet-api"
                             antiResourceLocking="false" privileged="true" />
 EOF
 
-    start_service $TOMCAT
+    start_service tomcat7
     start_service midolman
 fi
 

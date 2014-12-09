@@ -149,12 +149,25 @@ export MIDONET_NEUTRON_PLUGIN_GIT_BRANCH=${MIDONET_NEUTRON_PLUGIN_GIT_BRANCH:-$M
 
 echo ========== Running Midostack with the following configuration:
 echo Neutron Plugin location: $MIDOSTACK_NEUTRON_PLUGIN_LOCATION
-echo Midonet repo: $MIDONET_GIT_REPO
-echo MidoNet branch: $MIDONET_GIT_BRANCH
-echo MidoNet client repo: $MIDONET_CLIENT_REPO
-echo MidoNet client branch: $MIDONET_CLIENT_BRANCH
-echo Midonet plugin repo: $MIDONET_NEUTRON_PLUGIN_GIT_REPO
-echo Midonet plugin branch: $MIDONET_NEUTRON_PLUGIN_GIT_BRANCH
+if [ ! -z $MIDOSTACK_MIDOLMAN_PACKAGE_URL ] && [ ! -z $MIDOSTACK_MIDONETAPI_PACKAGE_URL ]; then
+    echo Midolman package: $MIDOSTACK_MIDOLMAN_PACKAGE_URL
+    echo Midonet API package: $MIDOSTACK_MIDONETAPI_PACKAGE_URL
+else
+    echo Midonet repo: $MIDONET_GIT_REPO
+    echo MidoNet branch: $MIDONET_GIT_BRANCH
+fi
+if [ ! -z $MIDOSTACK_MIDONETCLI_PACKAGE_URL ]; then
+    echo Midonet client package: $MIDOSTACK_MIDONETCLI_PACKAGE_URL
+else
+    echo MidoNet client repo: $MIDONET_CLIENT_REPO
+    echo MidoNet client branch: $MIDONET_CLIENT_BRANCH
+fi
+if [ ! -z $MIDOSTACK_NEUTRONPLUGIN_PACKAGE_URL ]; then
+    echo Midonet plugin package: $MIDOSTACK_NEUTRONPLUGIN_PACKAGE_URL
+else
+    echo Midonet plugin repo: $MIDONET_NEUTRON_PLUGIN_GIT_REPO
+    echo Midonet plugin branch: $MIDONET_NEUTRON_PLUGIN_GIT_BRANCH
+fi
 echo OpenStack branch: $MIDOSTACK_OPENSTACK_BRANCH
 echo Pull devstack repo: $MIDOSTACK_PULL_DEVSTACK
 echo ====================================

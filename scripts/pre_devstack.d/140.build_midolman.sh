@@ -14,8 +14,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-if [ "$BUILD_SOURCES" = "true" ]; then
+if [ ! -z $MIDOSTACK_MIDOLMAN_PACKAGE_URL ] && [ ! -z $MIDOSTACK_MIDONETAPI_PACKAGE_URL ] ; then
 
+    sudo apt-get install -y bridge-utils haproxy quagga iproute
+    wget $MIDOSTACK_MIDOLMAN_PACKAGE_URL -O /tmp/midolman.deb
+    wget $MIDOSTACK_MIDONETAPI_PACKAGE_URL -O /tmp/midonet-api.deb
+    sudo dpkg -i /tmp/midolman.deb
+    sudo dpkg -i /tmp/midonet-api.deb
+
+else
+
+    echo "Building midonet from sources"
     MIDONET_SRC_DIR=$MIDO_DEST/midonet
 
     # Create the dest dir in case it doesn't exist

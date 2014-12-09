@@ -23,12 +23,18 @@ sudo rm -rf /usr/local/bin/midonet-cli /usr/local/lib/python2.7/dist-packages/mi
 # Install python module and midonet-cli
 sudo apt-get install -y ncurses-dev libreadline-dev
 sudo pip install -U webob readline httplib2
-cd $MIDONET_CLIENT_DIR
-sudo python setup.py develop
+if [ ! -z $MIDOSTACK_MIDONETCLI_PACKAGE_URL ]; then
+    # Already installed previously. Need to ensure the sources are not in the 
+    # classpatch
+    sudo rm -rf $MIDONET_CLIENT_DIR
+else
+    cd $MIDONET_CLIENT_DIR
+    sudo python setup.py develop
 
-# Make sure to remove system lib dire in case it exists
-if grep -qw /usr/lib/python2.7/dist-packages /usr/local/lib/python2.7/dist-packages/easy-install.pth; then
-    echo "replacing /usr/local/lib/python2.7/dist-packages/easy-install.pth so it remove /usr/lib/python2.7/dist-packages"
-    grep -v /usr/lib/python2.7/dist-packages /usr/local/lib/python2.7/dist-packages/easy-install.pth| sudo tee /usr/local/lib/python2.7/dist-packages/easy-install.pth
+    # Make sure to remove system lib dire in case it exists
+    if grep -qw /usr/lib/python2.7/dist-packages /usr/local/lib/python2.7/dist-packages/easy-install.pth; then
+        echo "replacing /usr/local/lib/python2.7/dist-packages/easy-install.pth so it remove /usr/lib/python2.7/dist-packages"
+        grep -v /usr/lib/python2.7/dist-packages /usr/local/lib/python2.7/dist-packages/easy-install.pth| sudo tee /usr/local/lib/python2.7/dist-packages/easy-install.pth
+    fi
+
 fi
-
