@@ -185,3 +185,17 @@ function advanced_services_split {
         return 0
     fi
 }
+
+function use_midonet_sources() {
+
+    if [ ! -z $MIDOLMAN_PACKAGE_URL ] && [ ! -z $MIDONETAPI_PACKAGE_URL ]; then
+        return 1
+    fi
+    if [ -z $MIDOLMAN_PACKAGE_URL ] && [ -z $MIDONETAPI_PACKAGE_URL ]; then
+        return 0
+    fi
+
+    echo "\$MIDOLMAN_PACKAGE_URL and \$MIDONETAPI_PACKAGE_URL must be set both
+          or none of them. In a future we will allow to be set alone. Exiting"
+    exit 1;
+}

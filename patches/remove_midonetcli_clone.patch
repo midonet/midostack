@@ -1,0 +1,14 @@
+diff --git a/lib/neutron_thirdparty/midonet b/lib/neutron_thirdparty/midonet
+index 099a66e..ed749cd 100644
+--- a/lib/neutron_thirdparty/midonet
++++ b/lib/neutron_thirdparty/midonet
+@@ -29,8 +29,7 @@ function init_midonet {
+ }
+ 
+ function install_midonet {
+-    git_clone $MIDONET_CLIENT_REPO $MIDONET_CLIENT_DIR $MIDONET_CLIENT_BRANCH
+-    export PYTHONPATH=$MIDONET_CLIENT_DIR/src:$PYTHONPATH
++    :
+ }
+ 
+ function start_midonet {

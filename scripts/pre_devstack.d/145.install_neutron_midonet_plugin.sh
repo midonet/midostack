@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-if [ "$BUILD_SOURCES" = "true" ]; then
+if [ -z $NEUTRONPLUGIN_PACKAGE_URL ] || [ -z $MIDONETCLI_PACKAGE_URL ]; then
     MIDONET_PLUGIN_SRC_DIR=$MIDO_DEST/python-neutron-plugin-midonet
     if [ ! -d "$MIDONET_PLUGIN_SRC_DIR" ]; then
         git_clone $MIDONET_NEUTRON_PLUGIN_GIT_REPO $MIDONET_PLUGIN_SRC_DIR  $MIDONET_NEUTRON_PLUGIN_GIT_BRANCH
@@ -25,9 +25,8 @@ if [ "$BUILD_SOURCES" = "true" ]; then
     sudo python setup.py develop
     cd -
 
-    # clean up easy-install.pth
-    grep -v /usr/lib/python2.7 /usr/local/lib/python2.7/dist-packages/easy-install.pth| sudo tee /usr/local/lib/python2.7/dist-packages/easy-install.pth
 else
-    echo "BUILD_SOURCES false not supported"
-    return 0
+    curl $NEUTRONPLUGIN_PACKAGE_URL -o /tmp/neutronplugin.deb
+    sudo dpkg --force-all -i /tmp/neutronplugin.deb
+    sudo apt-get install -f
 fi
