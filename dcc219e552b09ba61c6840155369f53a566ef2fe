@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_66a02191",
+        "filename": "scripts/post_devstack.d/015.install_midonet_cli.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002732
+      },
+      "writtenOn": "2014-12-10T05:19:44Z",
+      "side": 1,
+      "message": "I think setup.py develop would just add an entry to MIDONET_CLIENT_DIR (usually /opt/stack/midonet/python-midonetclient/src) in /usr/local/lib/python2.7/dist-packages/easy-install.pth. So, as long as that entry is gone, i think that\u0027s enough.",
+      "parentUuid": "fafc7978_0638359f",
+      "revId": "dcc219e552b09ba61c6840155369f53a566ef2fe",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_e63c1196",
         "filename": "scripts/pre_devstack.d/140.build_midolman.sh",
         "patchSetId": 1
