@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_79f9e6c7",
+        "filename": "scripts/post_devstack.d/015.install_midonet_cli.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2014-12-10T10:50:22Z",
+      "side": 1,
+      "message": "Here you go:\n\nhttp://stackoverflow.com/questions/3606457/removing-python-module-installed-in-develop-mode\n\nexcept instead of \u0027site-packages\u0027 do it in \u0027dist-packages\u0027",
+      "parentUuid": "fafc7978_d9873260",
+      "revId": "dcc219e552b09ba61c6840155369f53a566ef2fe",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_e63c1196",
         "filename": "scripts/pre_devstack.d/140.build_midolman.sh",
         "patchSetId": 1
@@ -136,6 +154,24 @@
       "side": 1,
       "message": "Can we leave this case for a future? The script logic can became complicated if we allow this. We should only build the part that does not belong to the package. Midonet is a monolithic repository so we will have to say to gradle to only build some of the subdirectories in midonet repository. And 4 use cases are here: no packages, 1 package (2 use cases) and 2 packages.",
       "parentUuid": "fafc7978_e63c1196",
+      "revId": "dcc219e552b09ba61c6840155369f53a566ef2fe",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_591d020f",
+        "filename": "scripts/pre_devstack.d/140.build_midolman.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2014-12-10T10:50:22Z",
+      "side": 1,
+      "message": "Then maybe what we can do is, when midostack runs, you can validate that either both MIDOLMAN_PACKAGE_URL and MIDONETAPI_PACKAGE_URL are set or neither is set.  You can\u0027t have a situation where one of them is set but not the other.",
+      "parentUuid": "fafc7978_599342a3",
       "revId": "dcc219e552b09ba61c6840155369f53a566ef2fe",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": false
@@ -206,6 +242,24 @@
       "side": 1,
       "message": "It depends, because we have to fit into the same use case than the previous script. If we leave that logic as it is, we should preserve the same use case.",
       "parentUuid": "fafc7978_c6558dc7",
+      "revId": "dcc219e552b09ba61c6840155369f53a566ef2fe",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_b91a2e15",
+        "filename": "scripts/pre_devstack.d/150.setup_midonet_api.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2014-12-10T10:50:22Z",
+      "side": 1,
+      "message": "I find it odd that MIDOLMAN_PACKAGE_URL is required to set up Midonet API. So as I suggested earlier, for now we can just validate at the start that they both need to be set, and here you can just check for MIDONETAPI_PACKAGE_URL.",
+      "parentUuid": "fafc7978_998daa7e",
       "revId": "dcc219e552b09ba61c6840155369f53a566ef2fe",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": false
