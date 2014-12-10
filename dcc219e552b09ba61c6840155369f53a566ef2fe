@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fafc7978_c6be2dff",
+        "filename": "midonet_stack.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2014-12-10T03:10:48Z",
+      "side": 1,
+      "message": "This variable name feels verbose.  Do we need \u0027MIDOSTACK_\u0027 in these variables?  *_PACKAGE_URL feels good enough.",
+      "revId": "dcc219e552b09ba61c6840155369f53a566ef2fe",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_a6bb290d",
+        "filename": "scripts/post_devstack.d/015.install_midonet_cli.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2014-12-10T03:10:48Z",
+      "side": 1,
+      "message": "white space",
+      "revId": "dcc219e552b09ba61c6840155369f53a566ef2fe",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_0638359f",
+        "filename": "scripts/post_devstack.d/015.install_midonet_cli.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2014-12-10T03:10:48Z",
+      "side": 1,
+      "message": "Don\u0027t you need to also clean up /usr/local/lib/python2.X/dist-packages/ ?  In fact, maybe that\u0027s all you need to do, instead of removing /opt/stack/python-midonetclient but not sure.",
+      "revId": "dcc219e552b09ba61c6840155369f53a566ef2fe",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_e63c1196",
+        "filename": "scripts/pre_devstack.d/140.build_midolman.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2014-12-10T03:10:48Z",
+      "side": 1,
+      "message": "I\u0027m wondering if this logic belongs in 140.build_midolman.sh since we are not building here.  Perhaps this file should be renamed, \u0027140.install_midolman.sh\u0027.\n\nAlso, I think it\u0027s better if you could separate midolman and midonet API.  It\u0027s possible we mix source and package between them.  This also made me realize that this file should have been \u0027build_midonet\u0027 instead of \u0027build_midolman\u0027 to begin with.",
+      "revId": "dcc219e552b09ba61c6840155369f53a566ef2fe",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_6648212e",
+        "filename": "scripts/pre_devstack.d/145.install_neutron_midonet_plugin.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2014-12-10T03:10:48Z",
+      "side": 1,
+      "message": "ditto - i think it\u0027s better to treat these separately.  Also, I think it makes more sense to set up client with midonet, not neutron plugin.  So my suggestion is to change \u0027build_midolman\u0027 to \u0027install_midonet\u0027 and move python-midonetclient setup there.  Set up only the neutron plugin here.",
+      "revId": "dcc219e552b09ba61c6840155369f53a566ef2fe",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_c6558dc7",
+        "filename": "scripts/pre_devstack.d/150.setup_midonet_api.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2014-12-10T03:10:48Z",
+      "side": 1,
+      "message": "I think all you need to do here is to check for MIDONET_API_PACKAGE_URL",
+      "revId": "dcc219e552b09ba61c6840155369f53a566ef2fe",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
