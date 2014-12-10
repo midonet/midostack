@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_19ab7ad9",
+        "filename": "midonet_stack.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002749
+      },
+      "writtenOn": "2014-12-10T10:07:31Z",
+      "side": 1,
+      "message": "ok!",
+      "parentUuid": "fafc7978_c6be2dff",
+      "revId": "dcc219e552b09ba61c6840155369f53a566ef2fe",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_a6bb290d",
         "filename": "scripts/post_devstack.d/015.install_midonet_cli.sh",
         "patchSetId": 1
@@ -71,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_d9873260",
+        "filename": "scripts/post_devstack.d/015.install_midonet_cli.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002749
+      },
+      "writtenOn": "2014-12-10T10:07:31Z",
+      "side": 1,
+      "message": "Does it mean that lines 35:38 should be applied in package case too?",
+      "parentUuid": "fafc7978_66a02191",
+      "revId": "dcc219e552b09ba61c6840155369f53a566ef2fe",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_e63c1196",
         "filename": "scripts/pre_devstack.d/140.build_midolman.sh",
         "patchSetId": 1
@@ -82,6 +118,24 @@
       "writtenOn": "2014-12-10T03:10:48Z",
       "side": 1,
       "message": "I\u0027m wondering if this logic belongs in 140.build_midolman.sh since we are not building here.  Perhaps this file should be renamed, \u0027140.install_midolman.sh\u0027.\n\nAlso, I think it\u0027s better if you could separate midolman and midonet API.  It\u0027s possible we mix source and package between them.  This also made me realize that this file should have been \u0027build_midonet\u0027 instead of \u0027build_midolman\u0027 to begin with.",
+      "revId": "dcc219e552b09ba61c6840155369f53a566ef2fe",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_599342a3",
+        "filename": "scripts/pre_devstack.d/140.build_midolman.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002749
+      },
+      "writtenOn": "2014-12-10T10:07:31Z",
+      "side": 1,
+      "message": "Can we leave this case for a future? The script logic can became complicated if we allow this. We should only build the part that does not belong to the package. Midonet is a monolithic repository so we will have to say to gradle to only build some of the subdirectories in midonet repository. And 4 use cases are here: no packages, 1 package (2 use cases) and 2 packages.",
+      "parentUuid": "fafc7978_e63c1196",
       "revId": "dcc219e552b09ba61c6840155369f53a566ef2fe",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": false
@@ -105,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_b9906e96",
+        "filename": "scripts/pre_devstack.d/145.install_neutron_midonet_plugin.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002749
+      },
+      "writtenOn": "2014-12-10T10:07:31Z",
+      "side": 1,
+      "message": "Ok. I\u0027ll move there.",
+      "parentUuid": "fafc7978_6648212e",
+      "revId": "dcc219e552b09ba61c6840155369f53a566ef2fe",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_c6558dc7",
         "filename": "scripts/pre_devstack.d/150.setup_midonet_api.sh",
         "patchSetId": 1
@@ -116,6 +188,24 @@
       "writtenOn": "2014-12-10T03:10:48Z",
       "side": 1,
       "message": "I think all you need to do here is to check for MIDONET_API_PACKAGE_URL",
+      "revId": "dcc219e552b09ba61c6840155369f53a566ef2fe",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_998daa7e",
+        "filename": "scripts/pre_devstack.d/150.setup_midonet_api.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002749
+      },
+      "writtenOn": "2014-12-10T10:07:31Z",
+      "side": 1,
+      "message": "It depends, because we have to fit into the same use case than the previous script. If we leave that logic as it is, we should preserve the same use case.",
+      "parentUuid": "fafc7978_c6558dc7",
       "revId": "dcc219e552b09ba61c6840155369f53a566ef2fe",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": false
