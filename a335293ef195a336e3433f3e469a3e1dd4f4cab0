@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fafc7978_77ce0d85",
+        "filename": "scripts/pre_devstack.d/001.tweaks_for_devstack.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2014-12-10T17:34:43Z",
+      "side": 1,
+      "message": "We have to make sure to design midostack so that the installation from source remains the default, and that package-based setup is simply an add-on feature.  We should also avoid modifying the upstream devstack as much as possible, and especially avoid \u0027undoing\u0027 things.  So could we apply this patch ONLY if midostack was ran to set up using packages?",
+      "revId": "a335293ef195a336e3433f3e469a3e1dd4f4cab0",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_f7a15daa",
+        "filename": "scripts/pre_devstack.d/140.install_midonet.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2014-12-10T17:34:43Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be executed if this is package-based right?",
+      "revId": "a335293ef195a336e3433f3e469a3e1dd4f4cab0",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_97c5715d",
+        "filename": "scripts/pre_devstack.d/140.install_midonet.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2014-12-10T17:34:43Z",
+      "side": 1,
+      "message": "We should leave this in devstack",
+      "revId": "a335293ef195a336e3433f3e469a3e1dd4f4cab0",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_d7a6d9c0",
+        "filename": "scripts/pre_devstack.d/150.setup_midonet_api.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2014-12-10T17:34:43Z",
+      "side": 1,
+      "message": "To be less verbose, since we do this check everywhere, we could create a function, use_source(), and call that instead.",
+      "revId": "a335293ef195a336e3433f3e469a3e1dd4f4cab0",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_37ac85a0",
+        "filename": "scripts/pre_devstack.d/200.start_midonet_services.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2014-12-10T17:34:43Z",
+      "side": 1,
+      "message": "Just curious.  Why did this need to be changed?",
+      "revId": "a335293ef195a336e3433f3e469a3e1dd4f4cab0",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
