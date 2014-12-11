@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fafc7978_72a3bb9e",
+        "filename": "scripts/ci/thirdparty/run.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002732
+      },
+      "writtenOn": "2014-12-11T06:22:14Z",
+      "side": 1,
+      "message": "Nit: it\u0027d be useful to leave a log like\nlog has been copied to http://@3rdparty-logs.midokura.com/$ZUUL_CHANGE \n\nThat way it\u0027ll be easier to link to log from console log.",
+      "revId": "78186691572a6f909e67c33f7941458078a311dd",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
