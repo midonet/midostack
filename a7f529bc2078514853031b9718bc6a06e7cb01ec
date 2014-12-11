@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fafc7978_aa42c70d",
+        "filename": "devstack_local.conf",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2014-12-11T16:44:02Z",
+      "side": 1,
+      "message": "This reads kind of funny to me, that setting this environment variable determines whether we enable midonet service or not.  Could you explain this a bit?  Isn\u0027t \u0027enable_service midonet\u0027 doing a lot more than just installing midonet CLI from source?",
+      "revId": "a7f529bc2078514853031b9718bc6a06e7cb01ec",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_ea720f7b",
+        "filename": "scripts/pre_devstack.d/145.install_neutron_midonet_plugin.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2014-12-11T16:44:02Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s necessary to check MIDONETCLI_PACKAGE_URL here.",
+      "revId": "a7f529bc2078514853031b9718bc6a06e7cb01ec",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
