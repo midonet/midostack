@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_52231705",
+        "filename": "scripts/pre_devstack.d/001.tweaks_for_devstack.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002749
+      },
+      "writtenOn": "2014-12-11T07:53:01Z",
+      "side": 1,
+      "message": "Yes. BTW, in the afternoon, after submit the patch, I found a much better way to do it.",
+      "parentUuid": "fafc7978_77ce0d85",
+      "revId": "a335293ef195a336e3433f3e469a3e1dd4f4cab0",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_f7a15daa",
         "filename": "scripts/pre_devstack.d/140.install_midonet.sh",
         "patchSetId": 2
