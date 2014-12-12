@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_7390da43",
+        "filename": "devstack_local.conf",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2014-12-12T17:41:01Z",
+      "side": 1,
+      "message": "Yes, that is indeed my preference that I mentioned above.  As long as it touches the upstream file ONLY in the package mode.",
+      "parentUuid": "fafc7978_0df84d48",
+      "revId": "a7f529bc2078514853031b9718bc6a06e7cb01ec",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_ea720f7b",
         "filename": "scripts/pre_devstack.d/145.install_neutron_midonet_plugin.sh",
         "patchSetId": 4
