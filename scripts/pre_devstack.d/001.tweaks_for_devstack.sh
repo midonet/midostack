@@ -35,3 +35,7 @@ if [ $MIDOSTACK_NEUTRON_PLUGIN_LOCATION == "downstream" ] ; then
         patch -N -d $DEVSTACK_DIR -p1 < $PATCHES_DIR/devstack-use-downstream-neutron-plugin.patch
     fi
 fi
+
+if advanced_services_split ; then
+    patch -N -d $DEVSTACK_DIR -p1 < $PATCHES_DIR/clone_neutron_lbaas.patch
+fi
