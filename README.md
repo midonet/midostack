@@ -16,7 +16,11 @@ environment.
 Requirements
 ------------
 
-- Ubuntu 14.04 with 4GB of RAM + swap
+Platform: Ubuntu 14.04 on x86_64
+RAM: 4GB(minimum) or more(recommended). If you see issues in Midostack, e.g.
+     midonet_stack.sh fails to stack,  some service doesn't start,
+     VM doesn't launch, etc, try with more memory.
+     8GB should be big enough for spawning several VMs on midostack.
 
 Running MidoStack
 ------------------------
