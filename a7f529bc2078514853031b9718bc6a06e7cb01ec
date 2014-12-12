@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_8deb9daf",
+        "filename": "devstack_local.conf",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2014-12-12T08:27:35Z",
+      "side": 1,
+      "message": "I\u0027m still a bit uncomfortable about this because that file just happens to have only PMC setup right now but it is there so that we can add anything \u0027external\u0027 to neutron.  To have it so strongly tied to this PMC package setting feels awkward.  My (very slight) preference actually would be what you had previously, which is to patch if the packaging is specified.  But I don\u0027t find that elegant either.\n\n\nSince I don\u0027t have any solution that\u0027s better, and to keep this work moving along, I won\u0027t -1 it as long as others are ok with it.",
+      "parentUuid": "fafc7978_0dc04d29",
+      "revId": "a7f529bc2078514853031b9718bc6a06e7cb01ec",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_ea720f7b",
         "filename": "scripts/pre_devstack.d/145.install_neutron_midonet_plugin.sh",
         "patchSetId": 4
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Yes it is. The neutronplugin package depends on the midonetcli package. You can not install midonetcli from sources and neutronplugin from package (forcing its installation) without future apt conflicts.",
       "parentUuid": "fafc7978_ea720f7b",
+      "revId": "a7f529bc2078514853031b9718bc6a06e7cb01ec",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_ade821b5",
+        "filename": "scripts/pre_devstack.d/145.install_neutron_midonet_plugin.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2014-12-12T08:27:35Z",
+      "side": 1,
+      "message": "Understood, makes sense.  In fact, this sounds like another validation that we should have, that you cannot possibly set Neutron plugin package URL without setting Midonet client package URL to prevent misconfiguration early, but I won\u0027t -1 because of it.",
+      "parentUuid": "fafc7978_6dde3913",
       "revId": "a7f529bc2078514853031b9718bc6a06e7cb01ec",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": false
