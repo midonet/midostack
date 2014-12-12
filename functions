@@ -153,3 +153,35 @@ function run_midonet_api() {
     ./gradlew :midonet-api:jettyRun -Pport=$MIDONET_API_PORT
     LC_ALL=C
 }
+
+function is_havana() {
+    if [ "$MIDOSTACK_OPENSTACK_BRANCH" == "stable/havana" ] ; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+function is_icehouse() {
+    if [ "$MIDOSTACK_OPENSTACK_BRANCH" == "stable/icehouse" ] ; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+function is_juno() {
+    if [ "$MIDOSTACK_OPENSTACK_BRANCH" == "stable/juno" ] ; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+function advanced_services_split() {
+    if is_juno || is_icehouse || is_havana ; then
+        return 1
+    else
+        return 0
+    fi
+}
