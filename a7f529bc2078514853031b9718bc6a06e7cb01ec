@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_0dc04d29",
+        "filename": "devstack_local.conf",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002749
+      },
+      "writtenOn": "2014-12-12T08:04:20Z",
+      "side": 1,
+      "message": "\"enable_service midonet\" it only installs python-midonetclient from source. Check out the comments: https://github.com/openstack-dev/devstack/blob/master/lib/neutron_thirdparty/midonet\n\nAnd also, I built midostack with these options and I could pass the tempest tests.",
+      "parentUuid": "fafc7978_aa42c70d",
+      "revId": "a7f529bc2078514853031b9718bc6a06e7cb01ec",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_ea720f7b",
         "filename": "scripts/pre_devstack.d/145.install_neutron_midonet_plugin.sh",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2014-12-11T16:44:02Z",
       "side": 1,
       "message": "I don\u0027t think it\u0027s necessary to check MIDONETCLI_PACKAGE_URL here.",
+      "revId": "a7f529bc2078514853031b9718bc6a06e7cb01ec",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_6dde3913",
+        "filename": "scripts/pre_devstack.d/145.install_neutron_midonet_plugin.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002749
+      },
+      "writtenOn": "2014-12-12T08:04:20Z",
+      "side": 1,
+      "message": "Yes it is. The neutronplugin package depends on the midonetcli package. You can not install midonetcli from sources and neutronplugin from package (forcing its installation) without future apt conflicts.",
+      "parentUuid": "fafc7978_ea720f7b",
       "revId": "a7f529bc2078514853031b9718bc6a06e7cb01ec",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": false
