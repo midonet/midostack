@@ -28,7 +28,13 @@ fi
 
 if [ $MIDOSTACK_NEUTRON_PLUGIN_LOCATION == "downstream" ] ; then
     export DHCP_DRIVER="midonet.neutron.agent.midonet_driver.DhcpNoOpDriver"
-    if [ $MIDOSTACK_OPENSTACK_BRANCH == "master" ]  || [ $MIDOSTACK_OPENSTACK_BRANCH == "stable/juno" ] ; then
+
+    # TODO: Push these changes to upstream;  The following will break when new branch for L is cut
+    if [ $MIDOSTACK_OPENSTACK_BRANCH == "master" ]  || [ $MIDOSTACK_OPENSTACK_BRANCH == "stable/kilo" ]; then
+        cp $MIDOSTACK_TOPDIR/files/neutron_plugins $MIDOSTACK_TOPDIR/devstack/lib/neutron_plugins/midonet
+        cp $MIDOSTACK_TOPDIR/files/neutron_thirdparty $MIDOSTACK_TOPDIR/devstack/lib/neutron_thirdparty/midonet
+
+    elif [ $MIDOSTACK_OPENSTACK_BRANCH == "stable/juno" ] ; then
         patch -N -d $DEVSTACK_DIR -p1 < $PATCHES_DIR/downstream_plugin_with_juno.patch
         patch -N -d $DEVSTACK_DIR -p1 < $PATCHES_DIR/add_extensions_path.patch
     else
