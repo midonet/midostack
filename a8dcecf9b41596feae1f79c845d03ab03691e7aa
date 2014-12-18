@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "9a0b7d60_38182d84",
+        "filename": "midonetrc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002749
+      },
+      "writtenOn": "2014-12-18T11:07:07Z",
+      "side": 1,
+      "message": "I don\u0027t see a point of have this environment variable if there is a recursive gradle build that builds the submodules, right? It has to be always in the $MIDO_SRC_DEST/python-midonetclient\n\nMoreover, I wouldn\u0027t have the MIDO_SRC_DEST if we already have decided the MIDO_DEST.\n\nIt is ok to have variables, but not one that the user can change. I think this file should be reserved for user-defined vars",
+      "revId": "a8dcecf9b41596feae1f79c845d03ab03691e7aa",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a0b7d60_181d6974",
+        "filename": "patches/upstream_provider_router.patch",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002749
+      },
+      "writtenOn": "2014-12-18T11:07:07Z",
+      "side": 1,
+      "message": "Time to fix this: use $MIDO_DEST instead of /opt/stack/midonet",
+      "revId": "a8dcecf9b41596feae1f79c845d03ab03691e7aa",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a0b7d60_f84d05c6",
         "filename": "scripts/pre_devstack.d/140.build_midolman.sh",
         "patchSetId": 2
