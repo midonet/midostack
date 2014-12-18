@@ -91,9 +91,6 @@ while getopts n:m:c:o::p:qhBP OPT; do
       m)
         export MIDONET_GIT_BRANCH=$OPTARG
         ;;
-      c)
-        export MIDONET_CLIENT_BRANCH=$OPTARG
-        ;;
       o)
         MIDOSTACK_OPENSTACK_BRANCH=$OPTARG
         ;;
@@ -109,7 +106,7 @@ while getopts n:m:c:o::p:qhBP OPT; do
       h)
         # got invalid option
         echo "Usage: $0 [-n neutron_plugin_location] [-m midonet_branch]"
-        echo '          [-c midonet_client_branch] [-o openstack_branch ] [-q]'
+        echo '          [-o openstack_branch ] [-q]'
         echo
         echo '    neutron_plugin_location: Specifies the location of the'
         echo '                             neutron plugin.'
@@ -119,9 +116,6 @@ while getopts n:m:c:o::p:qhBP OPT; do
         echo
         echo '    midonet_branch: Specify a branch for midonet'
         echo '                    Default: master'
-        echo
-        echo '    midonet_client_branch: Specify a branch for python-midonetclient'
-        echo '                           Default: master'
         echo
         echo '    -o: Specify branch for openstack, such as master, stable/icehouse.'
         echo '                      Default: master'
@@ -151,8 +145,6 @@ echo ========== Running Midostack with the following configuration:
 echo Neutron Plugin location: $MIDOSTACK_NEUTRON_PLUGIN_LOCATION
 echo Midonet repo: $MIDONET_GIT_REPO
 echo MidoNet branch: $MIDONET_GIT_BRANCH
-echo MidoNet client repo: $MIDONET_CLIENT_REPO
-echo MidoNet client branch: $MIDONET_CLIENT_BRANCH
 echo Midonet plugin repo: $MIDONET_NEUTRON_PLUGIN_GIT_REPO
 echo Midonet plugin branch: $MIDONET_NEUTRON_PLUGIN_GIT_BRANCH
 echo OpenStack branch: $MIDOSTACK_OPENSTACK_BRANCH
@@ -172,7 +164,6 @@ check_devstack_branch
 check_openstack_branch
 if [ $MIDOSTACK_SUPPRESS_MIDO_BRANCH_CHECKS != "yes" ] ; then
     check_midonet_branch
-    check_python_midonetclient_branch
 fi
 
 if [ "$MIDOSTACK_PULL_DEVSTACK" == "yes" ] ; then
