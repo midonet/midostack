@@ -14,8 +14,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-export MIDONET_CLIENT_REPO=${MIDONET_CLIENT_REPO:-https://github.com/midonet/python-midonetclient.git}
-
 patch -N -d $DEVSTACK_DIR -p1 < $PATCHES_DIR/dont_use_reserved_ports.patch
 
 if [[ $MIDOSTACK_OPENSTACK_BRANCH == "master" && $MIDOSTACK_NEUTRON_PLUGIN_LOCATION == "downstream" ]] ; then

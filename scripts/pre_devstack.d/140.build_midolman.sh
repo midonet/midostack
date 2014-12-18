@@ -16,8 +16,6 @@
 
 if [ "$BUILD_SOURCES" = "true" ]; then
 
-    MIDONET_SRC_DIR=$MIDO_DEST/midonet
-
     # Create the dest dir in case it doesn't exist
     # Github clone will fail to run otherwise
     if [ ! -d $MIDO_DEST ]; then
@@ -27,8 +25,8 @@ if [ "$BUILD_SOURCES" = "true" ]; then
     fi
 
     # Get MidoNet source and install
-    if [ ! -d "$MIDONET_SRC_DIR" ]; then
-        git_clone $MIDONET_GIT_REPO $MIDONET_SRC_DIR $MIDONET_GIT_BRANCH
+    if [ ! -d "$MIDO_SRC_DEST" ]; then
+        git_clone $MIDONET_GIT_REPO $MIDO_SRC_DEST $MIDONET_GIT_BRANCH
         if [ $? -gt 0 ]
         then
             echo $?
@@ -36,7 +34,7 @@ if [ "$BUILD_SOURCES" = "true" ]; then
             exit 1
         fi
     fi
-    cd $MIDONET_SRC_DIR && git submodule update --init
+    cd $MIDO_SRC_DEST && git submodule update --init
 
     # Build midonet and produce jar files under build directories
     build_midonet

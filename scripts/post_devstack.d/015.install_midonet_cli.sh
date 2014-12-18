@@ -14,16 +14,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-MIDO_DEST=${MIDO_DEST:-/opt/stack/midonet}
-MIDONET_CLIENT_DIR=${MIDO_DEST}/python-midonetclient
-
 # Clean up previous installation
 sudo rm -rf /usr/local/bin/midonet-cli /usr/local/lib/python2.7/dist-packages/midonetclient*
 
 # Install python module and midonet-cli
 sudo apt-get install -y ncurses-dev libreadline-dev
 sudo pip install -U webob readline httplib2
-cd $MIDONET_CLIENT_DIR
+cd $MIDO_CLIENT_SRC_DEST
 sudo python setup.py develop
 
 # Make sure to remove system lib dire in case it exists

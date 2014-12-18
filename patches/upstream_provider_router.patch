@@ -19,7 +19,7 @@ index 099a66e..220718e 100644
 +password=$ADMIN_PASSWORD
 +EOF
 +
-+    provider_router_id=$(PYTHONPATH=/opt/stack/midonet/python-midonetclient/src/ /opt/stack/midonet/python-midonetclient/src/bin/midonet-cli -e router create name MidonetProviderRouter)
++    provider_router_id=$(PYTHONPATH=/opt/stack/midonet/midonet/python-midonetclient/src/ /opt/stack/midonet/midonet/python-midonetclient/src/bin/midonet-cli -e router create name MidonetProviderRouter)
 +
 +    iniset /etc/neutron/plugins/midonet/midonet.ini MIDONET provider_router_id $provider_router_id
  }
