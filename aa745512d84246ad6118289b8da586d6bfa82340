@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a0b7d60_e319da7a",
+        "filename": "patches/remove_midonetcli_clone.patch",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002749
+      },
+      "writtenOn": "2014-12-18T11:26:18Z",
+      "side": 1,
+      "message": "Tomoe, we have moved the pmc code to midonet. I don\u0027t know if it makes sense now to worry too much about this piece of code. I understand that we will remove this step in upstream devstack.",
+      "revId": "aa745512d84246ad6118289b8da586d6bfa82340",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
