@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a0b7d60_388f8d25",
+        "filename": "patches/remove_midonetcli_clone.patch",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002732
+      },
+      "writtenOn": "2014-12-18T03:33:22Z",
+      "side": 1,
+      "message": "nit: WS. upstream devstack doesn\u0027t have this.",
+      "revId": "26892815a46b66544ece0d15eff3aea9e755189e",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a0b7d60_589ed157",
+        "filename": "patches/remove_midonetcli_clone.patch",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002732
+      },
+      "writtenOn": "2014-12-18T03:33:22Z",
+      "side": 1,
+      "message": "Not a blocking issue, and we can/should do this kind of change in upstream. So don\u0027t need to change now.\n\nWe may want to do something like this to support switching back and forth to pkg mode. \n\n\n\nif use_pkg:\n    don\u0027t install source \n    if source found already,\n         remove the source or path from python path\n\nelse if not use_package:\n    do as is\nend if",
+      "revId": "26892815a46b66544ece0d15eff3aea9e755189e",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a0b7d60_18944936",
+        "filename": "patches/remove_midonetcli_clone.patch",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002732
+      },
+      "writtenOn": "2014-12-18T03:33:22Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "26892815a46b66544ece0d15eff3aea9e755189e",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a0b7d60_f8ace58e",
+        "filename": "scripts/pre_devstack.d/150.setup_midonet_api.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002732
+      },
+      "writtenOn": "2014-12-18T03:33:22Z",
+      "side": 1,
+      "message": "Is this absolutely needed for supporting package? \nIf not, could you remove?",
+      "revId": "26892815a46b66544ece0d15eff3aea9e755189e",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
