@@ -15,7 +15,7 @@
 # limitations under the License.
 
 if [ "$BUILD_SOURCES" = "true" ]; then
-    MIDONET_PLUGIN_SRC_DIR=$MIDO_DEST/python-neutron-plugin-midonet
+    MIDONET_PLUGIN_SRC_DIR=$MIDONET_DIR/python-neutron-plugin-midonet
     if [ ! -d "$MIDONET_PLUGIN_SRC_DIR" ]; then
         git_clone $MIDONET_NEUTRON_PLUGIN_GIT_REPO $MIDONET_PLUGIN_SRC_DIR  $MIDONET_NEUTRON_PLUGIN_GIT_BRANCH
     fi

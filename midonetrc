@@ -17,7 +17,7 @@
 ##########################################################
 BUILD_SOURCES=${BUILD_SOURCES:-true}
 MIDOSTACK_PASSWORD=${MIDOSTACK_PASSWORD:-gogomid0}
-MIDO_DEST=${MIDO_DEST:-$DEST/midonet}
+MIDONET_DIR=${MIDONET_DIR:-$DEST/midonet}
 
 # For midonet.ini (configured in lib/neutron_plugins/midonet in devstack)
 MIDONET_API_PORT=${MIDONET_API_PORT:-8081}
@@ -46,7 +46,7 @@ MIDONET_GIT_BRANCH=${MIDONET_GIT_BRANCH:-master}
 
 MIDONET_CLIENT_REPO=${MIDONET_CLIENT_REPO:-http://github.com/midonet/python-midonetclient}
 MIDONET_CLIENT_BRANCH=${MIDONET_CLIENT_BRANCH:-master}
-MIDONET_CLIENT_DIR=${MIDONET_CLIENT_DIR:-$MIDO_DEST/python-midonetclient}
+MIDONET_CLIENT_DIR=${MIDONET_CLIENT_DIR:-$MIDONET_DIR/python-midonetclient}
 
 MIDONET_NEUTRON_PLUGIN_GIT_REPO=${MIDONET_NEUTRON_PLUGIN_GIT_REPO:-http://github.com/midonet/python-neutron-plugin-midonet.git}
 

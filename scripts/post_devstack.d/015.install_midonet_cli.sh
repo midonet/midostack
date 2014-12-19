@@ -14,8 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-MIDO_DEST=${MIDO_DEST:-/opt/stack/midonet}
-MIDONET_CLIENT_DIR=${MIDO_DEST}/python-midonetclient
+MIDONET_CLIENT_DIR=${MIDONET_DIR}/python-midonetclient
 
 # Clean up previous installation
 sudo rm -rf /usr/local/bin/midonet-cli /usr/local/lib/python2.7/dist-packages/midonetclient*

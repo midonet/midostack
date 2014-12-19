@@ -16,13 +16,13 @@
 
 if [ "$BUILD_SOURCES" = "true" ]; then
 
-    MIDONET_SRC_DIR=$MIDO_DEST/midonet
+    MIDONET_SRC_DIR=$MIDONET_DIR/midonet
 
     # Create the dest dir in case it doesn't exist
     # Github clone will fail to run otherwise
-    if [ ! -d $MIDO_DEST ]; then
-        echo "Creating midonet destination directory... $MIDO_DEST"
-        sudo mkdir -p $MIDO_DEST
+    if [ ! -d $MIDONET_DIR ]; then
+        echo "Creating midonet destination directory... $MIDONET_DIR"
+        sudo mkdir -p $MIDONET_DIR
         sudo chmod -R 777 $DEST
     fi
 

@@ -7,7 +7,7 @@ index 17a612a..78e8b1d 100644
      Q_PLUGIN_CONF_FILENAME=midonet.ini
      Q_PLUGIN_CLASS="midonet.neutron.plugin.MidonetPluginV2"
 +
-+    iniset $NEUTRON_CONF DEFAULT api_extensions_path $MIDO_DEST/python-neutron-plugin-midonet/midonet/neutron/extensions
++    iniset $NEUTRON_CONF DEFAULT api_extensions_path $MIDONET_DIR/python-neutron-plugin-midonet/midonet/neutron/extensions
  }
 
  function neutron_plugin_configure_debug_command {
