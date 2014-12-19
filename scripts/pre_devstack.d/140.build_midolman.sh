@@ -39,8 +39,8 @@ if [ "$BUILD_SOURCES" = "true" ]; then
     cd $MIDONET_SRC_DIR && git submodule update --init
 
     # Build midonet and produce jar files under build directories
-    build_midonet
+    build_midonet $MIDONET_SRC_DIR
 
     # install midonet jars and command line tools
-    install_midonet
+    install_midonet $MIDONET_SRC_DIR
 fi

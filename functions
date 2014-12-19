@@ -93,15 +93,21 @@ function get_ubuntu_codename() {
 #
 
 function build_midonet() {
+    if [ -z "$1" ]; then
+        echo "Midonet src directory not passed in."
+        exit 1
+    fi
+    local midonet_src_dir=$1
+
     # Because some source code has unnicode characters
     LC_ALL=en_US.UTF-8
 
     # Use sudo to clean up stuff that previous :midolman:runWithSudo might
     # have created and chown .gradle dirs
-    cd $MIDONET_SRC_DIR && sudo ./gradlew clean
+    cd $midonet_src_dir && sudo ./gradlew clean
     sudo chown $(whoami) .gradle/ ~/.gradle -R
 
-    cd $MIDONET_SRC_DIR && ./gradlew assemble
+    cd $midonet_src_dir && ./gradlew assemble
     if [ $? -gt 0 ]; then
         echo "Exiting. MidoNet build failed."
         exit 1
@@ -110,16 +116,21 @@ function build_midonet() {
 }
 
 function install_midonet() {
+    if [ -z "$1" ]; then
+        echo "Midonet src directory not passed in."
+        exit 1
+    fi
+    local midonet_src_dir=$1
 
     # install jar to midolman's build dir
-    cd $MIDONET_SRC_DIR && ./gradlew :midolman:installApp
+    cd $midonet_src_dir && ./gradlew :midolman:installApp
 
     # Change MIDO_HOME (used by mm-ctl / mm-dpctl) to point at deps dir
-    MIDO_HOME=$MIDONET_SRC_DIR/midodeps
+    MIDO_HOME=$midonet_src_dir/midodeps
     rm -rf $MIDO_HOME ; mkdir -p $MIDO_HOME
 
     # Jars have been created in earlier build step, put them all in one deps dir
-    MIDOLMAN_BUILD_TARGET_DIR="$MIDONET_SRC_DIR/midolman/build/install/midolman/lib"
+    MIDOLMAN_BUILD_TARGET_DIR="$midonet_src_dir/midolman/build/install/midolman/lib"
     cp $MIDOLMAN_BUILD_TARGET_DIR/midolman-*.jar  $MIDO_HOME/midolman.jar
     cp $MIDOLMAN_BUILD_TARGET_DIR/midonet-jdk-bootstrap-*.jar $MIDO_HOME/midonet-jdk-bootstrap.jar
     cp -r $MIDOLMAN_BUILD_TARGET_DIR $MIDO_HOME/dep
@@ -136,10 +147,10 @@ function install_midonet() {
     fi
     # These config files are needed - create if not present
     if [ ! -f $MIDOLMAN_CONF_DIR/logback-dpctl.xml ]; then
-        sudo cp $MIDONET_SRC_DIR/midolman/conf/logback-dpctl.xml $MIDOLMAN_CONF_DIR/
+        sudo cp $midonet_src_dir/midolman/conf/logback-dpctl.xml $MIDOLMAN_CONF_DIR/
     fi
     if [ ! -f $MIDOLMAN_CONF_DIR/midolman.conf ]; then
-        sudo cp $MIDONET_SRC_DIR/midolman/conf/midolman.conf $MIDOLMAN_CONF_DIR/
+        sudo cp $midonet_src_dir/midolman/conf/midolman.conf $MIDOLMAN_CONF_DIR/
     fi
 }
 
