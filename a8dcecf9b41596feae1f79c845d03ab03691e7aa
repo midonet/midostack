@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9a0b7d60_dea9097d",
+        "filename": "midonetrc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2014-12-19T01:02:13Z",
+      "side": 1,
+      "message": "I agree with you, this is why MIDO_SRC_DEST and MIDO_CLIENT_SRC_DEST are not settable by users as I mentioned in the comment.  The only thing that should be provided by the users is MIDO_DEST.  What I don\u0027t really want is to have \"MIDO_DEST/midonet/python-midonetclient\" all over the place.  What I was hoping that I achieve are:\n\n1. Make these sub-directories non-settable\n2. Make them available in the rest of the script without needing to hardcode the paths\n\nMaybe there is a better way to do that?",
+      "parentUuid": "9a0b7d60_38182d84",
+      "revId": "a8dcecf9b41596feae1f79c845d03ab03691e7aa",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a0b7d60_181d6974",
         "filename": "patches/upstream_provider_router.patch",
         "patchSetId": 2
