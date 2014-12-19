@@ -16,8 +16,6 @@
 
 if [ "$BUILD_SOURCES" = "true" ]; then
 
-    MIDONET_SRC_DIR=$MIDONET_DIR/midonet
-
     # Create the dest dir in case it doesn't exist
     # Github clone will fail to run otherwise
     if [ ! -d $MIDONET_DIR ]; then

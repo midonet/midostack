@@ -19,6 +19,9 @@ BUILD_SOURCES=${BUILD_SOURCES:-true}
 MIDOSTACK_PASSWORD=${MIDOSTACK_PASSWORD:-gogomid0}
 MIDONET_DIR=${MIDONET_DIR:-$DEST/midonet}
 
+# Directory of midonet source.  Not intended to be set by the users.
+MIDONET_SRC_DIR=$MIDONET_DIR/midonet
+
 # For midonet.ini (configured in lib/neutron_plugins/midonet in devstack)
 MIDONET_API_PORT=${MIDONET_API_PORT:-8081}
 MIDONET_USERNAME=${MIDONET_USERNAME:-admin}
