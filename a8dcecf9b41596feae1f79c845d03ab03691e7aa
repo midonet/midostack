@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "7af0899e_ae121756",
+        "filename": "midonetrc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002749
+      },
+      "writtenOn": "2014-12-19T08:56:03Z",
+      "side": 1,
+      "message": "Why don\u0027t just add these two lines in the ./midonet_stack.sh script just after reading this file?",
+      "parentUuid": "9a0b7d60_dea9097d",
+      "revId": "a8dcecf9b41596feae1f79c845d03ab03691e7aa",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a0b7d60_181d6974",
         "filename": "patches/upstream_provider_router.patch",
         "patchSetId": 2
