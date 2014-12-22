@@ -22,6 +22,9 @@ MIDONET_DIR=${MIDONET_DIR:-$DEST/midonet}
 # Directory of midonet source.  Not intended to be set by the users.
 MIDONET_SRC_DIR=$MIDONET_DIR/midonet
 
+# Directory of midonet client source.  Not intended to be set by the users.
+MIDONET_CLIENT_DIR=$MIDONET_SRC_DIR/python-midonetclient
+
 # For midonet.ini (configured in lib/neutron_plugins/midonet in devstack)
 MIDONET_API_PORT=${MIDONET_API_PORT:-8081}
 MIDONET_USERNAME=${MIDONET_USERNAME:-admin}
