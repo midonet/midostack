@@ -16,6 +16,23 @@
       "revId": "aa745512d84246ad6118289b8da586d6bfa82340",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1af78d9a_31604835",
+        "filename": "scripts/ci/thirdparty/midostack.conf",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2014-12-22T11:32:10Z",
+      "side": 1,
+      "message": "I want Lucas to comment on this.  Isn\u0027t this better if we let the users specify?  Otherwise, we\u0027ll have to keep merging every time these change for third party testing.",
+      "revId": "aa745512d84246ad6118289b8da586d6bfa82340",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
     }
   ]
 }
