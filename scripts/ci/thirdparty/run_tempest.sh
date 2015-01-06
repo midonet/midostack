@@ -26,9 +26,6 @@ sudo pip install testtools==1.1.0
 echo "---------------------- tempest.conf"
 cat etc/tempest.conf
 
-#disable IPv6 tests
-export IPV6_ENABLED=False
-
 python -m subunit.run tempest.api.network.test_networks \
 tempest.api.network.test_ports \
 tempest.api.network.test_networks_negative \
