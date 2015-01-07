@@ -50,6 +50,24 @@
       "revId": "aa745512d84246ad6118289b8da586d6bfa82340",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1af78d9a_9e093c2f",
+        "filename": "scripts/ci/thirdparty/midostack.conf",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002770
+      },
+      "writtenOn": "2015-01-07T14:24:31Z",
+      "side": 1,
+      "message": "You are right, we can get rid of them.",
+      "parentUuid": "1af78d9a_2df3c474",
+      "revId": "aa745512d84246ad6118289b8da586d6bfa82340",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
     }
   ]
 }
