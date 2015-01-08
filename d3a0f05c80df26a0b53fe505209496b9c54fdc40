@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1af78d9a_39c142e5",
+        "filename": "scripts/pre_devstack.d/140.install_midonet.sh",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002732
+      },
+      "writtenOn": "2015-01-08T04:34:37Z",
+      "side": 1,
+      "message": "MIDO_DEST was removed recently. \nI think you can remove this line as MIDONET_SRC_DIR is defined in midonetrc.",
+      "revId": "d3a0f05c80df26a0b53fe505209496b9c54fdc40",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1af78d9a_99b67689",
+        "filename": "scripts/pre_devstack.d/140.install_midonet.sh",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002732
+      },
+      "writtenOn": "2015-01-08T04:34:37Z",
+      "side": 1,
+      "message": "This installs only by package. Could you take care of the source installation as well by setup.py develop?",
+      "revId": "d3a0f05c80df26a0b53fe505209496b9c54fdc40",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
