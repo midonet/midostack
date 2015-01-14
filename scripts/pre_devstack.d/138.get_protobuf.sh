@@ -16,7 +16,6 @@
 
 if [ $MIDONET_GIT_BRANCH == "master" ] ; then
     if ! which protoc > /dev/null || [ "$(protoc --version | awk '{print $2}')" != "2.6.1" ]; then
-        sudo apt-get --force -y install wget
         wget https://github.com/google/protobuf/releases/download/v2.6.1/protobuf-2.6.1.tar.gz
         tar -xzf protobuf-2.6.1.tar.gz
         cd protobuf-2.6.1
