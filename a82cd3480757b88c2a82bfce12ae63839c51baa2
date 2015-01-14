@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa2559ec_d9547f23",
+        "filename": "scripts/pre_devstack.d/138.get_protobuf.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002732
+      },
+      "writtenOn": "2015-01-14T02:46:04Z",
+      "side": 1,
+      "message": "Thanks Taku.\nCould you add this in \"000.install_prerequisites.sh\" instead of here?",
+      "revId": "a82cd3480757b88c2a82bfce12ae63839c51baa2",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
