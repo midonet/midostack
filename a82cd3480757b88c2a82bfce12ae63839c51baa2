@@ -16,6 +16,24 @@
       "revId": "a82cd3480757b88c2a82bfce12ae63839c51baa2",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa2559ec_992167b7",
+        "filename": "scripts/pre_devstack.d/138.get_protobuf.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002743
+      },
+      "writtenOn": "2015-01-14T02:54:27Z",
+      "side": 1,
+      "message": "This is the only place where wget is used and it\u0027s more important to fix this issue ASAP. So I submitted the follow-up patch on top of this.",
+      "parentUuid": "fa2559ec_d9547f23",
+      "revId": "a82cd3480757b88c2a82bfce12ae63839c51baa2",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
     }
   ]
 }
