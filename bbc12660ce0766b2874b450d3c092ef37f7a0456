@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa2559ec_c7e65116",
+        "filename": "scripts/pre_devstack.d/001.tweaks_for_devstack.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2015-01-15T11:17:35Z",
+      "side": 1,
+      "message": "continue is used to break out of a loop so it feels inappropriate here. Could we do instead:\n\n   if master:\n       # nothing to patch\n   else if juno:\n        patch downstream_plugin-with_juno\n        patch add_extensions_path\n   else:\n        patch devstack-use-downstream-neutron-plugin\n   fi",
+      "revId": "bbc12660ce0766b2874b450d3c092ef37f7a0456",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
