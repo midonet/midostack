@@ -24,7 +24,7 @@ source $MIDO_DIR/midonetrc
 source $MIDO_DIR/functions
 
 # Reset devstack and Execute stack script
-cd $DEVSTACK_DIR && git reset --hard && source unstack.sh
+cd $DEVSTACK_DIR && source unstack.sh
 
 # Clean up ZK
 stop_service zookeeper
