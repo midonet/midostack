@@ -28,14 +28,19 @@ fi
 
 if [ $MIDOSTACK_NEUTRON_PLUGIN_LOCATION == "downstream" ] ; then
     export DHCP_DRIVER="midonet.neutron.agent.midonet_driver.DhcpNoOpDriver"
-    if [ $MIDOSTACK_OPENSTACK_BRANCH == "master" ]  || [ $MIDOSTACK_OPENSTACK_BRANCH == "stable/juno" ] ; then
+    if [ $MIDOSTACK_OPENSTACK_BRANCH == "stable/juno" ] ; then
         patch -N -d $DEVSTACK_DIR -p1 < $PATCHES_DIR/downstream_plugin_with_juno.patch
         patch -N -d $DEVSTACK_DIR -p1 < $PATCHES_DIR/add_extensions_path.patch
+    elif [ $MIDOSTACK_OPENSTACK_BRANCH == "master" ] ; then
+        # Don't apply any patch for master branch.
+        :
     else
         patch -N -d $DEVSTACK_DIR -p1 < $PATCHES_DIR/devstack-use-downstream-neutron-plugin.patch
     fi
 fi
 
+# This patching should be removed once https://review.openstack.org/#/c/147589/
+# has been merged to upstream devstack.
 if advanced_services_split ; then
     patch -N -d $DEVSTACK_DIR -p1 < $PATCHES_DIR/clone_neutron_lbaas.patch
 fi
