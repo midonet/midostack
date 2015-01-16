@@ -83,7 +83,7 @@ function exec_hooks_on_dir() {
 while getopts n:m:c:o::p:qhBP OPT; do
     case "$OPT" in
       B)
-        MIDOSTACK_SUPPRESS_MIDO_BRANCH_CHECKS=yes
+        MIDOSTACK_SUPPRESS_BRANCH_CHECKS=yes
         ;;
       n)
         export MIDOSTACK_NEUTRON_PLUGIN_LOCATION=$OPTARG
@@ -129,14 +129,13 @@ while getopts n:m:c:o::p:qhBP OPT; do
         echo '    -p: Specify the branch for plugin neutron plugin. It is recommended'
         echo '        to use the same one as the -o option'
         echo
-        echo '    -P: Do NOT pull openstack related repos under /opt/stack and'
-        echo '        devstack'
+        echo '    -P: Do NOT pull upstream devstack'
         echo
         echo '    -q: quiet mode. With this option, midostack does not prompt'
         echo '         you for confirming branch setup.'
         echo '        Default: off'
         echo
-        echo '    -B: suppress branch sanity checks for midokura produced repos. '
+        echo '    -B: suppress branch sanity checks for repos.'
         echo '        Useful when used with gerrit, which checks out the code on'
         echo '        anonymoous branch'
         echo '        Default: no'
@@ -168,9 +167,9 @@ if [ "$MIDOSTACK_OPTION_CHECK" == "yes" ] ; then
 fi
 
 # Sanity check for openstack branches
-check_devstack_branch
-check_openstack_branch
-if [ $MIDOSTACK_SUPPRESS_MIDO_BRANCH_CHECKS != "yes" ] ; then
+if [ $MIDOSTACK_SUPPRESS_BRANCH_CHECKS != "yes" ] ; then
+    check_devstack_branch
+    check_openstack_branch
     check_midonet_branch
     check_python_midonetclient_branch
 fi

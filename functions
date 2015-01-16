@@ -34,12 +34,11 @@ function check_git_branch() {
 function check_devstack_branch() {
     MIDO_DIR=$(pwd)
     DEVSTACK_DIR="$MIDO_DIR/devstack"
-    if [ ! -d $DEVSTACK_DIR ]; then
-        # Clone devstack if missing
-        git clone http://github.com/openstack-dev/devstack devstack -b $MIDOSTACK_OPENSTACK_BRANCH
-    else
-        check_git_branch $DEVSTACK_DIR $MIDOSTACK_OPENSTACK_BRANCH
+    if [ ! -d $DEVSTACK_DIR ] ; then
+        return 0
     fi
+
+    check_git_branch $DEVSTACK_DIR $MIDOSTACK_OPENSTACK_BRANCH
 }
 
 function check_openstack_branch() {
@@ -73,12 +72,22 @@ function check_python_midonetclient_branch() {
 }
 
 function pull_devstack() {
-    if [ -d devstack/.git ] ; then
-        echo pulling devstack...
-        cd devstack
-        git pull
-        git log --oneline -n 5
-        cd -
+    MIDO_DIR=$(pwd)
+    DEVSTACK_DIR="$MIDO_DIR/devstack"
+    if [ -d $DEVSTACK_DIR ]; then
+        if [ -d $DEVSTACK_DIR/.git ] ; then
+            echo pulling devstack...
+            cd $DEVSTACK_DIR
+            git pull
+            git log --oneline -n 5
+            cd -
+        else
+            echo "Failed to pull devstack: $DEVSTACK_DIR is not a git directory"
+            exit 1
+        fi
+    else
+        # Clone devstack if missing
+        git clone http://github.com/openstack-dev/devstack devstack -b $MIDOSTACK_OPENSTACK_BRANCH
     fi
 }
 
