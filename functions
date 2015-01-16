@@ -189,10 +189,3 @@ function is_juno {
     fi
 }
 
-function advanced_services_split {
-    if is_juno || is_icehouse || is_havana ; then
-        return 1
-    else
-        return 0
-    fi
-}

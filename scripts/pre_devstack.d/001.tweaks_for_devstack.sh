@@ -39,8 +39,3 @@ if [ $MIDOSTACK_NEUTRON_PLUGIN_LOCATION == "downstream" ] ; then
     fi
 fi
 
-# This patching should be removed once https://review.openstack.org/#/c/147589/
-# has been merged to upstream devstack.
-if advanced_services_split ; then
-    patch -N -d $DEVSTACK_DIR -p1 < $PATCHES_DIR/clone_neutron_lbaas.patch
-fi
