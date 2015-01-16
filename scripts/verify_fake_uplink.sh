@@ -39,6 +39,8 @@ while getopts a:u:p:i:c:h: OPT; do
 done
 shift $(($OPTIND-1))
 
+export MIDO_TENANT=
+
 PROVIDER_ROUTER_NAME=${PROVIDER_ROUTER_NAME:-'MidoNet Provider Router'}
 PROVIDER_ROUTER_ID=${provider_router_id:-$(midonet-cli -e router list | grep "$PROVIDER_ROUTER_NAME" | awk '{ print $2 }')}
 if [ ! ${#PROVIDER_ROUTER_ID} -gt 1 ]; then

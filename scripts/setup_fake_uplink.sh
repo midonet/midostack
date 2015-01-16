@@ -39,6 +39,8 @@ while getopts a:u:p:i:c:h: OPT; do
 done
 shift $(($OPTIND-1))
 
+export MIDO_TENANT=
+
 # Get MidonetProviderRouter id.  The provider router name differs
 # between Havana and Icehouse.  In Havana, it's 'MidonetProviderRouter'.
 PROVIDER_ROUTER_NAME=${PROVIDER_ROUTER_NAME:-'MidoNet Provider Router'}
