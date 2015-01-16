@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa2559ec_e0f7fb8a",
+        "filename": "midonet_stack.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1002732
+      },
+      "writtenOn": "2015-01-16T07:00:40Z",
+      "side": 1,
+      "message": "My bad that this function name is not great in that it ensures devstack (clones if not found) and check the branch.",
+      "revId": "5efb1339dc0a4520795b2febc839d7d511e6548f",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
