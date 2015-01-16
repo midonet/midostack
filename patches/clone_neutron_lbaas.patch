@@ -3,9 +3,7 @@ index 4779d4e..6e80aa6 100644
 --- a/lib/neutron_plugins/midonet
 +++ b/lib/neutron_plugins/midonet
 @@ -31,6 +31,9 @@ function neutron_plugin_configure_common {
-     Q_PLUGIN_CLASS="midonet.neutron.plugin.MidonetPluginV2"
-
-     iniset $NEUTRON_CONF DEFAULT api_extensions_path $MIDONET_DIR/python-neutron-plugin-midonet/midonet/neutron/extensions
+     Q_PLUGIN_CLASS="neutron.plugins.midonet.plugin.MidonetPluginV2"
 +
 +    git_clone $NEUTRON_LBAAS_REPO $NEUTRON_LBAAS_DIR $NEUTRON_LBAAS_BRANCH
 +    setup_develop $NEUTRON_LBAAS_DIR
