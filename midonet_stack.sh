@@ -80,13 +80,10 @@ function exec_hooks_on_dir() {
 
 
 # Parse option parameters
-while getopts n:m:c:o::p:qhBP OPT; do
+while getopts m:c:o::p:qhBP OPT; do
     case "$OPT" in
       B)
         MIDOSTACK_SUPPRESS_MIDO_BRANCH_CHECKS=yes
-        ;;
-      n)
-        export MIDOSTACK_NEUTRON_PLUGIN_LOCATION=$OPTARG
         ;;
       m)
         export MIDONET_GIT_BRANCH=$OPTARG
@@ -148,7 +145,6 @@ done
 export MIDONET_NEUTRON_PLUGIN_GIT_BRANCH=${MIDONET_NEUTRON_PLUGIN_GIT_BRANCH:-$MIDOSTACK_OPENSTACK_BRANCH}
 
 echo ========== Running Midostack with the following configuration:
-echo Neutron Plugin location: $MIDOSTACK_NEUTRON_PLUGIN_LOCATION
 echo Midonet repo: $MIDONET_GIT_REPO
 echo MidoNet branch: $MIDONET_GIT_BRANCH
 echo MidoNet client repo: $MIDONET_CLIENT_REPO
