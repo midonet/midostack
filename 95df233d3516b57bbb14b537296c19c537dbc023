@@ -16,6 +16,24 @@
       "revId": "95df233d3516b57bbb14b537296c19c537dbc023",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da2a55be_585d29e9",
+        "filename": "scripts/pre_devstack.d/140.install_midonet.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002749
+      },
+      "writtenOn": "2015-01-19T08:55:16Z",
+      "side": 1,
+      "message": "The build sources it is absolute deprecated. This is legacy code. The new patch about sources/packages won\u0027t use this env var",
+      "parentUuid": "da2a55be_9847a11d",
+      "revId": "95df233d3516b57bbb14b537296c19c537dbc023",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
     }
   ]
 }
