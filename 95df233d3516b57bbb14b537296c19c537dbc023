@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da2a55be_9847a11d",
+        "filename": "scripts/pre_devstack.d/140.install_midonet.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002732
+      },
+      "writtenOn": "2015-01-19T08:51:51Z",
+      "side": 1,
+      "message": "without this check,  [ \"$BUILD_SOURCES\" \u003d \"true\" ], wouldn\u0027t the following code be executed even when you want to install from packages?",
+      "revId": "95df233d3516b57bbb14b537296c19c537dbc023",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
