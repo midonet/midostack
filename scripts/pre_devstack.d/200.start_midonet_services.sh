@@ -22,9 +22,7 @@ stop_service tomcat7
 
 # work around screen function inconsistency between different branches
 shopt -s expand_aliases
-if [ "$MIDOSTACK_OPENSTACK_BRANCH" == "stable/havana" ] ; then
-    alias run_in_screen=screen_it
-elif [ "$MIDOSTACK_OPENSTACK_BRANCH" == "stable/icehouse" ] ; then
+if [ "$MIDOSTACK_OPENSTACK_BRANCH" == "stable/icehouse" ] ; then
     alias run_in_screen=screen_service
 elif [ "$MIDOSTACK_OPENSTACK_BRANCH" == "stable/juno" ] ; then
     alias run_in_screen=screen_service

@@ -174,14 +174,6 @@ function run_midonet_api() {
     LC_ALL=C
 }
 
-function is_havana {
-    if [ "$MIDOSTACK_OPENSTACK_BRANCH" == "stable/havana" ] ; then
-        return 0
-    else
-        return 1
-    fi
-}
-
 function is_icehouse {
     if [ "$MIDOSTACK_OPENSTACK_BRANCH" == "stable/icehouse" ] ; then
         return 0
@@ -200,7 +192,7 @@ function is_juno {
 
 function keystone_ports_reserved_unsafely {
 
-    if is_juno || is_icehouse || is_havana ; then
+    if is_juno || is_icehouse ; then
         return 0
     else
         return 1
