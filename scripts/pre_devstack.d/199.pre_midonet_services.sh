@@ -19,5 +19,4 @@
 #
 
 # Make sure to load ovs kmod
-sudo apt-get install -y linux-image-`uname -r`
 sudo modprobe openvswitch
