@@ -198,3 +198,11 @@ function is_juno {
     fi
 }
 
+function keystone_reserved_ports_checked_unsafely {
+
+    if is_juno || is_icehouse || is_havana ; then
+        return 0
+    else
+        return 1
+    fi
+}
