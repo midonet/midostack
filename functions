@@ -198,3 +198,12 @@ function keystone_ports_reserved_unsafely {
         return 1
     fi
 }
+
+function uses_screen_service {
+
+    if is_juno || is_icehouse ; then
+        return 0
+    else
+        return 1
+    fi
+}
