@@ -61,7 +61,7 @@ FIXED_NETWORK_SIZE=${FIXED_NETWORK_SIZE:-256}
 
 function exec_hooks_on_dir() {
     local hook_dir=$1
-    for f in $hook_dir/* ; do
+    for f in $hook_dir/*.sh ; do
 	test -x $f && {
             echo -n "Executing $f..."
 	    LOGFILE=$MIDONET_LOGDIR/$(basename $f).log
