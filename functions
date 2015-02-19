@@ -163,17 +163,6 @@ function install_midonet() {
     fi
 }
 
-
-function run_midolman() {
-    ./gradlew -a :midolman:runWithSudo
-}
-
-function run_midonet_api() {
-    LC_ALL=en_US.UTF-8 # because some source code has unnicode characters
-    ./gradlew :midonet-api:jettyRun -Pport=$MIDONET_API_PORT
-    LC_ALL=C
-}
-
 function is_icehouse {
     if [ "$MIDOSTACK_OPENSTACK_BRANCH" == "stable/icehouse" ] ; then
         return 0
