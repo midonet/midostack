@@ -77,7 +77,7 @@ if [ $BUILD_SOURCES = true ]; then
     cp  $MIDONET_SRC_DIR/midolman/src/test/resources/logback-test.xml  \
         $MIDONET_SRC_DIR/midolman/build/classes/main/logback.xml
 
-    run_in_screen midolman "cd $MIDONET_SRC_DIR && run_midolman "
+    run_in_screen midolman "cd $MIDONET_SRC_DIR && ./gradlew -a :midolman:runWithSudo "
     # Run the API with jetty:plugin
     # Tomcat need to be stopped
     echo "Starting midonet-api"
@@ -99,7 +99,7 @@ if [ $BUILD_SOURCES = true ]; then
            $MIDONET_SRC_DIR/midonet-api/build/classes/main/logback.xml
     fi
 
-    run_in_screen midonet-api "cd $MIDONET_SRC_DIR && run_midonet_api"
+    run_in_screen midonet-api "cd $MIDONET_SRC_DIR && ./gradlew :midonet-api:jettyRun -Pport=$MIDONET_API_PORT "
     echo "* Making sure MidoNet API server is up and ready."
 
 else # Use packages
