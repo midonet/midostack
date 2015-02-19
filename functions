@@ -145,9 +145,10 @@ function install_midonet() {
     cp -r $MIDOLMAN_BUILD_TARGET_DIR $MIDO_HOME/dep
 
     # Place our executables in /usr/local/bin
-    LOCAL_BIN_DIR=/usr/local/bin/
+    LOCAL_BIN_DIR=/usr/local/bin
     sudo cp $MIDO_DIR/scripts/binproxy $LOCAL_BIN_DIR/mm-ctl
     sudo cp $MIDO_DIR/scripts/binproxy $LOCAL_BIN_DIR/mm-dpctl
+    sudo chmod +x $LOCAL_BIN_DIR/mm-ctl $LOCAL_BIN_DIR/mm-dpctl
 
     # Create the midolman's conf dir in case it doesn't exist
     # Midolman will fail to run otherwise
@@ -161,17 +162,6 @@ function install_midonet() {
     if [ ! -f $MIDOLMAN_CONF_DIR/midolman.conf ]; then
         sudo cp $midonet_src_dir/midolman/conf/midolman.conf $MIDOLMAN_CONF_DIR/
     fi
-}
-
-
-function run_midolman() {
-    ./gradlew -a :midolman:runWithSudo
-}
-
-function run_midonet_api() {
-    LC_ALL=en_US.UTF-8 # because some source code has unnicode characters
-    ./gradlew :midonet-api:jettyRun -Pport=$MIDONET_API_PORT
-    LC_ALL=C
 }
 
 function is_icehouse {
