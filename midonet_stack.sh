@@ -14,12 +14,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-set -a
-
 MIDOSTACK_TOPDIR=$(cd $(dirname $0) && pwd)
-LOGDIR=${MIDOSTACK_LOG_DIR:-$MIDOSTACK_TOPDIR/logs/$(date +'%Y-%m-%d-%H%M%S')}
+export LOGDIR=${MIDOSTACK_LOG_DIR:-$MIDOSTACK_TOPDIR/logs/$(date +'%Y-%m-%d-%H%M%S')}
 MIDONET_LOGDIR=$LOGDIR/midonet
-SCREEN_LOGDIR=${SCREEN_LOGDIR:-$LOGDIR/devstack}
+export SCREEN_LOGDIR=${SCREEN_LOGDIR:-$LOGDIR/devstack}
 mkdir -p $MIDONET_LOGDIR
 mkdir -p $SCREEN_LOGDIR
 
@@ -37,7 +35,7 @@ export PATCHES_DIR=$MIDOSTACK_TOPDIR/patches
 source $MIDOSTACK_TOPDIR/functions
 
 # Destination directory
-DEST=${DEST:-/opt/stack}
+export DEST=${DEST:-/opt/stack}
 
 # First configuration file is our own 'localrc'
 if [ -f $MIDOSTACK_TOPDIR/localrc ]; then
@@ -48,16 +46,16 @@ fi
 source $MIDOSTACK_TOPDIR/midonetrc
 
 # Midonet password. Used to simplify the passwords in the configurated localrc
-ADMIN_PASSWORD=${ADMIN_PASSWORD:-$MIDOSTACK_PASSWORD}
+export ADMIN_PASSWORD=${ADMIN_PASSWORD:-$MIDOSTACK_PASSWORD}
 
 # Set fixed and floating range here so we can make sure not to use addresses
 # from either range when attempting to guess the IP to use for the host.
 # Note that setting FIXED_RANGE may be necessary when running DevStack
 # in an OpenStack cloud that uses either of these address ranges internally.
-FLOATING_RANGE=${FLOATING_RANGE:-200.200.200.0/24}
-PUBLIC_NETWORK_GATEWAY=${PUBLIC_NETWORK_GATEWAY:-200.200.200.1}
-FIXED_RANGE=${FIXED_RANGE:-10.0.0.0/24}
-FIXED_NETWORK_SIZE=${FIXED_NETWORK_SIZE:-256}
+export FLOATING_RANGE=${FLOATING_RANGE:-200.200.200.0/24}
+export PUBLIC_NETWORK_GATEWAY=${PUBLIC_NETWORK_GATEWAY:-200.200.200.1}
+export FIXED_RANGE=${FIXED_RANGE:-10.0.0.0/24}
+export FIXED_NETWORK_SIZE=${FIXED_NETWORK_SIZE:-256}
 
 function exec_hooks_on_dir() {
     local hook_dir=$1
