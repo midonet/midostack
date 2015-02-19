@@ -81,16 +81,24 @@ if [ $BUILD_SOURCES = true ]; then
     # Run the API with jetty:plugin
     # Tomcat need to be stopped
     echo "Starting midonet-api"
-# put logback.xml to the classpath with "debug" level
-    sed -e 's/info/debug/' \
-        -e 's,</configuration>,\
+
+    # put logback.xml to the classpath with "debug" level
+    LOGBACK_FILE=$MIDONET_SRC_DIR/midonet-api/conf/logback.xml.dev
+    if [ -f $LOGBACK_FILE ]; then
+        cp $LOGBACK_FILE \
+            $MIDONET_SRC_DIR/midonet-api/build/classes/main/logback.xml
+    else
+        # The old way
+        sed -e 's/info/debug/' \
+            -e 's,</configuration>,\
 <logger name="org.apache.zookeeper" level="INFO" />\
 <logger name="org.apache.cassandra" level="INFO" />\
 <logger name="me.prettyprint.cassandra" level="INFO" />\
 </configuration>,' \
-       $MIDONET_SRC_DIR/midonet-api/conf/logback.xml.sample > \
-       $MIDONET_SRC_DIR/midonet-api/build/classes/main/logback.xml
-
+           $MIDONET_SRC_DIR/midonet-api/conf/logback.xml.sample > \
+           $MIDONET_SRC_DIR/midonet-api/build/classes/main/logback.xml
+    fi
+exit
     run_in_screen midonet-api "cd $MIDONET_SRC_DIR && run_midonet_api"
     echo "* Making sure MidoNet API server is up and ready."
 
