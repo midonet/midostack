@@ -16,20 +16,20 @@
 ## General variables                                    ##
 ##########################################################
 BUILD_SOURCES=${BUILD_SOURCES:-true}
-MIDOSTACK_PASSWORD=${MIDOSTACK_PASSWORD:-gogomid0}
-MIDONET_DIR=${MIDONET_DIR:-$DEST/midonet}
+export MIDOSTACK_PASSWORD=${MIDOSTACK_PASSWORD:-gogomid0}
+export MIDONET_DIR=${MIDONET_DIR:-$DEST/midonet}
 
 # Directory of midonet source.  Not intended to be set by the users.
-MIDONET_SRC_DIR=$MIDONET_DIR/midonet
+export MIDONET_SRC_DIR=$MIDONET_DIR/midonet
 
 # Directory of midonet client source.  Not intended to be set by the users.
-MIDONET_CLIENT_DIR=$MIDONET_SRC_DIR/python-midonetclient
+export MIDONET_CLIENT_DIR=$MIDONET_SRC_DIR/python-midonetclient
 
 # For midonet.ini (configured in lib/neutron_plugins/midonet in devstack)
-MIDONET_API_PORT=${MIDONET_API_PORT:-8081}
-MIDONET_USERNAME=${MIDONET_USERNAME:-admin}
-MIDONET_PASSWORD=${MIDOSTACK_PASSWORD}
-MIDONET_PROJECT_ID=${MIDONET_PROJECT_ID:-admin}
+export MIDONET_API_PORT=${MIDONET_API_PORT:-8081}
+export MIDONET_USERNAME=${MIDONET_USERNAME:-admin}
+export MIDONET_PASSWORD=${MIDOSTACK_PASSWORD}
+export MIDONET_PROJECT_ID=${MIDONET_PROJECT_ID:-admin}
 
 MIDONET_SCREEN_NAME=${MIDONET_SCREEN_NAME:-mido}
 
