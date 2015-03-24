@@ -30,15 +30,3 @@ if [ $MIDOSTACK_NEUTRON_PLUGIN_LOCATION == "upstream" ] ; then
     patch -N -d $DEVSTACK_DIR -p1 < $PATCHES_DIR/upstream_provider_router.patch
 fi
 
-if [ $MIDOSTACK_NEUTRON_PLUGIN_LOCATION == "downstream" ] ; then
-    export DHCP_DRIVER="midonet.neutron.agent.midonet_driver.DhcpNoOpDriver"
-    if [ $MIDOSTACK_OPENSTACK_BRANCH == "stable/juno" ] ; then
-        patch -N -d $DEVSTACK_DIR -p1 < $PATCHES_DIR/downstream_plugin_with_juno.patch
-        patch -N -d $DEVSTACK_DIR -p1 < $PATCHES_DIR/add_extensions_path.patch
-    elif [ $MIDOSTACK_OPENSTACK_BRANCH == "master" ] ; then
-        # Don't apply any patch for master branch.
-        :
-    else
-        patch -N -d $DEVSTACK_DIR -p1 < $PATCHES_DIR/devstack-use-downstream-neutron-plugin.patch
-    fi
-fi
