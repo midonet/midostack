@@ -19,7 +19,8 @@
 CASSANDRA_FILE='/etc/cassandra/cassandra.yaml'
 CASSANDRA_ENV_FILE='/etc/cassandra/cassandra-env.sh'
 
-sudo apt-get -o Dpkg::Options::="--force-confnew" -y --force-yes install dsc21
+sudo apt-get -o Dpkg::Options::="--force-confnew" -y --force-yes install dsc20=2.0.10-1 cassandra=2.0.10
+sudo apt-mark hold dsc20 cassandra
 
 sudo service cassandra stop
 sudo chown cassandra:cassandra /var/lib/cassandra
