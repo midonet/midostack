@@ -14,14 +14,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# apt package pinning (zookeeper 3.4.5, ovs-dp 1.10)
-UBUNTU_ARCHIVE="http://us.archive.ubuntu.com/ubuntu/"
-SAUCY_SRC="deb $UBUNTU_ARCHIVE saucy universe\ndeb-src $UBUNTU_ARCHIVE saucy universe"
-SAUCY_LIST_FILE=/etc/apt/sources.list.d/saucy.list
-if [ ! -f $SAUCY_LIST_FILE ]; then
-    echo "Adding sources from Ubuntu Saucy release"
-    echo -e $SAUCY_SRC | sudo tee $SAUCY_LIST_FILE
-fi
 CASSANDRA_LIST_FILE=/etc/apt/sources.list.d/cassandra.list
 if [ ! -f $CASSANDRA_LIST_FILE ]; then
     echo "Adding Cassandra sources"

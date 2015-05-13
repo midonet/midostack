@@ -1,11 +1,3 @@
-Package: openvswitch-datapath-dkms
-Pin: release n=saucy
-Pin-Priority: 1000
-
-Package: openvswitch-datapath-dkms
-Pin: release n=precise
-Pin-Priority: 10
-
 Package: zookeeper
 Pin: release n=trusty
 Pin-Priority: 1000
