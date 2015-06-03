@@ -63,14 +63,6 @@ function check_midonet_branch() {
     check_git_branch /opt/stack/midonet/midonet $MIDONET_GIT_BRANCH
 }
 
-function check_python_midonetclient_branch() {
-    if [ ! -d /opt/stack/midonet/python-midonetclient ] ; then
-        # Midostack should checkout the code of right branch
-        return 0
-    fi
-    check_git_branch /opt/stack/midonet/python-midonetclient $MIDONET_CLIENT_BRANCH
-}
-
 function pull_devstack() {
     MIDO_DIR=$(pwd)
     DEVSTACK_DIR="$MIDO_DIR/devstack"

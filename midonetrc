@@ -15,8 +15,7 @@
 ##########################################################
 ## General variables                                    ##
 ##########################################################
-BUILD_SOURCES=${BUILD_SOURCES:-true}
-export MIDOSTACK_PASSWORD=${MIDOSTACK_PASSWORD:-gogomid0}
+export MIDOSTACK_PASSWORD=${MIDOSTACK_PASSWORD:-midonet}
 export MIDONET_DIR=${MIDONET_DIR:-$DEST/midonet}
 
 # Directory of midonet source.  Not intended to be set by the users.
@@ -37,26 +36,12 @@ MIDOSTACK_OPTION_CHECK=${MIDOSTACK_OPTION_CHECK:-yes}
 MIDOSTACK_PULL_DEVSTACK=${MIDOSTACK_PULL_DEVSTACK:-yes}
 MIDOSTACK_SUPPRESS_MIDO_BRANCH_CHECKS=${MIDOSTACK_SUPRESS_MIDO_BRANCH_CHECKS:-no}
 
-###################################################################
-## Source build based environment variables (BUILD_SOURCES=true) ##
-## Define repositories                                           ##
-###################################################################
-
-MIDONET_BUILD_CLEAN=${MIDONET_BUILD_CLEAN:-false}
-
-# Set default plugin location. Upstream is not guaranteed to work
-MIDOSTACK_NEUTRON_PLUGIN_LOCATION=${MIDOSTACK_NEUTRON_PLUGIN_LOCATION:-downstream}
-
 MIDONET_GIT_REPO=${MIDONET_GIT_REPO:-http://github.com/midonet/midonet.git}
 MIDONET_GIT_BRANCH=${MIDONET_GIT_BRANCH:-master}
 
-export MIDONET_CLIENT_REPO=${MIDONET_CLIENT_REPO:-http://github.com/midonet/python-midonetclient}
-export MIDONET_CLIENT_BRANCH=${MIDONET_CLIENT_BRANCH:-master}
-export MIDONET_CLIENT_DIR=${MIDONET_CLIENT_DIR:-$MIDONET_DIR/python-midonetclient}
-
 MIDONET_NEUTRON_PLUGIN_GIT_REPO=${MIDONET_NEUTRON_PLUGIN_GIT_REPO:-https://github.com/stackforge/networking-midonet.git}
 
-MIDOSTACK_OPENSTACK_BRANCH=${MIDOSTACK_OPENSTACK_BRANCH:-master}
+MIDOSTACK_OPENSTACK_BRANCH=${MIDOSTACK_OPENSTACK_BRANCH:-stable/juno}
 
 MIDOLMAN_CONF_DIR=${MIDOLMAN_CONF_DIR:-/etc/midolman}
 

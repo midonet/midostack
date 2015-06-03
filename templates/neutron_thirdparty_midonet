@@ -1,0 +1,52 @@
+# MidoNet
+# -------
+
+# This file implements functions required to configure MidoNet as the third-party
+# system used with devstack's Neutron.  To include this file, specify the following
+# variables in localrc:
+#
+# * enable_service midonet
+#
+
+# MidoNet devstack destination dir
+MIDONET_DIR=${MIDONET_DIR:-$DEST/midonet}
+
+# Save trace setting
+MN3_XTRACE=$(set +o | grep xtrace)
+set +o xtrace
+
+function configure_midonet {
+    :
+}
+
+function init_midonet {
+    :
+}
+
+function install_midonet {
+    # Install MidoNet
+    git_clone $MIDONET_GIT_REPO $MIDONET_DIR $MIDONET_GIT_BRANCH
+    $MIDONET_DIR/tools/devmido/mido.sh
+
+    # Install MidoNet Neutron Plugin
+    MIDONET_PLUGIN_SRC_DIR=$DEST/networking-midonet
+    git_clone $MIDONET_NEUTRON_PLUGIN_GIT_REPO $MIDONET_PLUGIN_SRC_DIR $MIDOSTACK_OPENSTACK_BRANCH
+    cd $MIDONET_PLUGIN_SRC_DIR
+    sudo python setup.py develop
+    cd -
+}
+
+function start_midonet {
+    :
+}
+
+function stop_midonet {
+    :
+}
+
+function check_midonet {
+    :
+}
+
+# Restore xtrace
+$MN3_XTRACE
