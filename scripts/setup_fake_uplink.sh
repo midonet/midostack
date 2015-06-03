@@ -41,9 +41,8 @@ shift $(($OPTIND-1))
 
 export MIDO_TENANT=
 
-# Get MidonetProviderRouter id.  The provider router name differs
-# between Havana and Icehouse.  In Havana, it's 'MidonetProviderRouter'.
-PROVIDER_ROUTER_NAME=${PROVIDER_ROUTER_NAME:-'MidoNet Provider Router'}
+# Get MidonetProviderRouter id.
+PROVIDER_ROUTER_NAME='MidoNet Provider Router'
 PROVIDER_ROUTER_ID=${provider_router_id:-$(midonet-cli -e router list | grep "$PROVIDER_ROUTER_NAME" | awk '{ print $2 }')}
 if [ ! ${#PROVIDER_ROUTER_ID} -gt 1 ]; then
     echo "FAILED to find provider router"
