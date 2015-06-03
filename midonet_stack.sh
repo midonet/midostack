@@ -76,6 +76,11 @@ function exec_hooks_on_dir() {
     done
 }
 
+export MIDONET_GIT_REPO
+export MIDONET_GIT_BRANCH
+export MIDOSTACK_OPENSTACK_BRANCH
+export MIDONET_NEUTRON_PLUGIN_GIT_REPO
+export MIDONET_API_URI=http://localhost:$MIDONET_API_PORT/midonet-api
 
 # Parse option parameters
 while getopts n:m:c:o::p:qhBP OPT; do
@@ -83,20 +88,11 @@ while getopts n:m:c:o::p:qhBP OPT; do
       B)
         MIDOSTACK_SUPPRESS_BRANCH_CHECKS=yes
         ;;
-      n)
-        export MIDOSTACK_NEUTRON_PLUGIN_LOCATION=$OPTARG
-        ;;
       m)
-        export MIDONET_GIT_BRANCH=$OPTARG
-        ;;
-      c)
-        export MIDONET_CLIENT_BRANCH=$OPTARG
+        MIDONET_GIT_BRANCH=$OPTARG
         ;;
       o)
         MIDOSTACK_OPENSTACK_BRANCH=$OPTARG
-        ;;
-      p)
-        MIDONET_NEUTRON_PLUGIN_GIT_BRANCH=$OPTARG
         ;;
       P)
         MIDOSTACK_PULL_DEVSTACK=no
@@ -122,10 +118,7 @@ while getopts n:m:c:o::p:qhBP OPT; do
         echo '                           Default: master'
         echo
         echo '    -o: Specify branch for openstack, such as master, stable/icehouse.'
-        echo '                      Default: master'
-        echo
-        echo '    -p: Specify the branch for plugin neutron plugin. It is recommended'
-        echo '        to use the same one as the -o option'
+        echo '                      Default: stable/juno'
         echo
         echo '    -P: Do NOT pull upstream devstack'
         echo
@@ -142,16 +135,16 @@ while getopts n:m:c:o::p:qhBP OPT; do
     esac
 done
 
-export MIDONET_NEUTRON_PLUGIN_GIT_BRANCH=${MIDONET_NEUTRON_PLUGIN_GIT_BRANCH:-$MIDOSTACK_OPENSTACK_BRANCH}
+# Midostack is only for juno and icehouse
+if ! is_juno && ! is_icehouse ; then
+    echo "Only juno and icehouse are supported.  Exiting..."
+    exit 1
+fi
 
 echo ========== Running Midostack with the following configuration:
-echo Neutron Plugin location: $MIDOSTACK_NEUTRON_PLUGIN_LOCATION
 echo Midonet repo: $MIDONET_GIT_REPO
 echo MidoNet branch: $MIDONET_GIT_BRANCH
-echo MidoNet client repo: $MIDONET_CLIENT_REPO
-echo MidoNet client branch: $MIDONET_CLIENT_BRANCH
 echo Midonet plugin repo: $MIDONET_NEUTRON_PLUGIN_GIT_REPO
-echo Midonet plugin branch: $MIDONET_NEUTRON_PLUGIN_GIT_BRANCH
 echo OpenStack branch: $MIDOSTACK_OPENSTACK_BRANCH
 echo Pull devstack repo: $MIDOSTACK_PULL_DEVSTACK
 echo ====================================
@@ -159,7 +152,7 @@ if [ "$MIDOSTACK_OPTION_CHECK" == "yes" ] ; then
     echo -n "Confirm the above configuration. Are you sure to proceed? (y/n): "
     read answer
     if [ "$answer" != "y" ] ; then
-        echo "exitting..."
+        echo "exiting..."
         exit 1
     fi
 fi
@@ -169,11 +162,15 @@ if [ $MIDOSTACK_SUPPRESS_BRANCH_CHECKS != "yes" ] ; then
     check_devstack_branch
     check_openstack_branch
     check_midonet_branch
-    check_python_midonetclient_branch
 fi
 
 if [ "$MIDOSTACK_PULL_DEVSTACK" == "yes" ] ; then
+    rm -rf $MIDOSTACK_TOPDIR/devstack
     pull_devstack
+
+    # Copy over the template files
+    cp $MIDOSTACK_TOPDIR/templates/neutron_plugins_midonet $MIDOSTACK_TOPDIR/devstack/lib/neutron_plugins/midonet
+    cp $MIDOSTACK_TOPDIR/templates/neutron_thirdparty_midonet $MIDOSTACK_TOPDIR/devstack/lib/neutron_thirdparty/midonet
 fi
 
 # Source devstack's functions
