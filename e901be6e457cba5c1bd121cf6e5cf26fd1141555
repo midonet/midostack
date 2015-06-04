@@ -16,6 +16,24 @@
       "revId": "e901be6e457cba5c1bd121cf6e5cf26fd1141555",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "facab960_6bd706ee",
+        "filename": "scripts/pre_devstack.d/000.install_prerequisites.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2015-06-04T07:21:15Z",
+      "side": 0,
+      "message": "I believe I made it functionally equal to devstack.  If devstack doesn\u0027t run on a particular environment, midostack won\u0027t either.  If we were to run either on an environment that doesn\u0027t have python, for example, then it is expected that you install it yourself.",
+      "parentUuid": "facab960_cb101204",
+      "revId": "e901be6e457cba5c1bd121cf6e5cf26fd1141555",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
     }
   ]
 }
