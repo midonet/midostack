@@ -1,4 +1,5 @@
 # WARNING: MIDOSTACK HAS NOW BEEN DEPRECATED IN FAVOR OF DEVSTACK
+http://wiki.midonet.org/Devstack
 
 MidoStack
 =========
@@ -88,4 +89,4 @@ Run the following command to stop the running MidoStack:
 midostack$ ./midonet_unstack.sh
 ```
 
-This stops all the services and wipes out the data.
+This stops all the services and wipes out the data.~~
