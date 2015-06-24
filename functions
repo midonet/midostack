@@ -171,12 +171,3 @@ function is_juno {
         return 1
     fi
 }
-
-function keystone_ports_reserved_unsafely {
-
-    if is_juno || is_icehouse ; then
-        return 0
-    else
-        return 1
-    fi
-}
